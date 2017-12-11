@@ -1,0 +1,84 @@
+//
+//  UICollectionView+Reloading.m
+//  AMAppkit
+//
+//  Created by Ilya Kuznecov on 26/01/2017.
+//  Copyright © 2017 Arello Mobile. All rights reserved.
+//
+
+#import "UICollectionView+Reloading.h"
+
+@implementation UICollectionView (Reloading)
+
+- (NSArray *)reloadAnimated:(BOOL)animated oldData:(NSArray *)oldData data:(NSArray *)data completion:(dispatch_block_t)completion {
+    if (!animated || !self.window) {
+        
+        [self reloadData];
+        if (completion) completion();
+        return nil;
+    }
+    
+    NSMutableArray *toAdd = [NSMutableArray array];
+    NSMutableArray *toDelete = [NSMutableArray array];
+    NSMutableArray *toReload = [NSMutableArray array];
+    
+    NSMutableSet *oldDataSet = [NSMutableSet setWithArray:oldData];
+    NSMutableSet *dataSet = [NSMutableSet setWithArray:data];
+    
+    NSMutableOrderedSet *currentSet = [NSMutableOrderedSet orderedSetWithArray:oldData];
+    for (NSUInteger index = 0; index < oldData.count; index++) {
+        id object = oldData[index];
+        if (![dataSet containsObject:object]) {
+            [toDelete addObject:[NSIndexPath indexPathForItem:index inSection:0]];
+            [currentSet removeObject:object];
+        }
+    }
+    
+    for (NSUInteger index = 0; index < data.count; index++) {
+        id object = data[index];
+        if (![oldDataSet containsObject:object]) {
+            [toAdd addObject:[NSIndexPath indexPathForItem:index inSection:0]];
+            [currentSet insertObject:object atIndex:index];
+        } else {
+            [toReload addObject:[NSIndexPath indexPathForItem:index inSection:0]];
+        }
+    }
+    
+    NSMutableArray *itemsToMove = [NSMutableArray array];
+    for (NSUInteger index = 0; index < data.count; index++) {
+        id object = data[index];
+        NSUInteger oldDataIndex = [currentSet indexOfObject:object];
+        if (index != oldDataIndex) {
+            [itemsToMove addObject:@{ @"from" : [NSIndexPath indexPathForItem:[oldData indexOfObject:object] inSection:0],
+                                      @"to" : [NSIndexPath indexPathForItem:index inSection:0] }];
+        }
+    }
+    
+    if (toDelete.count || toAdd.count || itemsToMove.count || toReload.count) {
+        
+        [self performBatchUpdates:^{
+            [self deleteItemsAtIndexPaths:toDelete];
+            [self insertItemsAtIndexPaths:toAdd];
+            for (NSDictionary *dict in itemsToMove) {
+                [self moveItemAtIndexPath:dict[@"from"] toIndexPath:dict[@"to"]];
+            }
+        } completion:^(BOOL finished) {
+            if (completion) {
+                completion();
+            }
+        }];
+        if (self.collectionViewLayout.collectionViewContentSize.height < self.bounds.size.height && data.count) {
+            [UIView animateWithDuration:0.3 animations:^{
+                [self scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+            }];
+        }
+        
+    } else {
+        if (completion) {
+            completion();
+        }
+    }
+    return toReload;
+}
+
+@end
