@@ -3,7 +3,7 @@
 //  AMAppkit
 //
 //  Created by Ilya Kuznetsov on 12/7/17.
-//  Copyright © 2017 Arello Mobile. All rights reserved.
+//  Copyright © 2017 Ilya Kuznetsov. All rights reserved.
 //
 
 #ifndef AMAppkitObjC_h

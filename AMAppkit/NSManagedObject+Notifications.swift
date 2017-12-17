@@ -3,13 +3,21 @@
 //  AMAppkit
 //
 //  Created by Ilya Kuznetsov on 11/29/17.
-//  Copyright © 2017 Arello Mobile. All rights reserved.
+//  Copyright © 2017 Ilya Kuznetsov. All rights reserved.
 //
 
 import Foundation
 import CoreData
 
 public extension NSManagedObject {
+
+    public static func add(observer: AnyObject, closure: @escaping (AMNotification?)->()) {
+        self.add(observer: observer, closure: closure, classes: [self])
+    }
+    
+    public static func remove(observer: AnyObject) {
+        self.remove(observer: observer, classes: [self])
+    }
     
     public static func add(observer: AnyObject, closure: @escaping (AMNotification?)->(), classes: [NSManagedObject.Type]) {
         AMNotificationManager.shared.add(observer: observer, closure: closure, names: classNamesFor(classes: classes))

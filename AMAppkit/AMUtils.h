@@ -3,7 +3,7 @@
 //  AMToolkit
 //
 //  Created by Ilya Kuznecov on 25/02/16.
-//  Copyright © 2016 Arello Mobile. All rights reserved.
+//  Copyright © 2016 Ilya Kuznetsov. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

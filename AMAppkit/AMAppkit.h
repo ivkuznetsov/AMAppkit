@@ -3,7 +3,7 @@
 //  AMAppkit
 //
 //  Created by Ilya Kuznecov on 25/01/2017.
-//  Copyright © 2017 Arello Mobile. All rights reserved.
+//  Copyright © 2017 Ilya Kuznetsov. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -19,7 +19,6 @@ FOUNDATION_EXPORT const unsigned char AMAppkitVersionString[];
 #import <AMAppkit/AMAppkitObjC.h>
 
 //tools
-#import <AMAppkit/AMAlertView.h>
 #import <AMAppkit/AMUtils.h>
 #import <AMAppkit/AMLocationManager.h>
 

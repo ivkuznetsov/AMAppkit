@@ -58,6 +58,7 @@
 		D7949C541FCE15C3000D2C4F /* AMNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7949C531FCE15C3000D2C4F /* AMNotification.swift */; };
 		D7949C561FCE1725000D2C4F /* AMNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7949C551FCE1725000D2C4F /* AMNotificationManager.swift */; };
 		D7949C581FCEB081000D2C4F /* NSManagedObject+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7949C571FCEB081000D2C4F /* NSManagedObject+Notifications.swift */; };
+		D7CB5CE61FE5BBD900341E60 /* AMAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CB5CE51FE5BBD900341E60 /* AMAlertView.swift */; };
 		D7F324A61FDA8D3A0038F1C4 /* AMMake.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F324A51FDA8D3A0038F1C4 /* AMMake.swift */; };
 		D7F324AD1FDA9AAC0038F1C4 /* AMOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F324AC1FDA9AAC0038F1C4 /* AMOptionsView.swift */; };
 		D7F324AF1FDA9AB80038F1C4 /* AMOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F324AE1FDA9AB80038F1C4 /* AMOptionCell.swift */; };
@@ -96,9 +97,7 @@
 		D7FCA60C1FA246370005DAEB /* NSString+SSToolkitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FCA5FC1FA246370005DAEB /* NSString+SSToolkitAdditions.m */; };
 		D7FCA60D1FA246370005DAEB /* NSArray+Validation.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FCA5FD1FA246370005DAEB /* NSArray+Validation.m */; };
 		D7FCA60E1FA246370005DAEB /* NSObject+ClassName.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FCA5FE1FA246370005DAEB /* NSObject+ClassName.m */; };
-		D7FCA6181FA246C10005DAEB /* AMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FCA6101FA246C00005DAEB /* AMAlertView.m */; };
 		D7FCA61B1FA246C10005DAEB /* AMLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FCA6131FA246C00005DAEB /* AMLocationManager.m */; };
-		D7FCA61C1FA246C10005DAEB /* AMAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = D7FCA6141FA246C00005DAEB /* AMAlertView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D7FCA61D1FA246C10005DAEB /* AMLocationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D7FCA6151FA246C10005DAEB /* AMLocationManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D7FCA61E1FA246C10005DAEB /* AMUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D7FCA6161FA246C10005DAEB /* AMUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D7FCA61F1FA246C10005DAEB /* AMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FCA6171FA246C10005DAEB /* AMUtils.m */; };
@@ -199,6 +198,7 @@
 		D7949C531FCE15C3000D2C4F /* AMNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMNotification.swift; sourceTree = "<group>"; };
 		D7949C551FCE1725000D2C4F /* AMNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMNotificationManager.swift; sourceTree = "<group>"; };
 		D7949C571FCEB081000D2C4F /* NSManagedObject+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Notifications.swift"; sourceTree = "<group>"; };
+		D7CB5CE51FE5BBD900341E60 /* AMAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMAlertView.swift; sourceTree = "<group>"; };
 		D7F324A51FDA8D3A0038F1C4 /* AMMake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMMake.swift; sourceTree = "<group>"; };
 		D7F324AC1FDA9AAC0038F1C4 /* AMOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMOptionsView.swift; sourceTree = "<group>"; };
 		D7F324AE1FDA9AB80038F1C4 /* AMOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMOptionCell.swift; sourceTree = "<group>"; };
@@ -234,9 +234,7 @@
 		D7FCA5FC1FA246370005DAEB /* NSString+SSToolkitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SSToolkitAdditions.m"; sourceTree = "<group>"; };
 		D7FCA5FD1FA246370005DAEB /* NSArray+Validation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Validation.m"; sourceTree = "<group>"; };
 		D7FCA5FE1FA246370005DAEB /* NSObject+ClassName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ClassName.m"; sourceTree = "<group>"; };
-		D7FCA6101FA246C00005DAEB /* AMAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMAlertView.m; sourceTree = "<group>"; };
 		D7FCA6131FA246C00005DAEB /* AMLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMLocationManager.m; sourceTree = "<group>"; };
-		D7FCA6141FA246C00005DAEB /* AMAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMAlertView.h; sourceTree = "<group>"; };
 		D7FCA6151FA246C10005DAEB /* AMLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMLocationManager.h; sourceTree = "<group>"; };
 		D7FCA6161FA246C10005DAEB /* AMUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUtils.h; sourceTree = "<group>"; };
 		D7FCA6171FA246C10005DAEB /* AMUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMUtils.m; sourceTree = "<group>"; };
@@ -496,10 +494,9 @@
 			children = (
 				D7FCA6151FA246C10005DAEB /* AMLocationManager.h */,
 				D7FCA6131FA246C00005DAEB /* AMLocationManager.m */,
-				D7FCA6141FA246C00005DAEB /* AMAlertView.h */,
-				D7FCA6101FA246C00005DAEB /* AMAlertView.m */,
 				D7FCA6161FA246C10005DAEB /* AMUtils.h */,
 				D7FCA6171FA246C10005DAEB /* AMUtils.m */,
+				D7CB5CE51FE5BBD900341E60 /* AMAlertView.swift */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -579,7 +576,6 @@
 				D78098E61FD979EB0071B9FD /* AMAppkitObjC.h in Headers */,
 				592060ED1E38E26C0066BE0D /* AMAppkit.h in Headers */,
 				592061B31E3B735F0066BE0D /* AMPreviewScrollView.h in Headers */,
-				D7FCA61C1FA246C10005DAEB /* AMAlertView.h in Headers */,
 				D7FCA5E81FA245B60005DAEB /* UIView+SSToolkitAdditions.h in Headers */,
 				D7FCA5D51FA244490005DAEB /* UIImage+Tint.h in Headers */,
 				D7FCA5FF1FA246370005DAEB /* NSDateAdditions.h in Headers */,
@@ -712,13 +708,13 @@
 				D7FCA65D1FA2474C0005DAEB /* UIView+WebCacheOperation.m in Sources */,
 				D7FCA6541FA2474C0005DAEB /* SDImageCache.m in Sources */,
 				D7949C461FCDB691000D2C4F /* AMFaliedView.swift in Sources */,
+				D7CB5CE61FE5BBD900341E60 /* AMAlertView.swift in Sources */,
 				D7949C4A1FCDE44A000D2C4F /* AMContainerCell.swift in Sources */,
 				D7949C2D1FCB6112000D2C4F /* AMPagingLoader.swift in Sources */,
 				D7FCA61B1FA246C10005DAEB /* AMLocationManager.m in Sources */,
 				D7F324AF1FDA9AB80038F1C4 /* AMOptionCell.swift in Sources */,
 				D730FD9E1FD6EC66002D9F61 /* AMSeparatorView.swift in Sources */,
 				D7949C561FCE1725000D2C4F /* AMNotificationManager.swift in Sources */,
-				D7FCA6181FA246C10005DAEB /* AMAlertView.m in Sources */,
 				D7FCA5D21FA2441F0005DAEB /* UIView+Frame.m in Sources */,
 				D730FDA01FD6EF54002D9F61 /* AMFadeButton.swift in Sources */,
 				D7949C241FCB3A5D000D2C4F /* AMBaseViewController.swift in Sources */,
