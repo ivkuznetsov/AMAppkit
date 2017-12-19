@@ -73,7 +73,7 @@
             
             [AMUtils sharedInstance].processingRequests[key] = nil;
             
-        }, ^(CGFloat progress){
+        }, ^(double progress){
             
             NSDictionary *dict = [AMUtils sharedInstance].processingRequests[key];
             NSArray *blocks = dict[@"progress"];
@@ -97,7 +97,7 @@
             if (runFailure) {
                 runFailure(object, error);
             }
-        }, ^(CGFloat progress){
+        }, ^(double progress){
             if (runProgress) {
                 runProgress(progress);
             }

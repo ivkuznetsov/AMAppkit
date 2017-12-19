@@ -142,7 +142,7 @@ open class AMTable: StaticSetupObject {
         let oldObjects = self.objects
         self.objects = objects
         
-        // remove missed extimated heights
+        // remove missed estimated heights
         var set = Set(estimatedHeights.keys)
         objects.forEach { set.remove(estimatedHeightKeyFor(object: $0)) }
         set.forEach { estimatedHeights[$0] = nil }

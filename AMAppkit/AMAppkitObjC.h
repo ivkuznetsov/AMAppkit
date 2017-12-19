@@ -11,6 +11,6 @@
 
 typedef void (^AMHandleOperation)(id operation);
 typedef void (^AMCompletion)(id object, NSError *requestError);
-typedef void (^AMProgress)(CGFloat progress);
+typedef void (^AMProgress)(double progress);
 
 #endif /* AMAppkitObjC_h */

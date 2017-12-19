@@ -12,7 +12,9 @@ public class AMAlert: NSObject {
     
     fileprivate static let shared = AMAlert()
     
-    @objc public static let defaultTitle: String = Bundle().infoDictionary!["CFBundleDisplayName"] as? String ?? Bundle().infoDictionary!["CFBundleName"] as! String
+    @objc public static let defaultTitle: String = {
+        return Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String ?? Bundle.main.infoDictionary!["CFBundleName"] as! String
+    }()
     
     @objc public static func present(_ message: String?, on viewController: UIViewController?) -> UIAlertController {
         return present(title: defaultTitle, message: message, on: viewController)

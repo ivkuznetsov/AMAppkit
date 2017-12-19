@@ -37,8 +37,8 @@ import Foundation
     }
     @objc open var retry: (()->())?
     
-    @IBOutlet private var indicatorView: UIActivityIndicatorView!
-    @IBOutlet private var retryButton: UIButton!
+    @IBOutlet open var indicatorView: UIActivityIndicatorView!
+    @IBOutlet open var retryButton: UIButton!
     
     @IBAction private func retryAction(_ sender: UIButton) {
         retry?()

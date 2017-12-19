@@ -10,7 +10,7 @@
 
 typedef void (^SuccessCallback)(id object);
 typedef void (^FailCallback)(id object, NSError *requestError);
-typedef void (^ProgressCallback)(CGFloat progress);
+typedef void (^ProgressCallback)(double progress);
 
 @interface AMUtils : NSObject
 
