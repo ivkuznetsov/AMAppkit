@@ -311,7 +311,7 @@ extension AMTable: UITableViewDataSource {
             type(of: self).defaultDelegate?.cellEstimatedHeight?(object: object, default: tableView.estimatedRowHeight, table: self)) {
             return value
         }
-        return table.estimatedRowHeight
+        return 150
     }
     
     public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

@@ -27,3 +27,27 @@ import Foundation
         return CCell(type, fill)
     }
 }
+
+@objc public class AMake: NSObject {
+    
+    var title: String!
+    var closure: (()->())?
+    var closureField: ((UITextField)->())?
+    
+    public required override init() {
+        super.init()
+    }
+    
+    @objc public class func action(_ title: String, _ closure: (()->())?) -> Any {
+        let make = self.init()
+        make.title = title
+        make.closure = closure
+        return make
+    }
+    
+    @objc public class func action(_ title: String) -> Any {
+        let make = self.init()
+        make.title = title
+        return make
+    }
+}
