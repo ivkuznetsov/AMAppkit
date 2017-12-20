@@ -10,17 +10,21 @@ import Foundation
 
 @objc public class StaticSetup: NSObject {
     
-    private static var setupClosures: [String:(StaticSetupObject)->()] = [:]
+    private static var setupClosures: [String:[(StaticSetupObject)->()]] = [:]
     
     public static func setup<T: StaticSetupObject>(_ type: T.Type, _ closure: @escaping (T)->()) {
-        setupClosures[String(describing: type)] = { (object) in
+        var array = setupClosures[String(describing: type)] ?? []
+        array.append({ (object) in
             closure(object as! T)
-        }
+        })
+        setupClosures[String(describing: type)] = array
     }
     
     fileprivate static func performSetup(object: StaticSetupObject) {
-        if let closure = setupClosures[String(describing: type(of: object))] {
-            closure(object)
+        if let closures = setupClosures[String(describing: type(of: object))] {
+            closures.forEach({ (closure) in
+                closure(object)
+            })
         }
     }
 }
