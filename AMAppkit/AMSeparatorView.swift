@@ -49,7 +49,7 @@ open class AMSeparatorView: UIView {
         context.setLineWidth(lineWidth)
         
         if bounds.size.height == 1 {
-            let y = contentMode == .right ? lineWidth / 2.0 : (bounds.size.height - lineWidth / 2.0)
+            let y = contentMode == .top ? lineWidth / 2.0 : (bounds.size.height - lineWidth / 2.0)
             context.move(to: CGPoint(x: 0, y: y))
             context.addLine(to: CGPoint(x: bounds.size.width, y: y))
         } else if bounds.size.width == 1 {

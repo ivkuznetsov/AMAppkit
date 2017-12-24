@@ -14,7 +14,7 @@
     if (self = [super initWithCoder:aDecoder]) {
         UIView *view = nil;
         
-        for (UIView *object in [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self.class) owner:self options:nil]) {
+        for (UIView *object in [[NSBundle mainBundle] loadNibNamed:[NSStringFromClass(self.class) componentsSeparatedByString:@"."].lastObject owner:self options:nil]) {
             if ([object isKindOfClass:[UIView class]]) {
                 view = object;
                 break;

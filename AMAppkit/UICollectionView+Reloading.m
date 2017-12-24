@@ -63,13 +63,28 @@
     
     if (toDelete.count || toAdd.count || itemsToMove.count || toReload.count) {
         
+        UIApplication *application = [UIApplication respondsToSelector:@selector(sharedApplication)] ? [UIApplication valueForKey:@"sharedApplication"] : nil;
+        [application valueForKey:@"beginIgnoringInteractionEvents"];
+        
         [self performBatchUpdates:^{
             [self deleteItemsAtIndexPaths:toDelete];
             [self insertItemsAtIndexPaths:toAdd];
             for (NSDictionary *dict in itemsToMove) {
                 [self moveItemAtIndexPath:dict[@"from"] toIndexPath:dict[@"to"]];
             }
+            
+            for (NSIndexPath *indexPath in self.indexPathsForVisibleItems) {
+                UICollectionViewCell *cell = [self cellForItemAtIndexPath:indexPath];
+                
+                if ([toAdd containsObject:indexPath]) {
+                    [cell.superview sendSubviewToBack:cell];
+                } else {
+                    [cell.superview bringSubviewToFront:cell];
+                }
+            }
+            
         } completion:^(BOOL finished) {
+            [application valueForKey:@"endIgnoringInteractionEvents"];
             if (completion) {
                 completion();
             }

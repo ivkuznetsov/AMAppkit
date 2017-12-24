@@ -33,4 +33,22 @@
     [self.layer addAnimation:transition forKey:@"fade"];
 }
 
+- (void)addPushTransition {
+    CATransition *transition = [CATransition animation];
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromRight;
+    transition.duration = 0.4;
+    transition.timingFunction = [CAMediaTimingFunction functionWithControlPoints:0.4 :0 :0 :1.0];
+    [self.layer addAnimation:transition forKey:@"transition"];
+}
+
+- (void)addPopTransition {
+    CATransition *transition = [CATransition animation];
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromLeft;
+    transition.duration = 0.4;
+    transition.timingFunction = [CAMediaTimingFunction functionWithControlPoints:0.4 :0 :0 :1.0];
+    [self.layer addAnimation:transition forKey:@"transition"];
+}
+
 @end

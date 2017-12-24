@@ -13,5 +13,7 @@
 - (UIImage *)imageRepresentation;
 - (void)addFadeTransition;
 - (void)addFadeTransitionWithDuration:(CGFloat)duration;
+- (void)addPushTransition;
+- (void)addPopTransition;
 
 @end

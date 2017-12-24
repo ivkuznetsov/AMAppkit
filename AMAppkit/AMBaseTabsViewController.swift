@@ -1,0 +1,137 @@
+//
+//  BaseTabsViewController.swift
+//  YouPlayer
+//
+//  Created by Ilya Kuznetsov on 11/30/17.
+//  Copyright © 2017 Ilya Kuznetsov. All rights reserved.
+//
+
+import Foundation
+
+@objc open class AMBaseTabsViewController: AMBaseViewController {
+    
+    private(set) var viewControllers: [UIViewController]!
+    private(set) var currentViewController: UIViewController?
+    
+    @IBOutlet open var containerView: UIView!
+    @IBOutlet open var tabsContainerView: UIView? // navigationItem.titleView if nil
+    open var tabsView: TabsView!
+    
+    public init(viewControllers: [UIViewController]) {
+        self.viewControllers = viewControllers
+        super.init()
+    }
+    
+    public init?(coder aDecoder: NSCoder, viewControllers:[UIViewController]) {
+        self.viewControllers = viewControllers
+        super.init(coder: aDecoder)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.automaticallyAdjustsScrollViewInsets = false
+        tabsView = TabsView(titles: viewControllers.map{ $0.title! }, style: .dark, didSelect: { [unowned self] (button) in
+            _ = self.selectController(at: button.tag, animated: true)
+        })
+        
+        if tabsContainerView != nil {
+            self.attachTabsViewToContainer()
+        } else {
+            self.navigationItem.titleView = tabsView
+            
+            let insets = self.navigationController!.navigationBar.layoutMargins
+            let rect = self.navigationController!.navigationBar.frame
+            
+            let width = screenWidth() - insets.right - insets.left
+            
+            tabsView.translatesAutoresizingMaskIntoConstraints = false
+            tabsView.frame = CGRect(x: insets.left, y: 0, width: width, height: rect.size.height)
+            
+            let constraint = NSLayoutConstraint(item: tabsView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 44)
+            constraint.priority = UILayoutPriority(900)
+            tabsView.addConstraint(constraint)
+        }
+        _ = selectController(at: 0, animated: false)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(gr:)))
+        swipeLeft.direction = .left
+        swipeLeft.delegate = self
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(gr:)))
+        swipeRight.direction = .right
+        swipeRight.delegate = self
+        self.view.addGestureRecognizer(swipeRight)
+    }
+    
+    @objc private func swipeAction(gr: UISwipeGestureRecognizer) {
+        let currentIndex = viewControllers.index(of: currentViewController!)!
+        
+        if gr.direction == .left {
+            if currentIndex < viewControllers.count - 1 {
+                let index = currentIndex + 1
+                tabsView.selectTab(index: index, animated: true)
+                _ = selectController(at: index, animated: true)
+            }
+        } else if gr.direction == .right {
+            if currentIndex > 0 {
+                let index = currentIndex - 1
+                tabsView.selectTab(index: index, animated: true)
+                _ = selectController(at: index, animated: true)
+            }
+        }
+    }
+    
+    open func attachTabsViewToContainer() {
+        if let tabsContainer = tabsContainerView {
+            tabsView.removeFromSuperview()
+            
+            tabsView.translatesAutoresizingMaskIntoConstraints = false
+            tabsContainer.addSubview(tabsView)
+            
+            tabsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[tabsView]|", options: [], metrics: nil, views: ["tabsView":tabsView]))
+            tabsContainer.addConstraint(NSLayoutConstraint(item: tabsView, attribute: .centerX, relatedBy: .equal, toItem: tabsContainerView, attribute: .centerX, multiplier: 1, constant: 0))
+        }
+    }
+    
+    open func selectController(at index: Int) -> UIViewController {
+        tabsView.selectTab(index: index, animated: false)
+        return selectController(at: index, animated: false)
+    }
+    
+    open func selectController(at index: Int, animated: Bool) -> UIViewController {
+        let vc = viewControllers[index]
+        if vc == currentViewController {
+            return vc
+        }
+        if let currentViewController = currentViewController, animated {
+            if viewControllers.index(of: currentViewController)! < viewControllers.index(of: vc)! {
+                containerView.addPushTransition()
+            } else {
+                containerView.addPopTransition()
+            }
+        }
+        
+        currentViewController?.removeFromParentViewController()
+        currentViewController?.view.removeFromSuperview()
+        currentViewController = vc
+        self.addChildViewController(vc)
+        vc.view.frame = containerView.bounds
+        vc.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        containerView.addSubview(vc.view)
+        return currentViewController!
+    }
+    
+    open func screenWidth() -> CGFloat {
+        return min(self.view.width, self.view.height)
+    }
+}
+
+extension AMBaseTabsViewController: UIGestureRecognizerDelegate {
+    
+}

@@ -59,6 +59,11 @@
 		D7949C561FCE1725000D2C4F /* AMNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7949C551FCE1725000D2C4F /* AMNotificationManager.swift */; };
 		D7949C581FCEB081000D2C4F /* NSManagedObject+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7949C571FCEB081000D2C4F /* NSManagedObject+Notifications.swift */; };
 		D7CB5CE61FE5BBD900341E60 /* AMAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CB5CE51FE5BBD900341E60 /* AMAlert.swift */; };
+		D7E1BA601FEB04FE00BE8266 /* AMBaseTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1BA5B1FEB04FD00BE8266 /* AMBaseTabsViewController.swift */; };
+		D7E1BA611FEB04FE00BE8266 /* TabsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1BA5C1FEB04FD00BE8266 /* TabsCell.swift */; };
+		D7E1BA621FEB04FE00BE8266 /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1BA5D1FEB04FD00BE8266 /* TabsView.swift */; };
+		D7E1BA631FEB04FE00BE8266 /* TabsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7E1BA5E1FEB04FD00BE8266 /* TabsCell.xib */; };
+		D7E1BA641FEB04FE00BE8266 /* TabsViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1BA5F1FEB04FD00BE8266 /* TabsViewButton.swift */; };
 		D7F324A61FDA8D3A0038F1C4 /* AMMake.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F324A51FDA8D3A0038F1C4 /* AMMake.swift */; };
 		D7F324AD1FDA9AAC0038F1C4 /* AMOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F324AC1FDA9AAC0038F1C4 /* AMOptionsView.swift */; };
 		D7F324AF1FDA9AB80038F1C4 /* AMOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F324AE1FDA9AB80038F1C4 /* AMOptionCell.swift */; };
@@ -199,6 +204,11 @@
 		D7949C551FCE1725000D2C4F /* AMNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMNotificationManager.swift; sourceTree = "<group>"; };
 		D7949C571FCEB081000D2C4F /* NSManagedObject+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Notifications.swift"; sourceTree = "<group>"; };
 		D7CB5CE51FE5BBD900341E60 /* AMAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMAlert.swift; sourceTree = "<group>"; };
+		D7E1BA5B1FEB04FD00BE8266 /* AMBaseTabsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMBaseTabsViewController.swift; sourceTree = "<group>"; };
+		D7E1BA5C1FEB04FD00BE8266 /* TabsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsCell.swift; sourceTree = "<group>"; };
+		D7E1BA5D1FEB04FD00BE8266 /* TabsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsView.swift; sourceTree = "<group>"; };
+		D7E1BA5E1FEB04FD00BE8266 /* TabsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabsCell.xib; sourceTree = "<group>"; };
+		D7E1BA5F1FEB04FD00BE8266 /* TabsViewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsViewButton.swift; sourceTree = "<group>"; };
 		D7F324A51FDA8D3A0038F1C4 /* AMMake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMMake.swift; sourceTree = "<group>"; };
 		D7F324AC1FDA9AAC0038F1C4 /* AMOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMOptionsView.swift; sourceTree = "<group>"; };
 		D7F324AE1FDA9AB80038F1C4 /* AMOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMOptionCell.swift; sourceTree = "<group>"; };
@@ -308,6 +318,7 @@
 		592060EA1E38E26C0066BE0D /* AMAppkit */ = {
 			isa = PBXGroup;
 			children = (
+				D7E1BA5A1FEB04A600BE8266 /* AMTabs */,
 				D730FDAC1FD71B3D002D9F61 /* StaticSetup.swift */,
 				D7FCA6201FA2474C0005DAEB /* SDWebImage */,
 				D7FCA60F1FA246A80005DAEB /* Tools */,
@@ -489,6 +500,18 @@
 			name = PagingClasses;
 			sourceTree = "<group>";
 		};
+		D7E1BA5A1FEB04A600BE8266 /* AMTabs */ = {
+			isa = PBXGroup;
+			children = (
+				D7E1BA5B1FEB04FD00BE8266 /* AMBaseTabsViewController.swift */,
+				D7E1BA5C1FEB04FD00BE8266 /* TabsCell.swift */,
+				D7E1BA5E1FEB04FD00BE8266 /* TabsCell.xib */,
+				D7E1BA5D1FEB04FD00BE8266 /* TabsView.swift */,
+				D7E1BA5F1FEB04FD00BE8266 /* TabsViewButton.swift */,
+			);
+			name = AMTabs;
+			sourceTree = "<group>";
+		};
 		D7FCA60F1FA246A80005DAEB /* Tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -666,6 +689,7 @@
 				592061081E38F5BB0066BE0D /* AMLoadingView.xib in Resources */,
 				D7F324C31FDAB7CB0038F1C4 /* AMOptionCell.xib in Resources */,
 				D7F324C21FDAB7BC0038F1C4 /* AMOptionsView.xib in Resources */,
+				D7E1BA631FEB04FE00BE8266 /* TabsCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,6 +700,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7E1BA641FEB04FE00BE8266 /* TabsViewButton.swift in Sources */,
 				D7949C541FCE15C3000D2C4F /* AMNotification.swift in Sources */,
 				D7FCA6501FA2474C0005DAEB /* SDWebImagePrefetcher.m in Sources */,
 				D7FCA6051FA246370005DAEB /* NSDateAdditions.m in Sources */,
@@ -685,6 +710,7 @@
 				D7FCA5D91FA245470005DAEB /* UIColor+SSToolkitAdditions.m in Sources */,
 				D7949C501FCE0B19000D2C4F /* AMPagingCollection.swift in Sources */,
 				D7FCA6421FA2474C0005DAEB /* UIImage+WebP.m in Sources */,
+				D7E1BA601FEB04FE00BE8266 /* AMBaseTabsViewController.swift in Sources */,
 				D7FCA6031FA246370005DAEB /* NSString+Additions.m in Sources */,
 				D7FCA64E1FA2474C0005DAEB /* UIImage+MultiFormat.m in Sources */,
 				D7949C2B1FCB5EE4000D2C4F /* AMPagingTable.swift in Sources */,
@@ -706,6 +732,7 @@
 				D7FCA66C1FA249F50005DAEB /* NSData+SSToolkitAdditions.m in Sources */,
 				D7FCA6011FA246370005DAEB /* NSURL+SSToolkitAdditions.m in Sources */,
 				D7FCA65D1FA2474C0005DAEB /* UIView+WebCacheOperation.m in Sources */,
+				D7E1BA621FEB04FE00BE8266 /* TabsView.swift in Sources */,
 				D7FCA6541FA2474C0005DAEB /* SDImageCache.m in Sources */,
 				D7949C461FCDB691000D2C4F /* AMFaliedView.swift in Sources */,
 				D7CB5CE61FE5BBD900341E60 /* AMAlert.swift in Sources */,
@@ -744,6 +771,7 @@
 				D7FCA60E1FA246370005DAEB /* NSObject+ClassName.m in Sources */,
 				D7FCA64B1FA2474C0005DAEB /* SDWebImageDownloader.m in Sources */,
 				D7FCA6461FA2474C0005DAEB /* SDWebImageManager.m in Sources */,
+				D7E1BA611FEB04FE00BE8266 /* TabsCell.swift in Sources */,
 				D7FCA6611FA2474C0005DAEB /* UIButton+WebCache.m in Sources */,
 				D7949C3E1FCD7185000D2C4F /* UIView+LoadingFromFrameworkNib.swift in Sources */,
 				D7FCA60B1FA246370005DAEB /* NSString+Validation.m in Sources */,
