@@ -14,7 +14,7 @@
 
 @property (nonatomic) BOOL validationFailed;
 
-// these method isn't needed for subclasses of UITextField and UITextView
+// these method aren't needed for subclasses of UITextField and UITextView
 @optional
 @property (nonatomic) dispatch_block_t didChange;
 @property (nonatomic) dispatch_block_t didSelectNext;

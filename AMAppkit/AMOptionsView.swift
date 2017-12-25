@@ -79,7 +79,7 @@ import Foundation
     }
     
     private func tableOffset() -> CGFloat {
-        return CGFloat(table.objects.count) * self.cellHeight(object: 0, default: 0, table: table)
+        return CGFloat(table.objects.count) * self.cellHeight(object: 0, def: 0, table: table)
     }
     
     open override func awakeFromNib() {
@@ -108,7 +108,7 @@ import Foundation
         return .deselect
     }
     
-    public func cellHeight(object: Any, default: CGFloat, table: AMTable) -> CGFloat {
+    public func cellHeight(object: Any, def: CGFloat, table: AMTable) -> CGFloat {
         return 50
     }
 }

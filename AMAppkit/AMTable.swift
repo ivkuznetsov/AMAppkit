@@ -27,9 +27,9 @@ import Foundation
     
     @objc optional func createCell(object: Any, table: AMTable) -> Any?
     
-    @objc optional func cellHeight(object: Any, default: CGFloat, table: AMTable) -> CGFloat
+    @objc optional func cellHeight(object: Any, def: CGFloat, table: AMTable) -> CGFloat
     
-    @objc optional func cellEstimatedHeight(object: Any, default: CGFloat, table: AMTable) -> CGFloat
+    @objc optional func cellEstimatedHeight(object: Any, def: CGFloat, table: AMTable) -> CGFloat
 }
 
 @objc public protocol TEditable: class {
@@ -289,9 +289,9 @@ extension AMTable: UITableViewDataSource {
         var resultHeight = UITableViewAutomaticDimension
         let object = objects[indexPath.row] as Any // swift bug workaround
         
-        var height = delegate.cellHeight?(object: object, default: resultHeight, table: self)
+        var height = delegate.cellHeight?(object: object, def: resultHeight, table: self)
         if height == nil || height! == 0 {
-            height = type(of: self).defaultDelegate?.cellHeight?(object: object, default: resultHeight, table: self)
+            height = type(of: self).defaultDelegate?.cellHeight?(object: object, def: resultHeight, table: self)
         }
         if let height = height, height > 0 {
             resultHeight = height
@@ -307,8 +307,8 @@ extension AMTable: UITableViewDataSource {
             return cell.bounds.size.height
         } else if let value = estimatedHeights[estimatedHeightKeyFor(object: object)] {
             return value
-        } else if let value = (delegate.cellEstimatedHeight?(object: object, default: tableView.estimatedRowHeight, table: self) ??
-            type(of: self).defaultDelegate?.cellEstimatedHeight?(object: object, default: tableView.estimatedRowHeight, table: self)) {
+        } else if let value = (delegate.cellEstimatedHeight?(object: object, def: tableView.estimatedRowHeight, table: self) ??
+            type(of: self).defaultDelegate?.cellEstimatedHeight?(object: object, def: tableView.estimatedRowHeight, table: self)) {
             return value
         }
         return 150

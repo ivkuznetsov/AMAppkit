@@ -8,7 +8,8 @@
 
 import Foundation
 
-@IBDesignable open class AMBorderedButton: AMFadeButton {
+@IBDesignable
+open class AMBorderedButton: AMFadeButton {
     
     @IBInspectable open var borderColor: UIColor? {
         set {

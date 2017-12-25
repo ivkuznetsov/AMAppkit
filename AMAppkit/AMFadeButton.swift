@@ -11,6 +11,7 @@ import Foundation
 open class AMFadeButton: UIButton {
     
     @IBOutlet open weak var additionalView: UIView?
+    @IBInspectable open var animatedHiglight: Bool = true
     
     open override var isHighlighted: Bool {
         didSet {
@@ -19,10 +20,12 @@ open class AMFadeButton: UIButton {
             } else if isEnabled {
                 alpha = 1.0
                 
-                let tranition = CATransition()
-                tranition.duration = 0.15
-                layer.add(tranition, forKey: nil)
-                additionalView?.layer.add(tranition, forKey: nil)
+                if (animatedHiglight) {
+                    let tranition = CATransition()
+                    tranition.duration = 0.15
+                    layer.add(tranition, forKey: nil)
+                    additionalView?.layer.add(tranition, forKey: nil)
+                }
             }
         }
     }
