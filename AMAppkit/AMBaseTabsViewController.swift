@@ -15,6 +15,8 @@ import Foundation
     
     @IBOutlet open var containerView: UIView!
     @IBOutlet open var tabsContainerView: UIView? // navigationItem.titleView if nil
+    private var tabsWidthConstraint: NSLayoutConstraint?
+    
     open var tabsView: TabsView!
     
     public init(viewControllers: [UIViewController]) {
@@ -54,6 +56,7 @@ import Foundation
             
             let constraint = NSLayoutConstraint(item: tabsView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 44)
             constraint.priority = UILayoutPriority(900)
+            
             tabsView.addConstraint(constraint)
         }
         _ = selectController(at: 0, animated: false)
@@ -95,7 +98,12 @@ import Foundation
             tabsContainer.addSubview(tabsView)
             
             tabsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[tabsView]|", options: [], metrics: nil, views: ["tabsView":tabsView]))
-            tabsContainer.addConstraint(NSLayoutConstraint(item: tabsView, attribute: .centerX, relatedBy: .equal, toItem: tabsContainerView, attribute: .centerX, multiplier: 1, constant: 0))
+            
+            if tabsFillWidth() {
+                tabsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[tabsView]|", options: [], metrics: nil, views: ["tabsView":tabsView]))
+            } else {
+                tabsContainer.addConstraint(NSLayoutConstraint(item: tabsView, attribute: .centerX, relatedBy: .equal, toItem: tabsContainerView, attribute: .centerX, multiplier: 1, constant: 0))
+            }
         }
     }
     
@@ -129,6 +137,10 @@ import Foundation
     
     open func screenWidth() -> CGFloat {
         return min(self.view.width, self.view.height)
+    }
+    
+    open func tabsFillWidth() -> Bool {
+        return false
     }
 }
 

@@ -8,24 +8,28 @@
 
 #import "AMReusableView.h"
 
+@interface AMReusableView()
+
+@property (nonatomic) IBInspectable NSString *nibName;
+
+@end
+
 @implementation AMReusableView
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super initWithCoder:aDecoder]) {
-        UIView *view = nil;
-        
-        for (UIView *object in [[NSBundle mainBundle] loadNibNamed:[NSStringFromClass(self.class) componentsSeparatedByString:@"."].lastObject owner:self options:nil]) {
-            if ([object isKindOfClass:[UIView class]]) {
-                view = object;
-                break;
-            }
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    UIView *view = nil;
+    
+    for (UIView *object in [[NSBundle mainBundle] loadNibNamed:_nibName ?: [NSStringFromClass(self.class) componentsSeparatedByString:@"."].lastObject owner:self options:nil]) {
+        if ([object isKindOfClass:[UIView class]]) {
+            view = object;
+            break;
         }
-        view.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self insertSubview:view atIndex:0];
-        self.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0);
     }
-    return self;
+    view.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self insertSubview:view atIndex:0];
+    self.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
 @end

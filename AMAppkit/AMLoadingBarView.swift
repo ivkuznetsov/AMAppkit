@@ -16,6 +16,12 @@ import Foundation
         }
     }
     
+    open override var tintColor: UIColor! {
+        didSet {
+            fillColor = tintColor
+        }
+    }
+    
     @objc open var clipColor: UIColor = UIColor(white: 1.0, alpha: 0.6) {
         didSet {
             clipLayer.strokeColor = clipColor.cgColor

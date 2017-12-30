@@ -226,6 +226,7 @@ open class AMTable: StaticSetupObject {
         table.delegate = self
         table.dataSource = self
         table.tableFooterView = UIView()
+        table.register(AMContainerTableCell.self, forCellReuseIdentifier: "AMContainerTableCell")
         noObjectsViewType = AMNoObjectsView.self
     }
     
@@ -267,6 +268,10 @@ extension AMTable: UITableViewDataSource {
         
         if let object = safeCast as? UITableViewCell {
             cell = object
+        } else if let object = safeCast as? UIView {
+            let tableCell = table.dequeueReusableCell(withIdentifier: "AMContainerTableCell") as! AMContainerTableCell
+            tableCell.attach(view: object)
+            cell = tableCell
         } else {
             let createCell = (delegate.createCell?(object: safeCast, table: self) ??
                 type(of: self).defaultDelegate?.createCell?(object: safeCast, table: self))!

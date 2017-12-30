@@ -36,6 +36,7 @@
 		D730FDA01FD6EF54002D9F61 /* AMFadeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730FD9F1FD6EF54002D9F61 /* AMFadeButton.swift */; };
 		D730FDA21FD6F0E0002D9F61 /* AMBorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730FDA11FD6F0E0002D9F61 /* AMBorderedButton.swift */; };
 		D730FDAD1FD71B3D002D9F61 /* StaticSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730FDAC1FD71B3D002D9F61 /* StaticSetup.swift */; };
+		D77B880F1FF4397E0020E3D0 /* AMContainerTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77B880E1FF4397E0020E3D0 /* AMContainerTableCell.swift */; };
 		D78098E61FD979EB0071B9FD /* AMAppkitObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = D78098E01FD979910071B9FD /* AMAppkitObjC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D7949C1E1FCAAD1E000D2C4F /* AMTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7949C1D1FCAAD1E000D2C4F /* AMTable.swift */; };
 		D7949C201FCB35A5000D2C4F /* AMBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7949C1F1FCB35A5000D2C4F /* AMBaseTableViewCell.swift */; };
@@ -180,6 +181,7 @@
 		D730FD9F1FD6EF54002D9F61 /* AMFadeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMFadeButton.swift; sourceTree = "<group>"; };
 		D730FDA11FD6F0E0002D9F61 /* AMBorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMBorderedButton.swift; sourceTree = "<group>"; };
 		D730FDAC1FD71B3D002D9F61 /* StaticSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticSetup.swift; sourceTree = "<group>"; };
+		D77B880E1FF4397E0020E3D0 /* AMContainerTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMContainerTableCell.swift; sourceTree = "<group>"; };
 		D78098E01FD979910071B9FD /* AMAppkitObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMAppkitObjC.h; sourceTree = "<group>"; };
 		D7949C1D1FCAAD1E000D2C4F /* AMTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMTable.swift; sourceTree = "<group>"; };
 		D7949C1F1FCB35A5000D2C4F /* AMBaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMBaseTableViewCell.swift; sourceTree = "<group>"; };
@@ -318,7 +320,6 @@
 		592060EA1E38E26C0066BE0D /* AMAppkit */ = {
 			isa = PBXGroup;
 			children = (
-				D7E1BA5A1FEB04A600BE8266 /* AMTabs */,
 				D730FDAC1FD71B3D002D9F61 /* StaticSetup.swift */,
 				D7FCA6201FA2474C0005DAEB /* SDWebImage */,
 				D7FCA60F1FA246A80005DAEB /* Tools */,
@@ -328,6 +329,7 @@
 				5920614A1E3A2E270066BE0D /* AMInputHelper */,
 				592061491E3A2DF20066BE0D /* AMCollection */,
 				592061191E39071D0066BE0D /* AMTable */,
+				D7E1BA5A1FEB04A600BE8266 /* AMTabs */,
 				593F49BF1EC8C9E80030BEBE /* PagingClasses */,
 				592061181E3905F30066BE0D /* AMOperationHelper */,
 				D7949C231FCB3A5D000D2C4F /* AMBaseViewController.swift */,
@@ -359,6 +361,7 @@
 		592061191E39071D0066BE0D /* AMTable */ = {
 			isa = PBXGroup;
 			children = (
+				D77B880E1FF4397E0020E3D0 /* AMContainerTableCell.swift */,
 				D7949C211FCB38C5000D2C4F /* AMNoObjectsView.swift */,
 				5920614F1E3A31850066BE0D /* AMNoObjectsView.xib */,
 				D7949C1D1FCAAD1E000D2C4F /* AMTable.swift */,
@@ -742,6 +745,7 @@
 				D7F324AF1FDA9AB80038F1C4 /* AMOptionCell.swift in Sources */,
 				D730FD9E1FD6EC66002D9F61 /* AMSeparatorView.swift in Sources */,
 				D7949C561FCE1725000D2C4F /* AMNotificationManager.swift in Sources */,
+				D77B880F1FF4397E0020E3D0 /* AMContainerTableCell.swift in Sources */,
 				D7FCA5D21FA2441F0005DAEB /* UIView+Frame.m in Sources */,
 				D730FDA01FD6EF54002D9F61 /* AMFadeButton.swift in Sources */,
 				D7949C241FCB3A5D000D2C4F /* AMBaseViewController.swift in Sources */,
