@@ -11,6 +11,11 @@ import UIKit
 
 open class AMPagingCollection: AMCollection {
     
+    private var widthConstraint: NSLayoutConstraint?
+    private var heightConstraint: NSLayoutConstraint?
+    private var yConstraint: NSLayoutConstraint?
+    private var xConstraint: NSLayoutConstraint?
+    
     open private(set) var loader: AMPagingLoader!
     private weak var pagingDelegate: AMPagingLoaderDelegate!
     
@@ -46,7 +51,53 @@ open class AMPagingCollection: AMCollection {
                     if visible {
                         wSelf.collection.addSubview(footerView)
                         if wSelf.isVertical() {
-                            footerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                            
+                            footerView.translatesAutoresizingMaskIntoConstraints = false
+                            
+                            if wSelf.widthConstraint == nil {
+                                wSelf.widthConstraint = NSLayoutConstraint(item: footerView,
+                                                                     attribute: .width,
+                                                                     relatedBy: .equal,
+                                                                     toItem: wSelf.collection,
+                                                                     attribute: .width,
+                                                                     multiplier: 1.0,
+                                                                     constant: 0)
+                            }
+                            wSelf.collection.addConstraint(wSelf.widthConstraint!)
+                            
+                            if wSelf.heightConstraint == nil {
+                                wSelf.heightConstraint = NSLayoutConstraint(item: footerView,
+                                                            attribute: .height,
+                                                            relatedBy: .equal,
+                                                            toItem: nil,
+                                                            attribute: .notAnAttribute,
+                                                            multiplier: 1.0,
+                                                            constant: footerView.height)
+                            }
+                            footerView.addConstraint(wSelf.heightConstraint!)
+                            
+                            if wSelf.yConstraint == nil {
+                                wSelf.yConstraint = NSLayoutConstraint(item: footerView,
+                                                                           attribute: .top,
+                                                                           relatedBy: .equal,
+                                                                           toItem: wSelf.collection,
+                                                                           attribute: .top,
+                                                                           multiplier: 1.0,
+                                                                           constant: 0)
+                            }
+                            wSelf.collection.addConstraint(wSelf.yConstraint!)
+                            
+                            if wSelf.xConstraint == nil {
+                                wSelf.xConstraint = NSLayoutConstraint(item: footerView,
+                                                                       attribute: .left,
+                                                                       relatedBy: .equal,
+                                                                       toItem: wSelf.collection,
+                                                                       attribute: .left,
+                                                                       multiplier: 1.0,
+                                                                       constant: 0)
+                            }
+                            wSelf.collection.addConstraint(wSelf.xConstraint!)
+                            
                             insets.bottom = footerView.frame.size.height
                         } else {
                             insets.right = footerView.frame.size.width
@@ -75,7 +126,9 @@ open class AMPagingCollection: AMCollection {
         let size = collection.collectionViewLayout.collectionViewContentSize
         
         if isVertical() {
-            loader.footerLoadingView.center = CGPoint(x: size.width / 2.0, y: size.height + loader.footerLoadingView.frame.size.height / 2.0)
+            if let constraint = yConstraint {
+                constraint.constant = size.height
+            }
         } else {
             loader.footerLoadingView.center = CGPoint(x: size.width + loader.footerLoadingView.frame.size.width / 2.0, y: size.height / 2.0)
         }
