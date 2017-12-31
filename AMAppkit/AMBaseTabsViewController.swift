@@ -10,8 +10,8 @@ import Foundation
 
 @objc open class AMBaseTabsViewController: AMBaseViewController {
     
-    private(set) var viewControllers: [UIViewController]!
-    private(set) var currentViewController: UIViewController?
+    open private(set) var viewControllers: [UIViewController]!
+    open private(set) var currentViewController: UIViewController?
     
     @IBOutlet open var containerView: UIView!
     @IBOutlet open var tabsContainerView: UIView? // navigationItem.titleView if nil

@@ -15,11 +15,11 @@ import Foundation
 
 @objc open class TabsView: UIView {
     
-    private(set) var stackView: UIStackView?
+    open private(set) var stackView: UIStackView?
     
     private var backgroundView: UIView
     private var selectedView: UIView
-    private(set) var selectedIndex: Int = 0
+    open private(set) var selectedIndex: Int = 0
     private var didSelect: (UIButton)->()
     
     open override var frame: CGRect {
@@ -76,8 +76,8 @@ import Foundation
         }
     }
     
-    open func buttons() -> [UIButton] {
-        return stackView!.arrangedSubviews as? [UIButton] ?? []
+    open func buttons() -> [TabsViewButton] {
+        return stackView!.arrangedSubviews as? [TabsViewButton] ?? []
     }
     
     public required init?(coder aDecoder: NSCoder) {
