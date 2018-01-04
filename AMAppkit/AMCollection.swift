@@ -40,6 +40,7 @@ open class AMCollection: StaticSetupObject {
     
     @objc open static var defaultDelegate: CollectionDelegate?
     
+    @objc open var animationFix: Bool = true //fixes animation for insert/delete but duplicates reloading
     @objc open private(set) var objects: [AnyHashable] = []
     @objc open private(set) var collection: AMCollectionView!
     @objc open dynamic var layout: UICollectionViewFlowLayout? {
@@ -90,7 +91,8 @@ open class AMCollection: StaticSetupObject {
     }
     
     @objc private func createCollectionView() {
-        let layout = UICollectionViewFlowLayout()
+        let layout = AMCollectionViewLeftAlignedLayout()
+        layout.horizontalAlignment = .left
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         
@@ -113,9 +115,20 @@ open class AMCollection: StaticSetupObject {
             updatingDatasource = true
             
             set(objects: objects, animated: animated, completion: { [weak self] in
-                if let wSelf = self, let lazyObject = wSelf.lazyObjects {
-                    wSelf.set(objects: lazyObject, animated: false, completion: nil)
-                    wSelf.lazyObjects = nil
+                if let wSelf = self {
+                    if let lazyObject = wSelf.lazyObjects {
+                        wSelf.set(objects: lazyObject, animated: false, completion: nil)
+                        wSelf.lazyObjects = nil
+                    } else {
+                        if wSelf.animationFix {
+                            // fixes layout for further animation
+                            DispatchQueue.main.async {
+                                UIView.performWithoutAnimation {
+                                    wSelf.collection.reloadSections(IndexSet(integer: 0))
+                                }
+                            }
+                        }
+                    }
                 }
                 self?.updatingDatasource = false
             })
@@ -127,6 +140,7 @@ open class AMCollection: StaticSetupObject {
         self.objects = objects
         
         let toReload = collection.reload(animated: animated, oldData: oldObjects, data: objects, completion: completion)
+        collection.layoutIfNeeded()
         
         if let toReload = toReload, animated {
             toReload.forEach {

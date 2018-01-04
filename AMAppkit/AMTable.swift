@@ -39,8 +39,8 @@ import Foundation
 
 public struct TEditor {
     fileprivate var editingStyle: UITableViewCellEditingStyle = .delete
-    fileprivate var actions: (()->([UITableViewRowAction]))?
     fileprivate var action: (()->())?
+    fileprivate var actions: (()->([Any]))? // UIContextualAction or UITableViewRowAction
     
     public init(delete: @escaping ()->()) {
         editingStyle = .delete
@@ -51,7 +51,16 @@ public struct TEditor {
         action = insert
     }
     public init(actions: @escaping ()->([UITableViewRowAction])) {
-        self.actions = actions
+        self.actions = {
+            return actions() as [Any]
+        }
+    }
+    
+    @available(iOS 11.0, *)
+    public init(actions: @escaping ()->([UIContextualAction])) {
+        self.actions = {
+            return actions() as [Any]
+        }
     }
 }
 
@@ -360,12 +369,27 @@ extension AMTable: UITableViewDelegate {
         }
     }
     
+    @available(iOS 11.0, *)
+    public func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let object = objects[indexPath.row] as Any // swift bug workaround
+        if let editor = ((delegate.editable()?.cellEditor(object: object, table: self) ??
+            type(of: self).defaultDelegate?.editable()?.cellEditor(object: object, table: self)) as? TEditor) {
+            
+            if let actions = editor.actions?() as? [UIContextualAction] {
+                let configuration = UISwipeActionsConfiguration(actions: actions)
+                configuration.performsFirstActionWithFullSwipe = false
+                return configuration
+            }
+        }
+        return nil
+    }
+    
     public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let object = objects[indexPath.row] as Any // swift bug workaround
         if let editor = ((delegate.editable()?.cellEditor(object: object, table: self) ??
             type(of: self).defaultDelegate?.editable()?.cellEditor(object: object, table: self)) as? TEditor) {
             
-            return editor.actions?()
+            return editor.actions?() as? [UITableViewRowAction]
         }
         return nil
     }

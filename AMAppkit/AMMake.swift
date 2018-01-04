@@ -15,7 +15,12 @@ import Foundation
         return TCell(type, fill)
     }
     
-    @objc public class func editor(_ actions: @escaping ()->([UITableViewRowAction])) -> Any {
+    @objc public class func oldEditor(_ actions: @escaping ()->([UITableViewRowAction])) -> Any {
+        return TEditor(actions: actions)
+    }
+    
+    @available(iOS 11.0, *)
+    @objc public class func editor(_ actions: @escaping ()->([UIContextualAction])) -> Any {
         return TEditor(actions: actions)
     }
 }

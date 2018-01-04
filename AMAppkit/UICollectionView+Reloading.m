@@ -100,6 +100,7 @@
             completion();
         }
     }
+    
     return toReload;
 }
 
