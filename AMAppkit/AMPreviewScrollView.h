@@ -13,6 +13,7 @@
 @property (nonatomic) IBInspectable BOOL aspectFill;
 @property (nonatomic) UIImageView *imageView;
 @property (nonatomic) UIView *containerView;
+@property (nonatomic) void(^didZoom)(CGFloat zoom);
 
 - (void)setImage:(UIImage *)image;
 
