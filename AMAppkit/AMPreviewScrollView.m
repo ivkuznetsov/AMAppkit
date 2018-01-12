@@ -138,4 +138,10 @@
     scrollView.contentInset = UIEdgeInsetsMake(top, left, top, left);
 }
 
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
+    if (_didZoom) {
+        _didZoom(scale);
+    }
+}
+
 @end

@@ -36,6 +36,8 @@
 		D730FDA01FD6EF54002D9F61 /* AMFadeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730FD9F1FD6EF54002D9F61 /* AMFadeButton.swift */; };
 		D730FDA21FD6F0E0002D9F61 /* AMBorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730FDA11FD6F0E0002D9F61 /* AMBorderedButton.swift */; };
 		D730FDAD1FD71B3D002D9F61 /* StaticSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730FDAC1FD71B3D002D9F61 /* StaticSetup.swift */; };
+		D747AC4F1FFFC456000282EA /* AMImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D747AC4E1FFFC456000282EA /* AMImagePreviewController.swift */; };
+		D747AC531FFFC588000282EA /* AMExpandAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D747AC521FFFC588000282EA /* AMExpandAnimation.swift */; };
 		D77B880F1FF4397E0020E3D0 /* AMContainerTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77B880E1FF4397E0020E3D0 /* AMContainerTableCell.swift */; };
 		D78098E61FD979EB0071B9FD /* AMAppkitObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = D78098E01FD979910071B9FD /* AMAppkitObjC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D7949C1E1FCAAD1E000D2C4F /* AMTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7949C1D1FCAAD1E000D2C4F /* AMTable.swift */; };
@@ -181,6 +183,8 @@
 		D730FD9F1FD6EF54002D9F61 /* AMFadeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMFadeButton.swift; sourceTree = "<group>"; };
 		D730FDA11FD6F0E0002D9F61 /* AMBorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMBorderedButton.swift; sourceTree = "<group>"; };
 		D730FDAC1FD71B3D002D9F61 /* StaticSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticSetup.swift; sourceTree = "<group>"; };
+		D747AC4E1FFFC456000282EA /* AMImagePreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMImagePreviewController.swift; sourceTree = "<group>"; };
+		D747AC521FFFC588000282EA /* AMExpandAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMExpandAnimation.swift; sourceTree = "<group>"; };
 		D77B880E1FF4397E0020E3D0 /* AMContainerTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMContainerTableCell.swift; sourceTree = "<group>"; };
 		D78098E01FD979910071B9FD /* AMAppkitObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMAppkitObjC.h; sourceTree = "<group>"; };
 		D7949C1D1FCAAD1E000D2C4F /* AMTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMTable.swift; sourceTree = "<group>"; };
@@ -320,6 +324,7 @@
 		592060EA1E38E26C0066BE0D /* AMAppkit */ = {
 			isa = PBXGroup;
 			children = (
+				D747AC4D1FFFC43D000282EA /* AMImagePreviewController */,
 				D730FDAC1FD71B3D002D9F61 /* StaticSetup.swift */,
 				D7FCA6201FA2474C0005DAEB /* SDWebImage */,
 				D7FCA60F1FA246A80005DAEB /* Tools */,
@@ -501,6 +506,15 @@
 				D7949C4F1FCE0B19000D2C4F /* AMPagingCollection.swift */,
 			);
 			name = PagingClasses;
+			sourceTree = "<group>";
+		};
+		D747AC4D1FFFC43D000282EA /* AMImagePreviewController */ = {
+			isa = PBXGroup;
+			children = (
+				D747AC521FFFC588000282EA /* AMExpandAnimation.swift */,
+				D747AC4E1FFFC456000282EA /* AMImagePreviewController.swift */,
+			);
+			name = AMImagePreviewController;
 			sourceTree = "<group>";
 		};
 		D7E1BA5A1FEB04A600BE8266 /* AMTabs */ = {
@@ -703,6 +717,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D747AC4F1FFFC456000282EA /* AMImagePreviewController.swift in Sources */,
 				D7E1BA641FEB04FE00BE8266 /* TabsViewButton.swift in Sources */,
 				D7949C541FCE15C3000D2C4F /* AMNotification.swift in Sources */,
 				D7FCA6501FA2474C0005DAEB /* SDWebImagePrefetcher.m in Sources */,
@@ -720,6 +735,7 @@
 				D7FCA65A1FA2474C0005DAEB /* UIImageView+WebCache.m in Sources */,
 				D7FCA5EC1FA245B60005DAEB /* UIApplication+SSToolkitAdditions.m in Sources */,
 				D7FCA64C1FA2474C0005DAEB /* UIImage+GIF.m in Sources */,
+				D747AC531FFFC588000282EA /* AMExpandAnimation.swift in Sources */,
 				D7949C291FCB5CF7000D2C4F /* AMAlerBarView.swift in Sources */,
 				D7FCA60A1FA246370005DAEB /* NSArray+Additions.m in Sources */,
 				D7FCA64F1FA2474C0005DAEB /* SDWebImageCompat.m in Sources */,

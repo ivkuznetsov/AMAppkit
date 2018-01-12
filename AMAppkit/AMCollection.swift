@@ -40,7 +40,7 @@ open class AMCollection: StaticSetupObject {
     
     @objc open static var defaultDelegate: CollectionDelegate?
     
-    @objc open var animationFix: Bool = true //fixes animation for insert/delete but duplicates reloading
+    @objc open var animationFix: Bool = false //fixes animation for insert/delete but duplicates reloading
     @objc open private(set) var objects: [AnyHashable] = []
     @objc open private(set) var collection: AMCollectionView!
     @objc open dynamic var layout: UICollectionViewFlowLayout? {
