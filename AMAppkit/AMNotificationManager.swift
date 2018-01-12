@@ -71,7 +71,11 @@ private struct AMObserver: Equatable {
                         if postedUpdates.contains(observer) {
                             continue
                         }
-                        observer.closure(notification)
+                        
+                        if notification?.sender == nil || notification!.sender! !== observer.object {
+                            observer.closure(notification)
+                        }
+                        
                         postedUpdates.append(observer)
                     }
                     self.dictionary[name] = array
