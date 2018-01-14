@@ -240,7 +240,7 @@ extension AMCollection: UICollectionViewDelegateFlowLayout {
                 size = type(of: self).defaultDelegate?.viewSizeFor?(view: view, defaultSize: defaultSize, collection: self)
             }
             if let size = size {
-                return size
+                return CGSize(width: floor(size.width), height: ceil(size.height))
             }
             
             var frame = view.frame
@@ -248,7 +248,7 @@ extension AMCollection: UICollectionViewDelegateFlowLayout {
             view.frame = frame
             view.layoutIfNeeded()
             
-            return CGSize(width: frame.size.width, height: view.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height)
+            return CGSize(width: floor(frame.size.width), height: ceil(view.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height))
         } else {
             var size = delegate.cellSizeFor?(object: object, collection: self)
             
