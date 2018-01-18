@@ -39,4 +39,22 @@ open class AMCollectionView: UICollectionView {
         }
         return super.touchesShouldCancel(in: view)
     }
+    
+    open override var frame: CGRect {
+        didSet {
+            if frame != oldValue {
+                collectionViewLayout.invalidateLayout()
+            }
+        }
+    }
+    
+    open override var bounds: CGRect {
+        didSet {
+            if bounds != oldValue {
+                DispatchQueue.main.async {
+                    self.collectionViewLayout.invalidateLayout()
+                }
+            }
+        }
+    }
 }

@@ -70,7 +70,7 @@
         CGFloat scale = [UIScreen mainScreen].scale;
         
         _containerView.frame = CGRectMake(0, 0, size.width / scale, size.height / scale);
-        _imageView.frame = _containerView.frame;
+        _imageView.frame = _containerView.bounds;
         self.contentSize = _imageView.bounds.size;
         [self layoutImageView];
         self.zoomScale = self.minimumZoomScale;
@@ -86,9 +86,9 @@
     float aspect = (_containerView.frame.size.width / self.zoomScale) / (_containerView.frame.size.height / self.zoomScale);
     float viewAspect = self.bounds.size.width / self.bounds.size.height;
     if ((!_aspectFill && aspect > viewAspect) || (_aspectFill && aspect < viewAspect)) {
-        self.minimumZoomScale = self.bounds.size.width / (_containerView.frame.size.width / self.zoomScale);
+        self.minimumZoomScale = self.bounds.size.width / (_imageView.frame.size.width / self.zoomScale);
     } else {
-        self.minimumZoomScale = self.bounds.size.height / (_containerView.frame.size.height / self.zoomScale);
+        self.minimumZoomScale = self.bounds.size.height / (_imageView.frame.size.height / self.zoomScale);
     }
     
     if (self.maximumZoomScale < self.minimumZoomScale) {

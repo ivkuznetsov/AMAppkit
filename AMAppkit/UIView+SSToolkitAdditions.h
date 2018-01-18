@@ -15,5 +15,7 @@
 - (void)addFadeTransitionWithDuration:(CGFloat)duration;
 - (void)addPushTransition;
 - (void)addPopTransition;
+- (void)addPresentTransition;
+- (void)addDismissTransition;
 
 @end
