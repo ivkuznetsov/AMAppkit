@@ -67,7 +67,7 @@ public class AMCollectionViewLeftAlignedLayout: UICollectionViewFlowLayout {
     
     /// Determines how the cells are horizontally aligned in a row.
     /// - Note: The default is `.justified`.
-    public var horizontalAlignment: HorizontalAlignment = .justified
+    public var horizontalAlignment: HorizontalAlignment = .left
     
     /// Determines how the cells are vertically aligned in a row.
     /// - Note: The default is `.center`.
