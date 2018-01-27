@@ -17,7 +17,12 @@ import Foundation
 
 @objc open class AMFooterLoadingView: UIView {
     
-    @objc open var state: AMFooterState = .stop {
+    open override func awakeFromNib() {
+        super.awakeFromNib()
+        state = .stop
+    }
+    
+    @objc open var state: AMFooterState = .undefined {
         didSet {
             if state != oldValue {
                 switch state {

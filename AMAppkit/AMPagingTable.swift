@@ -34,7 +34,11 @@ import Foundation
                 
             }, setFooterVisible: { [weak self] (visible, footerView) in
                 
-                self?.table.tableFooterView = visible ? footerView : UIView()
+                if let wSelf = self {
+                    let offset = wSelf.table.contentOffset
+                    wSelf.table.tableFooterView = visible ? footerView : UIView()
+                    wSelf.table.contentOffset = offset
+                }
         })
     }
     

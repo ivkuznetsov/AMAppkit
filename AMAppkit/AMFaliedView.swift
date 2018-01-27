@@ -15,7 +15,9 @@ open class AMFailedView: UIView {
     
     private var retry: (()->())? {
         didSet {
-            retryButton.isHidden = retry == nil
+            if retryButton != nil {
+                retryButton.isHidden = retry == nil
+            }
         }
     }
     

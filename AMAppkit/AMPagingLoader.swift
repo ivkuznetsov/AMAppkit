@@ -158,9 +158,11 @@ extension AMPagingLoaderDelegate {
         setFooterVisible(true, footerLoadingView)
         footerLoadingView.state = .stop
         
-        if let refreshControl = refreshControl, !refreshControl.isRefreshing {
-            refreshControl.beginRefreshing()
-            scrollOnRefreshing(refreshControl)
+        if let refreshControl = refreshControl {
+            if !refreshControl.isRefreshing {
+                refreshControl.beginRefreshing()
+                scrollOnRefreshing(refreshControl)
+            }
         } else {
             if fetchedItems.count == 0 {
                 footerLoadingView.state = .loading
