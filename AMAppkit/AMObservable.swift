@@ -50,8 +50,8 @@ public extension AMObservable {
     }
     
     public func post(_ notification: AMNotification?) {
-        let notification = notification
-        notification?.object = self
+        let notification = notification ?? AMNotification()
+        notification.object = self
         type(of: self).post(notification)
     }
 }
