@@ -42,7 +42,7 @@ open class AMCollectionView: UICollectionView {
     
     open override var frame: CGRect {
         didSet {
-            if frame != oldValue {
+            if frame.size != oldValue.size {
                 collectionViewLayout.invalidateLayout()
             }
         }
@@ -50,10 +50,9 @@ open class AMCollectionView: UICollectionView {
     
     open override var bounds: CGRect {
         didSet {
-            if bounds != oldValue {
-                DispatchQueue.main.async {
-                    self.collectionViewLayout.invalidateLayout()
-                }
+            if bounds.size != oldValue.size {
+                self.layoutIfNeeded()
+                self.collectionViewLayout.invalidateLayout()
             }
         }
     }

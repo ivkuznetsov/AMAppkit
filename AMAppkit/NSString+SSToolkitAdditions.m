@@ -152,22 +152,14 @@
 #pragma mark - URL Escaping and Unescaping
 
 - (NSString *)stringByEscapingForURLQuery {
-	NSString *result = self;
-
-	static CFStringRef leaveAlone = CFSTR(" ");
-	static CFStringRef toEscape = CFSTR("\n\r:/=,!$&'()*+;[]@#?%");
-
-	CFStringRef escapedStr = CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (__bridge CFStringRef)self, leaveAlone,
-																	 toEscape, kCFStringEncodingUTF8);
-
-	if (escapedStr) {
-		NSMutableString *mutable = [NSMutableString stringWithString:(__bridge NSString *)escapedStr];
-		CFRelease(escapedStr);
-
-		[mutable replaceOccurrencesOfString:@" " withString:@"+" options:0 range:NSMakeRange(0, [mutable length])];
-		result = mutable;
-	}
-	return result;  
+	static NSMutableCharacterSet *allowed = nil;
+    if (!allowed) {
+        allowed = [[NSCharacterSet characterSetWithCharactersInString:@":/=,!$&'()*+;[]@#?%"].invertedSet mutableCopy];
+        [allowed addCharactersInString:@" "];
+    }
+    
+    NSString *escapedStr = [self stringByAddingPercentEncodingWithAllowedCharacters:allowed];
+    return [escapedStr stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 }
 
 
@@ -180,32 +172,26 @@
 #pragma mark - URL Encoding and Unencoding (Deprecated)
 
 - (NSString *)URLEncodedString {
-	static CFStringRef toEscape = CFSTR(":/=,!$&'()*+;[]@#?%");
-	return (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-																				 (__bridge CFStringRef)self,
-																				 NULL,
-																				 toEscape,
-																				 kCFStringEncodingUTF8);
+    static NSCharacterSet *allowed = nil;
+    if (!allowed) {
+        allowed = [NSCharacterSet characterSetWithCharactersInString:@":/=,!$&'()*+;[]@#?%"].invertedSet;
+    }
+    return [self stringByAddingPercentEncodingWithAllowedCharacters:allowed];
 }
 
 
 - (NSString *)URLEncodedParameterString {
-	static CFStringRef toEscape = CFSTR(":/=,!$&'()*+;[]@#?");
-    return (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-																				 (__bridge CFStringRef)self,
-																				 NULL,
-																				 toEscape,
-																				 kCFStringEncodingUTF8);
+    static NSCharacterSet *allowed = nil;
+    if (!allowed) {
+        allowed = [NSCharacterSet characterSetWithCharactersInString:@":/=,!$&'()*+;[]@#?"].invertedSet;
+    }
+    return [self stringByAddingPercentEncodingWithAllowedCharacters:allowed];
 }
 
 
 - (NSString *)URLDecodedString {
-	return (__bridge_transfer NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
-																								 (__bridge CFStringRef)self,
-																								 CFSTR(""),
-																								 kCFStringEncodingUTF8);
+    return [self stringByRemovingPercentEncoding];
 }
-
 
 #pragma mark - Base64 Encoding
 
