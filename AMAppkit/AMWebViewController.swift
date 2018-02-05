@@ -12,6 +12,7 @@ import WebKit
 open class AMWebViewController: AMBaseViewController {
     
     open var onlyLandscape: Bool = false
+    open static var processNavigation: ((URL)->())?
     open var url: URL?
     open var html: String?
     open var webView = WKWebView()
@@ -88,6 +89,15 @@ extension AMWebViewController: WKNavigationDelegate {
                 self?.webView.reload()
             })
         }
+    }
+    
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .linkActivated, let processNavigation = type(of: self).processNavigation, let url = navigationAction.request.url {
+            processNavigation(url)
+            decisionHandler(.cancel)
+            return
+        }
+        decisionHandler(.allow)
     }
 }
 

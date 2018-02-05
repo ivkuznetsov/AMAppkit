@@ -10,6 +10,8 @@ import Foundation
 
 open class AMBaseViewController: UIViewController {
     
+    open static var closeTitle: String?
+    
     public init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -37,7 +39,7 @@ open class AMBaseViewController: UIViewController {
     }
     
     open func createCloseButton() {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeAction))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: type(of: self).closeTitle ?? "Close", style: .plain, target: self, action: #selector(closeAction))
     }
     
     open func previousViewController() -> UIViewController? {
