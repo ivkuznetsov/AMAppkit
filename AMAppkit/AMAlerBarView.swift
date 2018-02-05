@@ -12,6 +12,7 @@ import UIKit
 open class AMAlertBarView: UIView {
     
     @IBOutlet private var textLabel: UILabel!
+    open var dismissTime: TimeInterval = 5
     
     open class func present(in view: UIView, message: String) -> Self {
         let barView = self.loadFromNib()
@@ -34,8 +35,10 @@ open class AMAlertBarView: UIView {
             barView.alpha = 1
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            barView.hide()
+        DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + barView.dismissTime) {
+                barView.hide()
+            }
         }
         return barView
     }

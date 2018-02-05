@@ -38,6 +38,7 @@
 		D730FDAD1FD71B3D002D9F61 /* StaticSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730FDAC1FD71B3D002D9F61 /* StaticSetup.swift */; };
 		D747AC4F1FFFC456000282EA /* AMImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D747AC4E1FFFC456000282EA /* AMImagePreviewController.swift */; };
 		D747AC531FFFC588000282EA /* AMExpandAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D747AC521FFFC588000282EA /* AMExpandAnimation.swift */; };
+		D77199A12024CA89006E5C8E /* AMWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77199A02024CA89006E5C8E /* AMWebViewController.swift */; };
 		D77B880F1FF4397E0020E3D0 /* AMContainerTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77B880E1FF4397E0020E3D0 /* AMContainerTableCell.swift */; };
 		D78098E61FD979EB0071B9FD /* AMAppkitObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = D78098E01FD979910071B9FD /* AMAppkitObjC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D7949C1E1FCAAD1E000D2C4F /* AMTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7949C1D1FCAAD1E000D2C4F /* AMTable.swift */; };
@@ -206,6 +207,7 @@
 		D730FDAC1FD71B3D002D9F61 /* StaticSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticSetup.swift; sourceTree = "<group>"; };
 		D747AC4E1FFFC456000282EA /* AMImagePreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMImagePreviewController.swift; sourceTree = "<group>"; };
 		D747AC521FFFC588000282EA /* AMExpandAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMExpandAnimation.swift; sourceTree = "<group>"; };
+		D77199A02024CA89006E5C8E /* AMWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMWebViewController.swift; sourceTree = "<group>"; };
 		D77B880E1FF4397E0020E3D0 /* AMContainerTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMContainerTableCell.swift; sourceTree = "<group>"; };
 		D78098E01FD979910071B9FD /* AMAppkitObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMAppkitObjC.h; sourceTree = "<group>"; };
 		D7949C1D1FCAAD1E000D2C4F /* AMTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMTable.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 		592060EA1E38E26C0066BE0D /* AMAppkit */ = {
 			isa = PBXGroup;
 			children = (
+				D771999F2024CA74006E5C8E /* AMWebViewController */,
 				D747AC4D1FFFC43D000282EA /* AMImagePreviewController */,
 				D730FDAC1FD71B3D002D9F61 /* StaticSetup.swift */,
 				D7FCA6201FA2474C0005DAEB /* SDWebImage */,
@@ -562,6 +565,14 @@
 				D747AC4E1FFFC456000282EA /* AMImagePreviewController.swift */,
 			);
 			name = AMImagePreviewController;
+			sourceTree = "<group>";
+		};
+		D771999F2024CA74006E5C8E /* AMWebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D77199A02024CA89006E5C8E /* AMWebViewController.swift */,
+			);
+			name = AMWebViewController;
 			sourceTree = "<group>";
 		};
 		D7E1BA5A1FEB04A600BE8266 /* AMTabs */ = {
@@ -926,6 +937,7 @@
 				D7949C3E1FCD7185000D2C4F /* UIView+LoadingFromFrameworkNib.swift in Sources */,
 				D7FCA60B1FA246370005DAEB /* NSString+Validation.m in Sources */,
 				D7949C4C1FCDE4F2000D2C4F /* AMCollectionView.swift in Sources */,
+				D77199A12024CA89006E5C8E /* AMWebViewController.swift in Sources */,
 				D7FCA6471FA2474C0005DAEB /* SDWebImageDecoder.m in Sources */,
 				D730FD631FD43D1F002D9F61 /* AMCollectionViewLeftAlignedLayout.swift in Sources */,
 				D7949C421FCDA617000D2C4F /* AMLoadingView.swift in Sources */,
