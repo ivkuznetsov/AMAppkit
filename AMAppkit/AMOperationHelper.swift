@@ -104,7 +104,20 @@ public typealias AMCompletion = (Any?, Error?)->()
         })
     }
     
+    @objc open func run(_ closure: @escaping (@escaping AMCompletion)->(AMCancellable?), loading: AMLoadingType, key: String?) {
+        run({ (completion, operation, _) in
+            if let task = closure(completion) {
+                operation(task)
+            }
+        }, completion: nil, loading: loading, key: key)
+    }
+    
+    @objc open func run(_ closure: @escaping (@escaping AMCompletion)->(AMCancellable?), loading: AMLoadingType) {
+        run(closure, loading: loading, key: nil)
+    }
+    
     private func process(error: Error, retry: (()->())?, loading: AMLoadingType) {
+        
         if (error as NSError).code == NSURLErrorCancelled {
             return
         }
