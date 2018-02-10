@@ -73,18 +73,12 @@ import Foundation
     }
     
     @objc private func swipeAction(gr: UISwipeGestureRecognizer) {
-        let currentIndex = viewControllers.index(of: currentViewController!)!
-        
         if gr.direction == .left {
-            if currentIndex < viewControllers.count - 1 {
-                let index = currentIndex + 1
-                tabsView.selectTab(index: index, animated: true)
+            if let index = tabsView.selectNext(animated: true) {
                 _ = selectController(at: index, animated: true)
             }
         } else if gr.direction == .right {
-            if currentIndex > 0 {
-                let index = currentIndex - 1
-                tabsView.selectTab(index: index, animated: true)
+            if let index = tabsView.selectPrevious(animated: true) {
                 _ = selectController(at: index, animated: true)
             }
         }
@@ -113,6 +107,10 @@ import Foundation
     }
     
     open func selectController(at index: Int, animated: Bool) -> UIViewController {
+        if tabsView.hiddenTabs.contains(index) {
+            return currentViewController!
+        }
+        
         let vc = viewControllers[index]
         if vc == currentViewController {
             return vc
