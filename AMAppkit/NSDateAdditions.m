@@ -27,8 +27,7 @@
 
 - (NSString *)stringValueWithStyle:(NSDateFormatterStyle)style {
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
-	[dateFormatter setDateStyle:style];
+    [dateFormatter setDateStyle:style];
 	NSString * result = [dateFormatter stringFromDate:self];
 	return result;
 }
