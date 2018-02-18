@@ -10,6 +10,18 @@
 
 @implementation UICollectionView (Reloading)
 
+- (void)printDuplicates:(NSArray *)array {
+    NSMutableSet *allSet = [NSMutableSet set];
+    
+    for (id object in array) {
+        if ([allSet containsObject:object]) {
+            NSLog(@"found duplicated object %@", object);
+        } else {
+            [allSet addObject:object];
+        }
+    }
+}
+
 - (NSArray<NSIndexPath *> *)reloadAnimated:(BOOL)animated oldData:(NSArray *)oldData data:(NSArray *)data completion:(dispatch_block_t)completion {
     BOOL applicationPresented = YES;
     
@@ -31,6 +43,13 @@
     
     NSMutableSet *oldDataSet = [NSMutableSet setWithArray:oldData];
     NSMutableSet *dataSet = [NSMutableSet setWithArray:data];
+    
+    if (oldDataSet.count != oldData.count) {
+        [self printDuplicates:oldData];
+    }
+    if (dataSet.count != data.count) {
+        [self printDuplicates:data];
+    }
     
     NSMutableOrderedSet *currentSet = [NSMutableOrderedSet orderedSetWithArray:oldData];
     for (NSUInteger index = 0; index < oldData.count; index++) {

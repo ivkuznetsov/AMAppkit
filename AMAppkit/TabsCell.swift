@@ -23,7 +23,7 @@ import Foundation
             self.addConstraints(constraints)
             
             if fillWidth {
-                let constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[tabsView]-3-|", options: [], metrics: nil, views: ["tabsView":tabsView])
+                let constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[tabsView]|", options: [], metrics: nil, views: ["tabsView":tabsView])
                 constraints.forEach {
                     $0.priority = UILayoutPriority(900)
                 }
