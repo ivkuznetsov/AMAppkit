@@ -35,6 +35,7 @@
         _tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
         _tapGR.delegate = self;
         _tapGR.cancelsTouchesInView = NO;
+        _tapGR.enabled = NO;
     }
     return _tapGR;
 }
@@ -298,6 +299,9 @@
         if (point.y != _scrollView.contentOffset.y) {
             _scrollView.contentOffset = point;
         }
+        self.tapGR.enabled = YES;
+    } else {
+        self.tapGR.enabled = NO;
     }
     [UIView commitAnimations];
 }

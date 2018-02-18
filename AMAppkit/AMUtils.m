@@ -10,7 +10,8 @@
 
 @interface AMUtils()
 
-@property (strong) NSMutableDictionary *processingRequests;
+@property (nonatomic) NSMutableDictionary *processingRequests;
+@property (nonatomic) dispatch_queue_t queue;
 
 @end
 
@@ -20,7 +21,7 @@
     static dispatch_once_t once;
     static id sharedInstance;
     dispatch_once(&once, ^{
-        sharedInstance = [[self alloc] init];
+        sharedInstance = [self new];
     });
     return sharedInstance;
 }
@@ -28,6 +29,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         _processingRequests = [NSMutableDictionary dictionary];
+        _queue = dispatch_queue_create("AMUtils.queue", DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
@@ -38,54 +40,76 @@
  progress:(ProgressCallback)runProgress
       key:(NSString *)key {
     if (key) {
-        NSMutableDictionary *dict = [AMUtils sharedInstance].processingRequests[key];
         
-        if (dict) {
+        __block id operation = nil;
+        
+        dispatch_sync(AMUtils.sharedInstance.queue, ^{
+            NSMutableDictionary *dict = [AMUtils sharedInstance].processingRequests[key];
+            
+            if (dict) {
+                [self insertBlock:runSuccess inDict:dict key:@"success"];
+                [self insertBlock:runFailure inDict:dict key:@"failure"];
+                [self insertBlock:runProgress inDict:dict key:@"progress"];
+                operation = dict[@"operation"];
+                return;
+            }
+            
+            dict = [NSMutableDictionary dictionary];
+            
             [self insertBlock:runSuccess inDict:dict key:@"success"];
             [self insertBlock:runFailure inDict:dict key:@"failure"];
             [self insertBlock:runProgress inDict:dict key:@"progress"];
-            return dict[@"operation"];
+            
+            [AMUtils sharedInstance].processingRequests[key] = dict;
+        });
+        
+        if (operation) {
+            return operation;
         }
-        
-        dict = [NSMutableDictionary dictionary];
-        
-        [self insertBlock:runSuccess inDict:dict key:@"success"];
-        [self insertBlock:runFailure inDict:dict key:@"failure"];
-        [self insertBlock:runProgress inDict:dict key:@"progress"];
-        
-        [AMUtils sharedInstance].processingRequests[key] = dict;
-        
-        id operation = block( ^(id object){
-            NSDictionary *dict = [AMUtils sharedInstance].processingRequests[key];
-            NSArray *blocks = dict[@"success"];
+            
+        operation = block( ^(id object){
+            __block NSArray *blocks = nil;
+            dispatch_sync(AMUtils.sharedInstance.queue, ^{
+                NSDictionary *dict = [AMUtils sharedInstance].processingRequests[key];
+                blocks = [dict[@"success"] copy];
+                [AMUtils sharedInstance].processingRequests[key] = nil;
+            });
+            
             for (void(^block)(id) in blocks) {
                 block(object);
             }
-           
-            [AMUtils sharedInstance].processingRequests[key] = nil;
             
         }, ^(id object, NSError *error){
-            NSDictionary *dict = [AMUtils sharedInstance].processingRequests[key];
-            NSArray *blocks = dict[@"failure"];
+            __block NSArray *blocks = nil;
+            dispatch_sync(AMUtils.sharedInstance.queue, ^{
+                NSDictionary *dict = [AMUtils sharedInstance].processingRequests[key];
+                blocks = [dict[@"failure"] copy];
+                [AMUtils sharedInstance].processingRequests[key] = nil;
+            });
+            
             for (void(^block)(id, NSError*) in blocks) {
                 block(object, error);
             }
             
-            [AMUtils sharedInstance].processingRequests[key] = nil;
-            
         }, ^(double progress){
             
-            NSDictionary *dict = [AMUtils sharedInstance].processingRequests[key];
-            NSArray *blocks = dict[@"progress"];
+            __block NSArray *blocks = nil;
+            dispatch_sync(AMUtils.sharedInstance.queue, ^{
+                NSDictionary *dict = [AMUtils sharedInstance].processingRequests[key];
+                blocks = [dict[@"progress"] copy];
+            });
+            
             for (void(^block)(CGFloat) in blocks) {
                 block(progress);
             }
-            
         });
 
-        if (operation) {
-            dict[@"operation"] = operation;
-        }
+        dispatch_sync(AMUtils.sharedInstance.queue, ^{
+            NSMutableDictionary *dict = [AMUtils sharedInstance].processingRequests[key];
+            if (operation) {
+                dict[@"operation"] = operation;
+            }
+        });
         
         return operation;
     } else {
