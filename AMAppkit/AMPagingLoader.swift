@@ -154,21 +154,6 @@ extension AMPagingLoaderDelegate {
         
         delegate.performOnRefresh?()
         
-        loading = true
-        setFooterVisible(true, footerLoadingView)
-        footerLoadingView.state = .stop
-        
-        if let refreshControl = refreshControl {
-            if !refreshControl.isRefreshing {
-                refreshControl.beginRefreshing()
-                scrollOnRefreshing(refreshControl)
-            }
-        } else {
-            if fetchedItems.count == 0 {
-                footerLoadingView.state = .loading
-            }
-        }
-        
         delegate.load(offset: nil, completion: { [weak self] (objects, error, newOffset) in
             guard let wSelf = self else {
                 return
@@ -181,11 +166,10 @@ extension AMPagingLoaderDelegate {
                     if refreshControl != nil {
                         wSelf.processPullToRefreshError(wSelf, error)
                     }
+                    wSelf.delegate.reloadView(false)
                 } else {
                     wSelf.footerLoadingView.state = .stop
                 }
-                wSelf.delegate.reloadView(false)
-                
             } else {
                 wSelf.offset = newOffset
                 let oldObjects = wSelf.fetchedItems
@@ -200,6 +184,21 @@ extension AMPagingLoaderDelegate {
             }
             wSelf.endRefreshing()
         })
+        
+        loading = true
+        setFooterVisible(true, footerLoadingView)
+        footerLoadingView.state = .stop
+        
+        if let refreshControl = refreshControl {
+            if !refreshControl.isRefreshing {
+                refreshControl.beginRefreshing()
+                scrollOnRefreshing(refreshControl)
+            }
+        } else {
+            if fetchedItems.count == 0 {
+                footerLoadingView.state = .loading
+            }
+        }
     }
     
     private func endRefreshing() {

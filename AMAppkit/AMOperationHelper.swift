@@ -25,7 +25,24 @@ public typealias AMProgress = (Double)->()
 public typealias AMOperation = (AMCancellable)->()
 public typealias AMCompletion = (Any?, Error?)->()
 
-@objc open class AMOperationHelper : StaticSetupObject {
+class AMOperationToken: Hashable {
+    var id: String
+    var completion: AMCompletion
+    var operation: AMCancellable?
+    
+    var hashValue: Int { return id.hashValue }
+    
+    static func ==(lhs: AMOperationToken, rhs: AMOperationToken) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+    
+    init(id: String, completion: @escaping AMCompletion) {
+        self.id = id
+        self.completion = completion
+    }
+}
+
+@objc open class AMOperationHelper: StaticSetupObject {
     
     //required for using AMLoadingTypeTranslucent.
     @objc open var processTranslucentError: ((UIView, Error, /*retry*/ (()->())?)->())!
@@ -46,7 +63,8 @@ public typealias AMCompletion = (Any?, Error?)->()
     private var failedBarView: AMAlertBarView!
     
     private weak var view: UIView!
-    private var operations: [String:AMCancellable] = [:]
+    private var keyedOperations: [String:AMOperationToken] = [:]
+    private var processing = Set<AMOperationToken>()
     private var loadingCounter = 0
     private var touchableLoadingCounter = 0
     
@@ -55,50 +73,75 @@ public typealias AMCompletion = (Any?, Error?)->()
         super.init()
     }
     
+    private func cancel(token: AMOperationToken) {
+        processing.remove(token)
+        token.operation?.cancel()
+        token.completion(nil, NSError(domain: "AMOperationHelper", code: NSURLErrorCancelled, userInfo: nil))
+    }
+    
     // progress indicator becomes visible on first AMProgress block performing
     // 'key' is needed to cancel previous launched operation with the same key, you can pass nil if you don't need such functional
     @objc open func run(_ closure: @escaping (@escaping AMCompletion, @escaping AMOperation, @escaping AMProgress)->(), completion: AMCompletion?, loading: AMLoadingType, key: String?) {
         
         assert(loading != .translucent || processTranslucentError != nil, "_processTranslucentError block must be set to use AMLoadingTypeTranslucent")
         
-        if let key = key {
-            if let operation = operations[key] {
-                operation.cancel()
-            }
-            operations[key] = nil
-        }
         increament(loading: loading)
+        if let key = key {
+            if let token = keyedOperations[key] {
+                cancel(token: token)
+            }
+        }
         
         if loading == .fullscreen || loading == .translucent {
             failedView?.removeFromSuperview()
         }
         
+        let token = AMOperationToken(id: UUID().uuidString,
+                                     completion: { [weak self] (request, error) in
+                                        if let wSelf = self {
+                                            wSelf.decrement(loading: loading)
+                                            
+                                            if let key = key {
+                                                wSelf.keyedOperations[key] = nil
+                                            }
+                                            
+                                            if let error = error {
+                                                var retry: (()->())?
+                                                
+                                                if wSelf.shouldSupplyRetry?(request, error) ?? true {
+                                                    retry = { wSelf.run(closure, completion: completion, loading: loading, key: key) }
+                                                }
+                                                wSelf.process(error: error, retry: retry, loading: loading)
+                                            }
+                                            completion?(request, error)
+                                        }
+        })
+        processing.insert(token)
+        if let key = key {
+            keyedOperations[key] = token
+        }
+        
         closure({ [weak self] (request, error) in
             if let wSelf = self {
-                wSelf.decrement(loading: loading)
-                
-                if let error = error {
-                   
-                    var retry: (()->())?
-                    
-                    if wSelf.shouldSupplyRetry?(request, error) ?? true {
-                        retry = { wSelf.run(closure, completion: completion, loading: loading, key: key) }
-                    }
-                    
-                    wSelf.process(error: error, retry: retry, loading: loading)
+                if wSelf.processing.contains(token) {
+                    wSelf.processing.remove(token)
+                    token.completion(request, error)
                 }
-                completion?(request, error)
             }
         }, { [weak self] (operation) in
             if let wSelf = self {
-                wSelf.operations[key ?? UUID().uuidString] = operation
+                if wSelf.processing.contains(token) {
+                    token.operation = operation
+                }
             }
         }, { [weak self] (progress) in
             if let wSelf = self {
-                if loading == .fullscreen || loading == .translucent {
-                    wSelf.loadingView.progress = CGFloat(progress)
-                } else if loading == .touchable {
-                    wSelf.loadingBarView.progress = CGFloat(progress)
+                if wSelf.processing.contains(token) {
+                    if loading == .fullscreen || loading == .translucent {
+                        wSelf.loadingView.progress = CGFloat(progress)
+                    } else if loading == .touchable {
+                        wSelf.loadingBarView.progress = CGFloat(progress)
+                    }
                 }
             }
         })
@@ -117,7 +160,6 @@ public typealias AMCompletion = (Any?, Error?)->()
     }
     
     private func process(error: Error, retry: (()->())?, loading: AMLoadingType) {
-        
         if (error as NSError).code == NSURLErrorCancelled {
             return
         }
@@ -164,7 +206,9 @@ public typealias AMCompletion = (Any?, Error?)->()
     }
     
     @objc open func cancelOperations() {
-        operations.forEach { $0.value.cancel() }
+        processing.forEach {
+            self.cancel(token: $0)
+        }
     }
     
     deinit {
