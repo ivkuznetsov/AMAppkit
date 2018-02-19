@@ -59,7 +59,7 @@ public extension AMAlert {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        var lastAction: UIAlertAction?
+        var firstAction: UIAlertAction?
         var fields: [UITextField] = []
         for setubBlock in fieldsSetup {
             alert.addTextField(configurationHandler: { (textfield) in
@@ -67,6 +67,10 @@ public extension AMAlert {
                 setubBlock(textfield)
                 textfield.addTarget(shared, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
                 fields.append(textfield)
+                
+                DispatchQueue.main.async {
+                    shared.textFieldDidChange(textfield)
+                }
             })
         }
         
@@ -79,11 +83,12 @@ public extension AMAlert {
                 action.1?(fields)
                 clear(fields: fields)
             }))
-            lastAction = alert.actions.last
         }
+        firstAction = alert.actions.first(where: { $0.style != .cancel })
+        
         viewController?.present(alert, animated: true, completion: nil)
         
-        if let action = lastAction {
+        if let action = firstAction {
             for field in fields {
                 associatedActions[field] = action
             }
