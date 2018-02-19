@@ -51,6 +51,7 @@
 - (NSInteger) minute;
 - (NSInteger) second;
 
+- (NSDateComponents *)components;
 - (NSDate*) dateByAddingDays:(NSInteger) day;
 - (NSDate*) dateByAddingMonths:(NSInteger) months;
 - (NSDate*) dateByAddingYears:(NSInteger) years;
