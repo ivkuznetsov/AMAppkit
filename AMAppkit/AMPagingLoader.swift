@@ -57,6 +57,7 @@ extension AMPagingLoaderDelegate {
     open var fetchedItems: [AnyHashable] = []
     open var offset: Any?
     
+    private var currentOperationId: String?
     private weak var scrollView: UIScrollView!
     private weak var delegate: AMPagingLoaderDelegate!
     private var performedLoading = false
@@ -108,15 +109,21 @@ extension AMPagingLoaderDelegate {
     
     // load new page manually
     open func loadMore() {
+        
         performedLoading = true
         footerLoadingView.state = .loading
         loading = true
+        
+        let operationId = UUID().uuidString
+        currentOperationId = operationId
         
         delegate.load(offset: offset, completion: { [weak self] (objects, error, newOffset) in
             guard let wSelf = self else {
                 return
             }
-            
+            if wSelf.currentOperationId != operationId {
+                return
+            }
             wSelf.loading = false
             if let error = error as NSError? {
                 wSelf.footerLoadingView.state = error.code == NSURLErrorCancelled ? .stop : .failed
@@ -154,11 +161,30 @@ extension AMPagingLoaderDelegate {
         
         delegate.performOnRefresh?()
         
+        loading = true
+        setFooterVisible(true, footerLoadingView)
+        footerLoadingView.state = .stop
+        
+        if let refreshControl = refreshControl {
+            if !refreshControl.isRefreshing {
+                refreshControl.beginRefreshing()
+                scrollOnRefreshing(refreshControl)
+            }
+        } else {
+            if fetchedItems.count == 0 {
+                footerLoadingView.state = .loading
+            }
+        }
+        let operationId = UUID().uuidString
+        currentOperationId = operationId
+        
         delegate.load(offset: nil, completion: { [weak self] (objects, error, newOffset) in
             guard let wSelf = self else {
                 return
             }
-            
+            if wSelf.currentOperationId != operationId {
+                return
+            }
             wSelf.loading = false
             if let error = error as NSError? {
                 if error.code != NSURLErrorCancelled {
@@ -184,21 +210,6 @@ extension AMPagingLoaderDelegate {
             }
             wSelf.endRefreshing()
         })
-        
-        loading = true
-        setFooterVisible(true, footerLoadingView)
-        footerLoadingView.state = .stop
-        
-        if let refreshControl = refreshControl {
-            if !refreshControl.isRefreshing {
-                refreshControl.beginRefreshing()
-                scrollOnRefreshing(refreshControl)
-            }
-        } else {
-            if fetchedItems.count == 0 {
-                footerLoadingView.state = .loading
-            }
-        }
     }
     
     private func endRefreshing() {
