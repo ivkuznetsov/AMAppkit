@@ -354,7 +354,7 @@ extension AMTable: UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? AMBaseTableViewCell, let object = cell.object {
+        if let holding = cell as? TCellObjectHolding, let object = holding.object {
             estimatedHeights[estimatedHeightKeyFor(object: object)] = cell.bounds.size.height
         }
     }
