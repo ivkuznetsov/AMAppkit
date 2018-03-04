@@ -353,10 +353,11 @@ extension AMTable: UITableViewDelegate {
         }
     }
     
-    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? AMBaseTableViewCell, let object = cell.object {
             estimatedHeights[estimatedHeightKeyFor(object: object)] = cell.bounds.size.height
         }
+        delegate.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
     }
     
     public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
