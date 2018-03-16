@@ -37,8 +37,8 @@ import Foundation
         super.viewDidLoad()
         
         self.automaticallyAdjustsScrollViewInsets = false
-        tabsView = TabsView(titles: viewControllers.map{ $0.title! }, style: .dark, didSelect: { [unowned self] (button) in
-            _ = self.selectController(at: button.tag, animated: true)
+        tabsView = TabsView(titles: viewControllers.map{ $0.title! }, style: .dark, didSelect: { [unowned self] (button, animated) in
+            _ = self.selectController(at: button.tag, animated: animated)
         })
         
         if tabsContainerView != nil {

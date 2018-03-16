@@ -20,7 +20,7 @@ import Foundation
     private var backgroundView: UIView
     private var selectedView: UIView
     open private(set) var selectedIndex: Int = 0
-    private var didSelect: (UIButton)->()
+    private var didSelect: (UIButton, /* animated */ Bool)->()
     open private(set) var buttons: [TabsViewButton] = []
     
     open var hiddenTabs: [Int] = [] {
@@ -38,7 +38,8 @@ import Foundation
                 }
             }
             if hiddenTabs.contains(selectedIndex), let availableButton = buttons.first(where: { !hiddenTabs.contains($0.tag) }) {
-                selectAction(availableButton)
+                selectTab(index: availableButton.tag, animated: false)
+                didSelect(availableButton, false)
             } else {
                 self.selectedView.frame = self.selectedFrame()
             }
@@ -51,7 +52,7 @@ import Foundation
         }
     }
     
-    public init(titles: [String], style: TabsViewStyle, didSelect: @escaping (UIButton)->()) {
+    public init(titles: [String], style: TabsViewStyle, didSelect: @escaping (UIButton, Bool)->()) {
         self.didSelect = didSelect
         
         backgroundView = UIView()
@@ -121,7 +122,7 @@ import Foundation
     
     @objc private func selectAction(_ sender: UIButton) {
         selectTab(index: sender.tag, animated: true)
-        didSelect(sender)
+        didSelect(sender, true)
     }
     
     open func selectTab(index: Int, animated: Bool) {
@@ -132,7 +133,7 @@ import Foundation
     }
     
     open func selectNext(animated: Bool) -> Int? {
-        let nextIndex: Int? = (selectedIndex...buttons.count - 1).first { !hiddenTabs.contains($0) && $0 != selectedIndex }
+        let nextIndex: Int? = (selectedIndex...buttons.count - 1).first { !hiddenTabs.contains($0) && $0 != selectedIndex && buttons[$0].isEnabled }
         
         if let nextIndex = nextIndex {
             selectTab(index: nextIndex, animated: animated)
@@ -141,7 +142,7 @@ import Foundation
     }
     
     open func selectPrevious(animated: Bool) -> Int? {
-        let prevIndex: Int? = (0...selectedIndex).reversed().first { !hiddenTabs.contains($0) && $0 != selectedIndex }
+        let prevIndex: Int? = (0...selectedIndex).reversed().first { !hiddenTabs.contains($0) && $0 != selectedIndex && buttons[$0].isEnabled }
         
         if let prevIndex = prevIndex {
             selectTab(index: prevIndex, animated: animated)

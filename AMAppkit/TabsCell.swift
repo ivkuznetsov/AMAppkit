@@ -37,7 +37,7 @@ import Foundation
     open class func make(titles: [String], fillWidth: Bool, action: @escaping (Int)->()) -> Self {
         let view = self.loadFromNib()
         view.fillWidth = fillWidth
-        view.tabsView = TabsView(titles: titles, style: .dark, didSelect: { (button) in
+        view.tabsView = TabsView(titles: titles, style: .dark, didSelect: { (button, animated) in
             action(button.tag)
         })
         return view

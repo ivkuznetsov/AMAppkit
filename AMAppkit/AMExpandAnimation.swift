@@ -260,6 +260,18 @@ extension UIView {
         }
         return nil
     }
+    
+    func findViewController() -> UIViewController? {
+        var responder: UIResponder = self
+        
+        while responder.next != nil {
+            responder = responder.next!
+            if let vc = responder as? UIViewController {
+                return vc
+            }
+        }
+        return nil
+    }
 }
 
 extension AMExpandAnimation: UIViewControllerAnimatedTransitioning {
@@ -287,14 +299,30 @@ extension AMExpandAnimation: UIViewControllerAnimatedTransitioning {
             var customOverlay: UIView?
             if let container = customContainer {
                 customOverlay = container.snapshotView(afterScreenUpdates: true)
-                customOverlay!.contentMode = .top
-                customOverlay!.clipsToBounds = true
-                customOverlay!.frame = container.convert(container.frame, to: containerView)
-                customOverlay!.height = min(containerView.height - customOverlay!.y, customOverlay!.height)
+                
+                let view = UIView(frame: customOverlay!.frame)
+                view.addSubview(customOverlay!)
+                view.backgroundColor = UIColor.clear
+                view.clipsToBounds = true
+                view.frame = container.convert(container.bounds, to: containerView)
+                view.height = min(containerView.height - view.y, view.height)
                 
                 if let tabbar = container.findTabbar() {
-                    customOverlay!.height -= tabbar.height
+                    view.height -= tabbar.height
                 }
+                
+                let vc = customContainer?.findViewController()
+                
+                var offset = view.y
+                if vc?.navigationController?.isNavigationBarHidden == false, let navbar = vc?.navigationController?.navigationBar {
+                    offset -= navbar.y + navbar.height
+                }
+                
+                customOverlay!.y = offset
+                view.y -= offset
+                view.height += offset
+                
+                customOverlay = view
             }
             
             let oldColor = toVC.view.subviews.first?.backgroundColor
@@ -380,14 +408,30 @@ extension AMExpandAnimation: UIViewControllerAnimatedTransitioning {
         var customOverlay: UIView?
         if let container = customContainer {
             customOverlay = container.snapshotView(afterScreenUpdates: true)
-            customOverlay!.contentMode = .top
-            customOverlay!.clipsToBounds = true
-            customOverlay!.frame = container.convert(container.frame, to: containerView)
-            customOverlay!.height = min(containerView.height - customOverlay!.y, customOverlay!.height)
+            
+            let view = UIView(frame: customOverlay!.frame)
+            view.addSubview(customOverlay!)
+            view.backgroundColor = UIColor.clear
+            view.clipsToBounds = true
+            view.frame = container.convert(container.bounds, to: containerView)
+            view.height = min(containerView.height - view.y, view.height)
             
             if let tabbar = container.findTabbar() {
-                customOverlay!.height -= tabbar.height
+                view.height -= tabbar.height
             }
+            
+            let vc = customContainer?.findViewController()
+            
+            var offset = view.y
+            if vc?.navigationController?.isNavigationBarHidden == false, let navbar = vc?.navigationController?.navigationBar {
+                offset -= navbar.y + navbar.height
+            }
+            
+            customOverlay!.y = offset
+            view.y -= offset
+            view.height += offset
+            
+            customOverlay = view
             containerView.addSubview(customOverlay!)
             customOverlay!.alpha = 0
         }
