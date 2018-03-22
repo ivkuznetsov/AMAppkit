@@ -74,6 +74,7 @@
 		D7F324C11FDAAE070038F1C4 /* AMObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7949C511FCE13B8000D2C4F /* AMObservable.swift */; };
 		D7F324C21FDAB7BC0038F1C4 /* AMOptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 592061AB1E3B6DA00066BE0D /* AMOptionsView.xib */; };
 		D7F324C31FDAB7CB0038F1C4 /* AMOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 592061A81E3B6B5B0066BE0D /* AMOptionCell.xib */; };
+		D7F962672064022400F852C5 /* AMRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F962662064022400F852C5 /* AMRefreshControl.swift */; };
 		D7FCA5CD1FA243F10005DAEB /* UITableViewCell+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = D7FCA5CB1FA243F00005DAEB /* UITableViewCell+Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D7FCA5CE1FA243F10005DAEB /* UITableViewCell+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FCA5CC1FA243F10005DAEB /* UITableViewCell+Additions.m */; };
 		D7FCA5D11FA2441F0005DAEB /* UIView+Frame.h in Headers */ = {isa = PBXBuildFile; fileRef = D7FCA5CF1FA2441F0005DAEB /* UIView+Frame.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -241,6 +242,7 @@
 		D7F324A51FDA8D3A0038F1C4 /* AMMake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMMake.swift; sourceTree = "<group>"; };
 		D7F324AC1FDA9AAC0038F1C4 /* AMOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMOptionsView.swift; sourceTree = "<group>"; };
 		D7F324AE1FDA9AB80038F1C4 /* AMOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMOptionCell.swift; sourceTree = "<group>"; };
+		D7F962662064022400F852C5 /* AMRefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMRefreshControl.swift; sourceTree = "<group>"; };
 		D7FCA5CB1FA243F00005DAEB /* UITableViewCell+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+Additions.h"; sourceTree = "<group>"; };
 		D7FCA5CC1FA243F10005DAEB /* UITableViewCell+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+Additions.m"; sourceTree = "<group>"; };
 		D7FCA5CF1FA2441F0005DAEB /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 		593F49BF1EC8C9E80030BEBE /* PagingClasses */ = {
 			isa = PBXGroup;
 			children = (
+				D7F962662064022400F852C5 /* AMRefreshControl.swift */,
 				D7949C471FCDC4E9000D2C4F /* AMFooterLoadingView.swift */,
 				596A29481E4752DB00F6AA7A /* AMFooterLoadingView.xib */,
 				D7949C2C1FCB6112000D2C4F /* AMPagingLoader.swift */,
@@ -870,6 +873,7 @@
 				D7949C501FCE0B19000D2C4F /* AMPagingCollection.swift in Sources */,
 				D7FCA6421FA2474C0005DAEB /* UIImage+WebP.m in Sources */,
 				D7E1BA601FEB04FE00BE8266 /* AMBaseTabsViewController.swift in Sources */,
+				D7F962672064022400F852C5 /* AMRefreshControl.swift in Sources */,
 				D7FCA6031FA246370005DAEB /* NSString+Additions.m in Sources */,
 				D7FCA64E1FA2474C0005DAEB /* UIImage+MultiFormat.m in Sources */,
 				D7949C2B1FCB5EE4000D2C4F /* AMPagingTable.swift in Sources */,

@@ -82,7 +82,7 @@ extension AMPagingLoaderDelegate {
         }
         
         if delegate.hasRefreshControl?() ?? true {
-            refreshControl = UIRefreshControl()
+            refreshControl = AMRefreshControl()
             refreshControl?.addTarget(self, action: #selector(refreshAction), for: .valueChanged)
             addRefreshControl(refreshControl!)
         }
