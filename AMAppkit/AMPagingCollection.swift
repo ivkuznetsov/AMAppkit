@@ -150,7 +150,7 @@ open class AMPagingCollection: AMCollection {
     }
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if loader.footerLoadingView != nil, keyPath == "contentOffset" {
+        if loader.footerLoadingView != nil, keyPath == "contentOffset", collection.superview != nil {
             reloadFooterPosition()
         }
     }
