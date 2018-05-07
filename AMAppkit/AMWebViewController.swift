@@ -45,7 +45,6 @@ open class AMWebViewController: AMBaseViewController {
         view.addSubview(webView)
         webView.navigationDelegate = self
         webView.frame = view.bounds
-        webView.scalesPageToFit = true
         webView.translatesAutoresizingMaskIntoConstraints = false
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[webView]|", options: [], metrics: nil, views: ["webView":webView]))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[webView]|", options: [], metrics: nil, views: ["webView":webView]))

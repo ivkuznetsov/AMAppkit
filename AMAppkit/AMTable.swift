@@ -159,26 +159,7 @@ open class AMTable: StaticSetupObject {
         if animated && oldObjects.count > 0 {
             table.reload(withOldData: oldObjects, newData: objects, block: {
                 
-                self.table.visibleCells.forEach {
-                    var resIndex: Int?
-                    
-                    if let cell = $0 as? TCellObjectHolding {
-                        if let object = cell.object, let index = objects.index(of: object) {
-                            resIndex = index
-                            
-                            let createCell = self.delegate.createCell?(object: object, table: self) ??
-                                type(of: self).defaultDelegate?.createCell?(object: object, table: self)
-                            if let cell = createCell as? TCell {
-                                cell.cellFill?($0)
-                            }
-                        }
-                    } else {
-                        resIndex = objects.index(of: $0)
-                    }
-                    if let index = resIndex {
-                        $0.separatorHidden = index == objects.count - 1 && self.table.tableFooterView != nil
-                    }
-                }
+                self.reloadVisibleCells()
             }, add:self.delegate.animationForAdding?(table: self) ??
                 (type(of: self).defaultDelegate?.animationForAdding?(table: self) ?? .fade))
         } else {
@@ -199,6 +180,29 @@ open class AMTable: StaticSetupObject {
     @objc open func scrollTo(object: AnyHashable, animated: Bool) {
         if let index = objects.index(of: object) {
             table.scrollToRow(at: IndexPath(row: index, section:0), at: .none, animated: animated)
+        }
+    }
+    
+    open func reloadVisibleCells() {
+        self.table.visibleCells.forEach {
+            var resIndex: Int?
+            
+            if let cell = $0 as? TCellObjectHolding {
+                if let object = cell.object, let index = objects.index(of: object) {
+                    resIndex = index
+                    
+                    let createCell = self.delegate.createCell?(object: object, table: self) ??
+                        type(of: self).defaultDelegate?.createCell?(object: object, table: self)
+                    if let cell = createCell as? TCell {
+                        cell.cellFill?($0)
+                    }
+                }
+            } else {
+                resIndex = objects.index(of: $0)
+            }
+            if let index = resIndex {
+                $0.separatorHidden = index == objects.count - 1 && self.table.tableFooterView != nil
+            }
         }
     }
     
