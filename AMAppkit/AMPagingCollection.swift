@@ -123,7 +123,7 @@ open class AMPagingCollection: AMCollection {
     }
     
     open func reloadFooterPosition() {
-        let size = collection.collectionViewLayout.collectionViewContentSize
+        let size = collection.contentSize
         
         if isVertical() {
             if let constraint = yConstraint {
