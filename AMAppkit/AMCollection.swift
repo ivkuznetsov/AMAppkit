@@ -123,8 +123,10 @@ open class AMCollection: StaticSetupObject {
                         if wSelf.animationFix {
                             // fixes layout for further animation
                             DispatchQueue.main.async {
-                                UIView.performWithoutAnimation {
-                                    wSelf.collection.reloadSections(IndexSet(integer: 0))
+                                if !wSelf.updatingDatasource {
+                                    UIView.performWithoutAnimation {
+                                        wSelf.collection.reloadSections(IndexSet(integer: 0))
+                                    }
                                 }
                             }
                         }
