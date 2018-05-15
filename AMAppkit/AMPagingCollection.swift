@@ -123,7 +123,7 @@ open class AMPagingCollection: AMCollection {
     }
     
     open func reloadFooterPosition() {
-        let size = collection.collectionViewLayout.collectionViewContentSize
+        let size = collection.contentSize
         
         if isVertical() {
             if let constraint = yConstraint {
@@ -150,7 +150,7 @@ open class AMPagingCollection: AMCollection {
     }
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if loader.footerLoadingView != nil, keyPath == "contentOffset" {
+        if loader.footerLoadingView != nil, keyPath == "contentOffset", collection.superview != nil {
             reloadFooterPosition()
         }
     }
