@@ -51,16 +51,16 @@ class AMOperationToken: Hashable {
     @objc open var shouldSupplyRetry: ((Any?, Error)->Bool)?
     
     @objc open var loadingViewType: AMLoadingView.Type = AMLoadingView.self
-    private weak var loadingView: AMLoadingView!
+    private weak var loadingView: AMLoadingView?
     
     @objc open var loadingBarViewType: AMLoadingBarView.Type = AMLoadingBarView.self
-    private var loadingBarView: AMLoadingBarView!
+    private var loadingBarView: AMLoadingBarView?
     
     @objc open var failedViewType: AMFailedView.Type = AMFailedView.self
     private var failedView: AMFailedView?
     
     @objc open var failedBarViewType: AMAlertBarView.Type = AMAlertBarView.self
-    private var failedBarView: AMAlertBarView!
+    private var failedBarView: AMAlertBarView?
     
     private weak var view: UIView!
     private var keyedOperations: [String:AMOperationToken] = [:]
@@ -138,9 +138,9 @@ class AMOperationToken: Hashable {
             if let wSelf = self {
                 if wSelf.processing.contains(token) {
                     if loading == .fullscreen || loading == .translucent {
-                        wSelf.loadingView.progress = CGFloat(progress)
+                        wSelf.loadingView?.progress = CGFloat(progress)
                     } else if loading == .touchable {
-                        wSelf.loadingBarView.progress = CGFloat(progress)
+                        wSelf.loadingBarView?.progress = CGFloat(progress)
                     }
                 }
             }
@@ -179,8 +179,8 @@ class AMOperationToken: Hashable {
             if loadingCounter == 0 {
                 loadingView = loadingViewType.present(in: view, animated: (loading == .translucent) && view.window != nil && failedView == nil)
             }
-            if loading == .fullscreen && !loadingView.opaqueStyle {
-                loadingView.opaqueStyle = true
+            if loading == .fullscreen && loadingView?.opaqueStyle == false {
+                loadingView?.opaqueStyle = true
             }
             loadingCounter += 1
         } else if loading == .touchable {
@@ -195,12 +195,12 @@ class AMOperationToken: Hashable {
         if loading == .translucent || loading == .fullscreen {
             loadingCounter -= 1
             if loadingCounter == 0 {
-                loadingView.hide(true)
+                loadingView?.hide(true)
             }
         } else if loading == .touchable {
             touchableLoadingCounter -= 1
             if touchableLoadingCounter == 0 {
-                loadingBarView.hide(true)
+                loadingBarView?.hide(true)
             }
         }
     }
