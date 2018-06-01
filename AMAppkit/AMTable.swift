@@ -157,11 +157,12 @@ open class AMTable: StaticSetupObject {
         set.forEach { estimatedHeights[$0] = nil }
         
         if animated && oldObjects.count > 0 {
-            table.reload(withOldData: oldObjects, newData: objects, block: {
+            table.reload(oldData: oldObjects, newData: objects, deferred: { [weak self] in
                 
-                self.reloadVisibleCells()
-            }, add:self.delegate.animationForAdding?(table: self) ??
-                (type(of: self).defaultDelegate?.animationForAdding?(table: self) ?? .fade))
+                self?.reloadVisibleCells()
+            }, addAnimation: self.delegate.animationForAdding?(table: self) ??
+                    (type(of: self).defaultDelegate?.animationForAdding?(table: self) ?? .fade))
+            
         } else {
             table.reloadData()
         }
