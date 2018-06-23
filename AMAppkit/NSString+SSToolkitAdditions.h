@@ -233,4 +233,6 @@
  */
 - (NSString *)stringByTrimmingTrailingWhitespaceAndNewlineCharacters;
 
+- (NSString *)camelCased;
+
 @end

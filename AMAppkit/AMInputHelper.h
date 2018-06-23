@@ -23,9 +23,8 @@
 
 @protocol AMInputHelperDelegate <NSObject>
 
-- (void)didSuccessInput;
-
 @optional
+- (void)didSuccessInput;
 - (BOOL)isInputValid:(UIView *)input;
 - (void)animateInsetChangeWithInsets:(UIEdgeInsets)insets; // performed in animation block
 - (CGFloat)targetOffsetOnKeyboardHide:(CGFloat)originalOffset input:(UIView *)input;

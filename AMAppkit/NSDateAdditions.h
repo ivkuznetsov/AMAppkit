@@ -11,6 +11,7 @@
 
 + (NSDate*) dateFromString:(NSString*)string withFormat:(NSString*)format;
 - (NSString*) stringValueWithFormat:(NSString*)format;
+- (NSString*) localStringValueWithFormat:(NSString*)format;
 - (NSString*) stringValueWithStyle:(NSDateFormatterStyle)style;
 - (NSInteger) weekDay;
 
@@ -19,6 +20,7 @@
 
 + (NSDate*) dateWithoutTimeComponent;
 
+- (NSDate*) dayBeginTime;
 - (NSDate*) dayEndTime;
 
 + (NSDate*) yearBeginDateForYear:(NSInteger) year;
@@ -55,5 +57,6 @@
 - (NSDate*) dateByAddingDays:(NSInteger) day;
 - (NSDate*) dateByAddingMonths:(NSInteger) months;
 - (NSDate*) dateByAddingYears:(NSInteger) years;
+- (NSDate *)dateByAddingWeeks:(NSInteger)weeks;
 
 @end
