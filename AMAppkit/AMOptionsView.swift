@@ -22,6 +22,7 @@ import Foundation
     fileprivate var didSelect: ((Any)->())!
     private var willHide: (()->())?
     fileprivate var selectedOption: Any?
+    open var cellHeight: CGFloat = 50.0
     
     open class func present<T: Hashable>(view: UIView,
                                          options: [T],
@@ -41,7 +42,9 @@ import Foundation
         }
         optionView.willHide = willHide
         optionView.options = options
-        optionView.show(in: view)
+        DispatchQueue.main.async {
+            optionView.show(in: view)
+        }
         return optionView
     }
     
@@ -109,7 +112,7 @@ import Foundation
     }
     
     public func cellHeight(object: Any, def: CGFloat, table: AMTable) -> CGFloat {
-        return 50
+        return cellHeight
     }
 }
 

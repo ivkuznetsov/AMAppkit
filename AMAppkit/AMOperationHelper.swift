@@ -62,7 +62,7 @@ class AMOperationToken: Hashable {
     @objc open var failedBarViewType: AMAlertBarView.Type = AMAlertBarView.self
     private weak var failedBarView: AMAlertBarView?
     
-    private weak var view: UIView!
+    open weak var view: UIView!
     private var keyedOperations: [String:AMOperationToken] = [:]
     private var processing = Set<AMOperationToken>()
     private var loadingCounter = 0
