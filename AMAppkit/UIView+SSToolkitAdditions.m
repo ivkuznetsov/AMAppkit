@@ -51,6 +51,15 @@
     [self.layer addAnimation:transition forKey:@"transition"];
 }
 
+- (void)addMoveOutTransition {
+    CATransition *transition = [CATransition animation];
+    transition.type = kCATransitionMoveIn;
+    transition.subtype = kCATransitionFromLeft;
+    transition.duration = 0.4;
+    transition.timingFunction = [CAMediaTimingFunction functionWithControlPoints:0.4 :0 :0 :1.0];
+    [self.layer addAnimation:transition forKey:@"transition"];
+}
+
 - (void)addPresentTransition {
     CATransition *transition = [CATransition animation];
     transition.type = kCATransitionMoveIn;

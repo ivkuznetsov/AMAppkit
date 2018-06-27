@@ -231,7 +231,9 @@
 - (IBAction)trySubmit:(id)sender {
     if ([self validateInputs]) {
         [self.scrollView.superview endEditing:YES];
-        [_delegate didSuccessInput];
+        if ([_delegate respondsToSelector:@selector(didSuccessInput)]) {
+            [_delegate didSuccessInput];
+        }
     }
 }
 
