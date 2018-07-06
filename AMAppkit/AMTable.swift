@@ -300,6 +300,7 @@ extension AMTable: UITableViewDataSource {
             }
         }
         
+        cell.layoutIfNeeded()
         cell.separatorHidden = (indexPath.row == objects.count - 1) && table.tableFooterView != nil
         return cell
     }
