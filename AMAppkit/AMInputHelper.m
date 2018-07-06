@@ -301,10 +301,9 @@
         if (point.y != _scrollView.contentOffset.y) {
             _scrollView.contentOffset = point;
         }
-        self.tapGR.enabled = YES;
-    } else {
-        self.tapGR.enabled = NO;
     }
+    self.tapGR.enabled = bottomOffset != 0;
+    
     [UIView commitAnimations];
 }
 
