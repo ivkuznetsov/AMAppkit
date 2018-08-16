@@ -10,8 +10,6 @@
 		592060ED1E38E26C0066BE0D /* AMAppkit.h in Headers */ = {isa = PBXBuildFile; fileRef = 592060EB1E38E26C0066BE0D /* AMAppkit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		592061011E38EF270066BE0D /* AMFailedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 592061001E38EF270066BE0D /* AMFailedView.xib */; };
 		592061081E38F5BB0066BE0D /* AMLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 592061071E38F5BB0066BE0D /* AMLoadingView.xib */; };
-		592061471E3A26B90066BE0D /* UITableView+Reloading.h in Headers */ = {isa = PBXBuildFile; fileRef = 592061451E3A26B90066BE0D /* UITableView+Reloading.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		592061481E3A26B90066BE0D /* UITableView+Reloading.m in Sources */ = {isa = PBXBuildFile; fileRef = 592061461E3A26B90066BE0D /* UITableView+Reloading.m */; };
 		592061501E3A31850066BE0D /* AMNoObjectsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5920614F1E3A31850066BE0D /* AMNoObjectsView.xib */; };
 		592061651E3A62610066BE0D /* UICollectionView+Reloading.h in Headers */ = {isa = PBXBuildFile; fileRef = 592061631E3A62610066BE0D /* UICollectionView+Reloading.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		592061661E3A62610066BE0D /* UICollectionView+Reloading.m in Sources */ = {isa = PBXBuildFile; fileRef = 592061641E3A62610066BE0D /* UICollectionView+Reloading.m */; };
@@ -31,6 +29,7 @@
 		592061BE1E3B7F0F0066BE0D /* AMInputHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 592061BC1E3B7F0F0066BE0D /* AMInputHelper.m */; };
 		596A29491E4752DB00F6AA7A /* AMFooterLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596A29481E4752DB00F6AA7A /* AMFooterLoadingView.xib */; };
 		59C55A081E3E5D200049748A /* AMAlertBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59C55A071E3E5D200049748A /* AMAlertBarView.xib */; };
+		D70F8AB420F5FEB6002ADD30 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F8AB320F5FEB6002ADD30 /* String+Validation.swift */; };
 		D730FD631FD43D1F002D9F61 /* AMCollectionViewLeftAlignedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730FD621FD43D1F002D9F61 /* AMCollectionViewLeftAlignedLayout.swift */; };
 		D730FD9E1FD6EC66002D9F61 /* AMSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730FD9D1FD6EC66002D9F61 /* AMSeparatorView.swift */; };
 		D730FDA01FD6EF54002D9F61 /* AMFadeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730FD9F1FD6EF54002D9F61 /* AMFadeButton.swift */; };
@@ -63,6 +62,7 @@
 		D7949C561FCE1725000D2C4F /* AMNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7949C551FCE1725000D2C4F /* AMNotificationManager.swift */; };
 		D7949C581FCEB081000D2C4F /* NSManagedObject+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7949C571FCEB081000D2C4F /* NSManagedObject+Notifications.swift */; };
 		D7CB5CE61FE5BBD900341E60 /* AMAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CB5CE51FE5BBD900341E60 /* AMAlert.swift */; };
+		D7D20A6420C16D9100E15EEE /* UITableView+Reloading.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D20A6320C16D9100E15EEE /* UITableView+Reloading.swift */; };
 		D7E1BA601FEB04FE00BE8266 /* AMBaseTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1BA5B1FEB04FD00BE8266 /* AMBaseTabsViewController.swift */; };
 		D7E1BA611FEB04FE00BE8266 /* TabsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1BA5C1FEB04FD00BE8266 /* TabsCell.swift */; };
 		D7E1BA621FEB04FE00BE8266 /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1BA5D1FEB04FD00BE8266 /* TabsView.swift */; };
@@ -178,8 +178,6 @@
 		592060EC1E38E26C0066BE0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		592061001E38EF270066BE0D /* AMFailedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMFailedView.xib; sourceTree = "<group>"; };
 		592061071E38F5BB0066BE0D /* AMLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMLoadingView.xib; sourceTree = "<group>"; };
-		592061451E3A26B90066BE0D /* UITableView+Reloading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Reloading.h"; sourceTree = "<group>"; };
-		592061461E3A26B90066BE0D /* UITableView+Reloading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Reloading.m"; sourceTree = "<group>"; };
 		5920614F1E3A31850066BE0D /* AMNoObjectsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMNoObjectsView.xib; sourceTree = "<group>"; };
 		592061631E3A62610066BE0D /* UICollectionView+Reloading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+Reloading.h"; sourceTree = "<group>"; };
 		592061641E3A62610066BE0D /* UICollectionView+Reloading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Reloading.m"; sourceTree = "<group>"; };
@@ -201,6 +199,7 @@
 		592061BC1E3B7F0F0066BE0D /* AMInputHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInputHelper.m; sourceTree = "<group>"; };
 		596A29481E4752DB00F6AA7A /* AMFooterLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMFooterLoadingView.xib; sourceTree = "<group>"; };
 		59C55A071E3E5D200049748A /* AMAlertBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMAlertBarView.xib; sourceTree = "<group>"; };
+		D70F8AB320F5FEB6002ADD30 /* String+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
 		D730FD621FD43D1F002D9F61 /* AMCollectionViewLeftAlignedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMCollectionViewLeftAlignedLayout.swift; sourceTree = "<group>"; };
 		D730FD9D1FD6EC66002D9F61 /* AMSeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMSeparatorView.swift; sourceTree = "<group>"; };
 		D730FD9F1FD6EF54002D9F61 /* AMFadeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMFadeButton.swift; sourceTree = "<group>"; };
@@ -234,6 +233,7 @@
 		D7949C551FCE1725000D2C4F /* AMNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMNotificationManager.swift; sourceTree = "<group>"; };
 		D7949C571FCEB081000D2C4F /* NSManagedObject+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Notifications.swift"; sourceTree = "<group>"; };
 		D7CB5CE51FE5BBD900341E60 /* AMAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMAlert.swift; sourceTree = "<group>"; };
+		D7D20A6320C16D9100E15EEE /* UITableView+Reloading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Reloading.swift"; sourceTree = "<group>"; };
 		D7E1BA5B1FEB04FD00BE8266 /* AMBaseTabsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMBaseTabsViewController.swift; sourceTree = "<group>"; };
 		D7E1BA5C1FEB04FD00BE8266 /* TabsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsCell.swift; sourceTree = "<group>"; };
 		D7E1BA5D1FEB04FD00BE8266 /* TabsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsView.swift; sourceTree = "<group>"; };
@@ -465,6 +465,8 @@
 			isa = PBXGroup;
 			children = (
 				D7949C3D1FCD7185000D2C4F /* UIView+LoadingFromFrameworkNib.swift */,
+				D7D20A6320C16D9100E15EEE /* UITableView+Reloading.swift */,
+				D70F8AB320F5FEB6002ADD30 /* String+Validation.swift */,
 				D7FCA6691FA249F40005DAEB /* NSData+SSToolkitAdditions.h */,
 				D7FCA66A1FA249F40005DAEB /* NSData+SSToolkitAdditions.m */,
 				D7FCA6651FA2499B0005DAEB /* NSDictionary+SSToolkitAdditions.h */,
@@ -501,8 +503,6 @@
 				D7FCA5D01FA2441F0005DAEB /* UIView+Frame.m */,
 				D7FCA5CB1FA243F00005DAEB /* UITableViewCell+Additions.h */,
 				D7FCA5CC1FA243F10005DAEB /* UITableViewCell+Additions.m */,
-				592061451E3A26B90066BE0D /* UITableView+Reloading.h */,
-				592061461E3A26B90066BE0D /* UITableView+Reloading.m */,
 				592061631E3A62610066BE0D /* UICollectionView+Reloading.h */,
 				592061641E3A62610066BE0D /* UICollectionView+Reloading.m */,
 			);
@@ -680,7 +680,6 @@
 				D7FCA6481FA2474C0005DAEB /* SDWebImageDownloaderOperation.h in Headers */,
 				5920619E1E3B66E60066BE0D /* AMLocalizedLabel.h in Headers */,
 				D7FCA6521FA2474C0005DAEB /* MKAnnotationView+WebCache.h in Headers */,
-				592061471E3A26B90066BE0D /* UITableView+Reloading.h in Headers */,
 				D7FCA65B1FA2474C0005DAEB /* SDWebImageOperation.h in Headers */,
 				592061851E3B58F70066BE0D /* AMUntouchableView.h in Headers */,
 				592061981E3B631A0066BE0D /* AMLocalizedButton.h in Headers */,
@@ -784,7 +783,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Arello Mobile";
 				TargetAttributes = {
 					592060E71E38E26C0066BE0D = {
@@ -884,10 +883,12 @@
 				D7949C291FCB5CF7000D2C4F /* AMAlerBarView.swift in Sources */,
 				D7FCA60A1FA246370005DAEB /* NSArray+Additions.m in Sources */,
 				D7FCA64F1FA2474C0005DAEB /* SDWebImageCompat.m in Sources */,
+				D70F8AB420F5FEB6002ADD30 /* String+Validation.swift in Sources */,
 				592061BE1E3B7F0F0066BE0D /* AMInputHelper.m in Sources */,
 				D7949C261FCB3F9E000D2C4F /* AMOperationHelper.swift in Sources */,
 				D7FCA6681FA2499C0005DAEB /* NSDictionary+SSToolkitAdditions.m in Sources */,
 				D7FCA6431FA2474C0005DAEB /* MKAnnotationView+WebCache.m in Sources */,
+				D7D20A6420C16D9100E15EEE /* UITableView+Reloading.swift in Sources */,
 				592061991E3B631A0066BE0D /* AMLocalizedButton.m in Sources */,
 				D7FCA6591FA2474C0005DAEB /* NSData+ImageContentType.m in Sources */,
 				D7FCA5CE1FA243F10005DAEB /* UITableViewCell+Additions.m in Sources */,
@@ -925,7 +926,6 @@
 				D7949C221FCB38C5000D2C4F /* AMNoObjectsView.swift in Sources */,
 				D7949C441FCDA6A5000D2C4F /* AMCircularProgressView.swift in Sources */,
 				D7F324C11FDAAE070038F1C4 /* AMObservable.swift in Sources */,
-				592061481E3A26B90066BE0D /* UITableView+Reloading.m in Sources */,
 				592061861E3B58F70066BE0D /* AMUntouchableView.m in Sources */,
 				592061661E3A62610066BE0D /* UICollectionView+Reloading.m in Sources */,
 				D7FCA5E71FA245B60005DAEB /* UIView+SSToolkitAdditions.m in Sources */,

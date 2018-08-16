@@ -262,4 +262,34 @@
     return [self stringByTrimmingTrailingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
+- (NSString *)camelCased  {
+    NSMutableString *result = [NSMutableString new];
+    NSArray *words = [self componentsSeparatedByString: @" "];
+    for (uint i = 0; i < words.count; i++) {
+        if (i==0) {
+            [result appendString:((NSString *) words[i]).withLowercasedFirstChar];
+        }
+        else {
+            [result appendString:((NSString *)words[i]).withUppercasedFirstChar];
+        }
+    }
+    return result;
+}
+
+- (NSString *)withUppercasedFirstChar  {
+    if (self.length <= 1) {
+        return self.uppercaseString;
+    } else {
+        return [NSString stringWithFormat:@"%@%@",[[self substringToIndex:1] uppercaseString],[self substringFromIndex:1]];
+    }
+}
+
+- (NSString *)withLowercasedFirstChar {
+    if (self.length <= 1) {
+        return self.lowercaseString;
+    } else {
+        return [NSString stringWithFormat:@"%@%@",[[self substringToIndex:1] lowercaseString],[self substringFromIndex:1]];
+    }
+}
+
 @end

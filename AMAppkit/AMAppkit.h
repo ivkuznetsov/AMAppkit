@@ -36,7 +36,6 @@ FOUNDATION_EXPORT const unsigned char AMAppkitVersionString[];
 #import <AMAppkit/NSData+ImageContentType.h>
 
 //table helper
-#import <AMAppkit/UITableView+Reloading.h>
 #import <AMAppkit/UITableViewCell+Additions.h>
 
 //collection helper
