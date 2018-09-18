@@ -42,7 +42,7 @@ open class AMCollectionView: UICollectionView {
     
     open override var frame: CGRect {
         didSet {
-            if frame.size != oldValue.size {
+            if needRelayoutFor(size: frame.size, oldSize: oldValue.size) {
                 collectionViewLayout.invalidateLayout()
             }
         }
@@ -50,10 +50,21 @@ open class AMCollectionView: UICollectionView {
     
     open override var bounds: CGRect {
         didSet {
-            if bounds.size != oldValue.size {
+            if needRelayoutFor(size: bounds.size, oldSize: oldValue.size) {
                 self.layoutIfNeeded()
                 self.collectionViewLayout.invalidateLayout()
             }
         }
+    }
+    
+    private func needRelayoutFor(size: CGSize, oldSize: CGSize) -> Bool {
+        if let layout = self.collectionViewLayout as? UICollectionViewFlowLayout {
+            if layout.scrollDirection == .horizontal {
+                return size.height != oldSize.height
+            } else {
+                return size.width != oldSize.width
+            }
+        }
+        return size != oldSize
     }
 }
