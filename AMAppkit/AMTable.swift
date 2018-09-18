@@ -86,7 +86,7 @@ fileprivate extension TableDelegate {
 
 open class AMTable: StaticSetupObject {
     
-    open static var defaultDelegate: TableDelegate?
+    public static var defaultDelegate: TableDelegate?
     @objc open private(set) var table: UITableView!
     @objc open private(set) var objects: [AnyHashable] = []
     

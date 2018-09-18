@@ -27,7 +27,7 @@ private struct AMObserver: Equatable {
 
 @objc open class AMNotificationManager: NSObject {
     
-    @objc open static let shared = AMNotificationManager()
+    @objc public static let shared = AMNotificationManager()
     
     private var dictionary: [AnyHashable:[AMObserver]] = [:]
     

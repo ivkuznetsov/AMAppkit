@@ -38,7 +38,7 @@ public struct CCell {
 
 open class AMCollection: StaticSetupObject {
     
-    @objc open static var defaultDelegate: CollectionDelegate?
+    @objc public static var defaultDelegate: CollectionDelegate?
     
     @objc open var animationFix: Bool = false //fixes animation for insert/delete but duplicates reloading
     @objc open private(set) var objects: [AnyHashable] = []
