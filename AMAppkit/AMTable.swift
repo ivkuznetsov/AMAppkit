@@ -214,7 +214,7 @@ open class AMTable: StaticSetupObject {
     
     private func reloadEditButton(animated: Bool) {
         if let navigationItem = navigationItem {
-            if noObjectsView.superview != nil {
+            if noObjectsView.superview == nil {
                 navigationItem.setRightBarButton(table.isEditing ? doneButton : editButton, animated: animated)
             } else {
                 navigationItem.setRightBarButton(nil, animated: animated)
