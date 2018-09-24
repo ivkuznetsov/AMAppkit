@@ -25,6 +25,12 @@
 	return result;
 }
 
+- (NSString *)localStringValueWithFormat:(NSString *)format {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:format];
+    return [dateFormatter stringFromDate:self];
+}
+
 - (NSString *)stringValueWithStyle:(NSDateFormatterStyle)style {
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:style];
@@ -77,6 +83,18 @@
 
 + (NSDate*)dateWithoutTimeComponent {
 	return [[NSDate date] dateWithoutTimeComponent];
+}
+
+-(NSDate*) dayBeginTime; {
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    [comps setHour:0];
+    [comps setMinute:0];
+    [comps setSecond:0];
+    NSDate *date = [calendar dateByAddingComponents:comps toDate:[self dateWithoutTimeComponent] options:0];
+    
+    return date;
 }
 
 - (NSDate*)dayEndTime {
@@ -301,6 +319,19 @@
 	[comps setYear:years];
 	NSDate *date = [calendar dateByAddingComponents:comps toDate:self options:0];
 	return date;
+}
+
+- (NSDate *)dateByAddingWeeks:(NSInteger)weeks {
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger numberOfDaysInAWeek = 7;
+    [comps setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    comps.day = weeks * numberOfDaysInAWeek;
+    NSDate *date = [calendar dateByAddingComponents:comps toDate:self options:0];
+    
+    return date;
 }
 
 @end

@@ -10,8 +10,8 @@ import Foundation
 
 open class AMFailedView: UIView {
     
-    @IBOutlet var textLabel: UILabel!
-    @IBOutlet var retryButton: AMBorderedButton!
+    @IBOutlet open var textLabel: UILabel!
+    @IBOutlet open var retryButton: AMBorderedButton!
     
     private var retry: (()->())? {
         didSet {
