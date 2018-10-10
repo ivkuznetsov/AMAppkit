@@ -336,7 +336,7 @@ extension AMTable: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         let object = objects[indexPath.row] as Any // swift bug workaround
-        if let editor = ((delegate.editable()?.cellEditor(object: object, table: self) ??
+        if let editor = ((delegate?.editable()?.cellEditor(object: object, table: self) ??
             type(of: self).defaultDelegate?.editable()?.cellEditor(object: object, table: self)) as? TEditor) {
             
             return editor.editingStyle != .none
