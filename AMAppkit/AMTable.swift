@@ -214,7 +214,7 @@ open class AMTable: StaticSetupObject {
     
     private func reloadEditButton(animated: Bool) {
         if let navigationItem = navigationItem {
-            if noObjectsView.superview != nil {
+            if noObjectsView.superview == nil {
                 navigationItem.setRightBarButton(table.isEditing ? doneButton : editButton, animated: animated)
             } else {
                 navigationItem.setRightBarButton(nil, animated: animated)
@@ -336,7 +336,7 @@ extension AMTable: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         let object = objects[indexPath.row] as Any // swift bug workaround
-        if let editor = ((delegate.editable()?.cellEditor(object: object, table: self) ??
+        if let editor = ((delegate?.editable()?.cellEditor(object: object, table: self) ??
             type(of: self).defaultDelegate?.editable()?.cellEditor(object: object, table: self)) as? TEditor) {
             
             return editor.editingStyle != .none
