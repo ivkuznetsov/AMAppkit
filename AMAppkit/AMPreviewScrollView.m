@@ -75,11 +75,14 @@
         [self layoutImageView];
         self.zoomScale = self.minimumZoomScale;
         [self scrollViewDidZoom:self];
+        if (_aspectFill) {
+            self.contentOffset = CGPointMake(self.contentSize.width / 2.0 - self.bounds.size.width / 2.0, self.contentSize.height / 2.0 - self.bounds.size.height / 2.0);
+        }
     }
 }
 
 - (void)layoutImageView {
-    if (!_imageView.image) {
+    if (!_imageView.image || self.bounds.size.width == 0 || self.bounds.size.height == 0) {
         return;
     }
     self.maximumZoomScale = 4.0;
@@ -119,6 +122,22 @@
         [self layoutImageView];
         [self scrollViewDidZoom:self];
     }
+}
+
+- (UIImage *)croppedImage {
+    if (!_imageView.image) {
+        return nil;
+    }
+    CGRect newRect = [self convertRect:self.bounds toView:_imageView];
+    newRect.origin.x *= UIScreen.mainScreen.scale;
+    newRect.origin.y *= UIScreen.mainScreen.scale;
+    newRect.size.width *= UIScreen.mainScreen.scale;
+    newRect.size.height *= UIScreen.mainScreen.scale;
+    CGImageRef imageRef = CGImageCreateWithImageInRect(_imageView.image.CGImage, newRect);
+    UIImage* image = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    
+    return image;
 }
 
 #pragma mark - UIScrollViewDelegate
