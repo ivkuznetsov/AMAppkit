@@ -250,7 +250,7 @@ extension AMCollection: UICollectionViewDelegateFlowLayout {
             view.frame = frame
             view.layoutIfNeeded()
             
-            return CGSize(width: floor(frame.size.width), height: ceil(view.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height))
+            return CGSize(width: floor(frame.size.width), height: ceil(view.systemLayoutSizeFitting(CGSize(width: floor(frame.size.width), height: UILayoutFittingCompressedSize.height)).height))
         } else {
             var size = delegate.cellSizeFor?(object: object, collection: self)
             
