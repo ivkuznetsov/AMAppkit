@@ -31,6 +31,7 @@ import Foundation
             
             stackView.arrangedSubviews.forEach {
                 stackView.removeArrangedSubview($0)
+                $0.removeFromSuperview()
             }
             for (index, button) in buttons.enumerated() {
                 if !hiddenTabs.contains(index) {
