@@ -12,7 +12,7 @@ import WebKit
 open class AMWebViewController: AMBaseViewController, WKNavigationDelegate {
     
     open var onlyLandscape: Bool = false
-    open static var processNavigation: ((URL)->())?
+    public static var processNavigation: ((URL)->())?
     open var url: URL?
     open var html: String?
     open var webView = WKWebView()

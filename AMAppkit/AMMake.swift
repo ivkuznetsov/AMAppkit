@@ -19,6 +19,10 @@ import Foundation
         return TEditor(actions: actions)
     }
     
+    @objc public class func deleteEditor(_ delete: @escaping ()->()) -> Any {
+        return TEditor(delete: delete)
+    }
+    
     @available(iOS 11.0, *)
     @objc public class func editor(_ actions: @escaping ()->([UIContextualAction])) -> Any {
         return TEditor(actions: actions)

@@ -10,7 +10,7 @@ import Foundation
 
 open class AMBaseViewController: UIViewController {
     
-    open static var closeTitle: String?
+    public static var closeTitle: String?
     
     public init() {
         super.init(nibName: nil, bundle: nil)

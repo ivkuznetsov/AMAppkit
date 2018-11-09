@@ -229,11 +229,10 @@
 }
 
 - (IBAction)trySubmit:(id)sender {
-    if ([self validateInputs]) {
-        [self.scrollView.superview endEditing:YES];
-        if ([_delegate respondsToSelector:@selector(didSuccessInput)]) {
-            [_delegate didSuccessInput];
-        }
+    [self.scrollView.superview endEditing:YES];
+    
+    if ([_delegate respondsToSelector:@selector(didSuccessInput)] && [self validateInputs]) {
+        [_delegate didSuccessInput];
     }
 }
 
@@ -301,10 +300,9 @@
         if (point.y != _scrollView.contentOffset.y) {
             _scrollView.contentOffset = point;
         }
-        self.tapGR.enabled = YES;
-    } else {
-        self.tapGR.enabled = NO;
     }
+    self.tapGR.enabled = bottomOffset != 0;
+    
     [UIView commitAnimations];
 }
 

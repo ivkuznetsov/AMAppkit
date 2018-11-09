@@ -29,6 +29,7 @@
 		592061BE1E3B7F0F0066BE0D /* AMInputHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 592061BC1E3B7F0F0066BE0D /* AMInputHelper.m */; };
 		596A29491E4752DB00F6AA7A /* AMFooterLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596A29481E4752DB00F6AA7A /* AMFooterLoadingView.xib */; };
 		59C55A081E3E5D200049748A /* AMAlertBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59C55A071E3E5D200049748A /* AMAlertBarView.xib */; };
+		D70F8AB420F5FEB6002ADD30 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F8AB320F5FEB6002ADD30 /* String+Validation.swift */; };
 		D730FD631FD43D1F002D9F61 /* AMCollectionViewLeftAlignedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730FD621FD43D1F002D9F61 /* AMCollectionViewLeftAlignedLayout.swift */; };
 		D730FD9E1FD6EC66002D9F61 /* AMSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730FD9D1FD6EC66002D9F61 /* AMSeparatorView.swift */; };
 		D730FDA01FD6EF54002D9F61 /* AMFadeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730FD9F1FD6EF54002D9F61 /* AMFadeButton.swift */; };
@@ -198,6 +199,7 @@
 		592061BC1E3B7F0F0066BE0D /* AMInputHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInputHelper.m; sourceTree = "<group>"; };
 		596A29481E4752DB00F6AA7A /* AMFooterLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMFooterLoadingView.xib; sourceTree = "<group>"; };
 		59C55A071E3E5D200049748A /* AMAlertBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMAlertBarView.xib; sourceTree = "<group>"; };
+		D70F8AB320F5FEB6002ADD30 /* String+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
 		D730FD621FD43D1F002D9F61 /* AMCollectionViewLeftAlignedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMCollectionViewLeftAlignedLayout.swift; sourceTree = "<group>"; };
 		D730FD9D1FD6EC66002D9F61 /* AMSeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMSeparatorView.swift; sourceTree = "<group>"; };
 		D730FD9F1FD6EF54002D9F61 /* AMFadeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMFadeButton.swift; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 			children = (
 				D7949C3D1FCD7185000D2C4F /* UIView+LoadingFromFrameworkNib.swift */,
 				D7D20A6320C16D9100E15EEE /* UITableView+Reloading.swift */,
+				D70F8AB320F5FEB6002ADD30 /* String+Validation.swift */,
 				D7FCA6691FA249F40005DAEB /* NSData+SSToolkitAdditions.h */,
 				D7FCA66A1FA249F40005DAEB /* NSData+SSToolkitAdditions.m */,
 				D7FCA6651FA2499B0005DAEB /* NSDictionary+SSToolkitAdditions.h */,
@@ -880,6 +883,7 @@
 				D7949C291FCB5CF7000D2C4F /* AMAlerBarView.swift in Sources */,
 				D7FCA60A1FA246370005DAEB /* NSArray+Additions.m in Sources */,
 				D7FCA64F1FA2474C0005DAEB /* SDWebImageCompat.m in Sources */,
+				D70F8AB420F5FEB6002ADD30 /* String+Validation.swift in Sources */,
 				592061BE1E3B7F0F0066BE0D /* AMInputHelper.m in Sources */,
 				D7949C261FCB3F9E000D2C4F /* AMOperationHelper.swift in Sources */,
 				D7FCA6681FA2499C0005DAEB /* NSDictionary+SSToolkitAdditions.m in Sources */,

@@ -16,5 +16,6 @@
 @property (nonatomic) void(^didZoom)(CGFloat zoom);
 
 - (void)setImage:(UIImage *)image;
+- (UIImage *)croppedImage;
 
 @end
