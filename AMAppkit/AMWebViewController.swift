@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-open class AMWebViewController: AMBaseViewController {
+open class AMWebViewController: AMBaseViewController, WKNavigationDelegate {
     
     open var onlyLandscape: Bool = false
     public static var processNavigation: ((URL)->())?
@@ -66,23 +66,20 @@ open class AMWebViewController: AMBaseViewController {
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return onlyLandscape ? .landscape : .all
     }
-}
-
-extension AMWebViewController: WKNavigationDelegate {
     
-    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+    open func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         failView?.removeFromSuperview()
         indicator.startAnimating()
     }
     
-    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         indicator.stopAnimating()
         if firstLoad {
             firstLoad = false
         }
     }
     
-    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+    open func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         if firstLoad {
             failView = AMFailedView.present(in: view, text: error.localizedDescription, retry: { [weak self] in
                 self?.webView.reload()
@@ -90,7 +87,7 @@ extension AMWebViewController: WKNavigationDelegate {
         }
     }
     
-    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    open func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if navigationAction.navigationType == .linkActivated, let processNavigation = type(of: self).processNavigation, let url = navigationAction.request.url {
             processNavigation(url)
             decisionHandler(.cancel)

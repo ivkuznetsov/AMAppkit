@@ -325,6 +325,8 @@ extension AMTable: UITableViewDataSource {
         
         if let cell = object as? UITableViewCell {
             return cell.bounds.size.height
+        } else if let cell = object as? UIView {
+            return cell.systemLayoutSizeFitting(CGSize(width: tableView.width, height: CGFloat.greatestFiniteMagnitude)).height
         } else if let value = estimatedHeights[estimatedHeightKeyFor(object: object)] {
             return value
         } else if let value = (delegate.cellEstimatedHeight?(object: object, def: tableView.estimatedRowHeight, table: self) ??
