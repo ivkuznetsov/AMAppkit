@@ -30,6 +30,7 @@
     CATransition *transition = [CATransition animation];
     transition.type = kCATransitionFade;
     transition.duration = duration;
+    transition.fillMode = kCAFillModeBoth;
     [self.layer addAnimation:transition forKey:@"fade"];
 }
 
