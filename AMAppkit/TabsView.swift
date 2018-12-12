@@ -13,6 +13,7 @@ import Foundation
     case dark
 }
 
+@objcMembers
 @objc open class TabsView: UIView {
     
     open private(set) var stackView: UIStackView!

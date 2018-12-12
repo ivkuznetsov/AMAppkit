@@ -42,7 +42,7 @@ open class AMCircularProgressView: UIView {
         let layer = CAShapeLayer()
         layer.strokeColor = self.tintColor.cgColor
         layer.lineWidth = self.lineWidth
-        layer.lineCap = kCALineCapRound
+        layer.lineCap = .round
         layer.strokeEnd = 0
         layer.fillColor = UIColor.clear.cgColor
         self.layer.addSublayer(layer)

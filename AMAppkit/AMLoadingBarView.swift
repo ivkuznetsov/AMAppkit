@@ -31,7 +31,7 @@ import Foundation
     private lazy var fillLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
         layer.strokeColor = self.fillColor.cgColor
-        layer.lineCap = kCALineCapRound
+        layer.lineCap = CAShapeLayerLineCap.round
         layer.fillColor = UIColor.clear.cgColor
         layer.backgroundColor = UIColor(white:0.0, alpha:0.05).cgColor
         self.layer.addSublayer(layer)
@@ -41,7 +41,7 @@ import Foundation
     private lazy var clipLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
         layer.strokeColor = self.tintColor.cgColor
-        layer.lineCap = kCALineCapRound
+        layer.lineCap = CAShapeLayerLineCap.round
         layer.fillColor = UIColor.clear.cgColor
         layer.backgroundColor = UIColor(white:0.0, alpha:0.05).cgColor
         self.fillLayer.addSublayer(layer)
@@ -161,7 +161,7 @@ import Foundation
         animation.fromValue = startPath()
         animation.toValue = toPath()
         animation.duration = 0.2
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         animation.repeatCount = HUGE
         clipLayer.add(animation, forKey: "animation")
     }

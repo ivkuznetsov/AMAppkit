@@ -16,9 +16,9 @@ import Foundation
     private var sourceView: UIView
     private var customContainer: UIView?
     private var animation: AMExpandAnimation!
-    private var contentMode: UIViewContentMode
+    private var contentMode: UIView.ContentMode
     
-    public init(image: UIImage, sourceView: UIView, customContainer: UIView?, contentMode: UIViewContentMode) {
+    public init(image: UIImage, sourceView: UIView, customContainer: UIView?, contentMode: UIView.ContentMode) {
         self.image = image
         self.sourceView = sourceView
         self.customContainer = customContainer

@@ -43,7 +43,7 @@ private struct AMObserver: Equatable {
     
     @objc open func remove(observer: AnyObject, names: [String]) {
         for name in names {
-            dictionary[name] = dictionary[name]?.flatMap { $0.object === observer ? nil : $0 }
+            dictionary[name] = dictionary[name]?.compactMap { $0.object === observer ? nil : $0 }
         }
     }
     

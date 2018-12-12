@@ -22,7 +22,7 @@ public extension UITableView {
         }
     }
     
-    public func reload(oldData: [AnyHashable], newData: [AnyHashable], deferred: (()->())?, addAnimation: UITableViewRowAnimation) {
+    public func reload(oldData: [AnyHashable], newData: [AnyHashable], deferred: (()->())?, addAnimation: UITableView.RowAnimation) {
         
         var toAdd: [IndexPath] = []
         var toDelete: [IndexPath] = []

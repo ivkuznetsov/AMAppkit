@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objcMembers
 @objc public class AMNotification: NSObject {
     
     public var created: Set<AnyHashable>?

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+@objcMembers
 open class AMPagingCollection: AMCollection {
     
     private var widthConstraint: NSLayoutConstraint?

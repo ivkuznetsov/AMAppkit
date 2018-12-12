@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objcMembers
 open class AMFailedView: UIView {
     
     @IBOutlet open var textLabel: UILabel!

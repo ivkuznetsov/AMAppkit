@@ -123,10 +123,10 @@ import Foundation
             }
         }
         
-        currentViewController?.removeFromParentViewController()
+        currentViewController?.removeFromParent()
         currentViewController?.view.removeFromSuperview()
         currentViewController = vc
-        self.addChildViewController(vc)
+        self.addChild(vc)
         vc.view.frame = containerView.bounds
         vc.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         containerView.addSubview(vc.view)

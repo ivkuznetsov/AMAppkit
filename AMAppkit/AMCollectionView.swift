@@ -23,7 +23,7 @@ open class AMCollectionView: UICollectionView {
         self.delaysContentTouches = false
     }
     
-    open func createCell(for type: UICollectionViewCell.Type, at indexPath: IndexPath) -> UICollectionViewCell {
+    @objc open func createCell(for type: UICollectionViewCell.Type, at indexPath: IndexPath) -> UICollectionViewCell {
         let identifier = String(describing: type)
         
         if !registeredCells.contains(identifier) {

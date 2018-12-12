@@ -11,15 +11,15 @@ import UIKit
 
 public extension UIView {
     
-    public static func loadFromNib() -> Self {
+    @objc public static func loadFromNib() -> Self {
         return loadFrom(nib: String(describing: self))
     }
     
-    public static func loadFrom(nib: String) -> Self {
+    @objc public static func loadFrom(nib: String) -> Self {
         return loadFrom(nib: nib, owner: nil)
     }
     
-    public static func loadFrom(nib: String, owner: Any?) -> Self {
+    @objc public static func loadFrom(nib: String, owner: Any?) -> Self {
         return loadFrom(nib: nib, owner: owner, type: self)
     }
     

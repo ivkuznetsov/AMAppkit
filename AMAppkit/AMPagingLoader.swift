@@ -38,6 +38,7 @@ extension AMPagingLoaderDelegate {
     }
 }
 
+@objcMembers
 @objc open class AMPagingLoader: StaticSetupObject {
     
     open var processPullToRefreshError: ((AMPagingLoader, Error)->())! //AMAppearance Support
@@ -228,7 +229,7 @@ extension AMPagingLoaderDelegate {
     }
     
     open func validateFetchedItems(_ closure: (AnyHashable)->(Bool)) {
-        fetchedItems = fetchedItems.flatMap { closure($0) ? $0 : nil }
+        fetchedItems = fetchedItems.compactMap { closure($0) ? $0 : nil }
     }
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

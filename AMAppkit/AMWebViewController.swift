@@ -17,7 +17,7 @@ open class AMWebViewController: AMBaseViewController, WKNavigationDelegate {
     open var html: String?
     open var webView = WKWebView()
     open var indicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        let indicator = UIActivityIndicatorView(style: .gray)
         indicator.hidesWhenStopped = true
         return indicator
     }()

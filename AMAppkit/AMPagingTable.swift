@@ -51,7 +51,7 @@ import Foundation
         self.init(view: view, style: .plain, pagingDelegate: pagingDelegate)
     }
     
-    @objc public init(view: UIView, style: UITableViewStyle, pagingDelegate: AMPagingLoaderDelegate & TableDelegate) {
+    @objc public init(view: UIView, style: UITableView.Style, pagingDelegate: AMPagingLoaderDelegate & TableDelegate) {
         self.pagingDelegate = pagingDelegate
         super.init(view: view, style: style, delegate: pagingDelegate)
     }
@@ -60,7 +60,7 @@ import Foundation
         self.init(customAdd: customAdd, style: .plain, pagingDelegate: pagingDelegate)
     }
     
-    @objc public init(customAdd: (UITableView)->(), style: UITableViewStyle, pagingDelegate: AMPagingLoaderDelegate & TableDelegate) {
+    @objc public init(customAdd: (UITableView)->(), style: UITableView.Style, pagingDelegate: AMPagingLoaderDelegate & TableDelegate) {
         self.pagingDelegate = pagingDelegate
         super.init(customAdd: customAdd, style: style, delegate: pagingDelegate)
     }

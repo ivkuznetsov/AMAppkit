@@ -61,10 +61,10 @@ import Foundation
     fileprivate var pinchGR: UIPinchGestureRecognizer!
     fileprivate var panGR: UIPanGestureRecognizer!
     fileprivate var tapGR: UITapGestureRecognizer!
-    fileprivate var contentMode: UIViewContentMode
+    fileprivate var contentMode: UIView.ContentMode
     var presenting: Bool = false
     
-    init(source: UIView, dismissingSource: UIImageView, customContainer: UIView?, viewController: UIViewController, contentMode: UIViewContentMode) {
+    init(source: UIView, dismissingSource: UIImageView, customContainer: UIView?, viewController: UIViewController, contentMode: UIView.ContentMode) {
         self.source = source
         self.dismissingSource = dismissingSource
         self.customContainer = customContainer
@@ -104,12 +104,12 @@ import Foundation
             let scale = max(value, 0.7)
             
             var convertedTranslation = translation
-            convertedTranslation.x = fabs(translation.x) < 25 ? fabs(translation.x) : (sqrt(fabs(convertedTranslation.x)) * 5)
+            convertedTranslation.x = abs(translation.x) < 25 ? abs(translation.x) : (sqrt(abs(convertedTranslation.x)) * 5)
             if translation.x < 0 {
                 convertedTranslation.x = -convertedTranslation.x
             }
             if translation.y < 0 {
-                convertedTranslation.y = translation.y > -25 ? translation.y : (-sqrt(fabs(convertedTranslation.y)) * 5)
+                convertedTranslation.y = translation.y > -25 ? translation.y : (-sqrt(abs(convertedTranslation.y)) * 5)
             }
             imageView.transform = CGAffineTransform(translationX: convertedTranslation.x, y: convertedTranslation.y).concatenating(CGAffineTransform(scaleX: scale, y: scale))
             overlayView.alpha = value

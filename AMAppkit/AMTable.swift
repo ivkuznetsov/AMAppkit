@@ -17,7 +17,7 @@ import Foundation
 @objc public protocol TableDelegate: UITableViewDelegate {
     
     //fade by default
-    @objc optional func animationForAdding(table: AMTable) -> UITableViewRowAnimation
+    @objc optional func animationForAdding(table: AMTable) -> UITableView.RowAnimation
     
     //by default it becomes visible when objects array is empty
     @objc optional func shouldShowNoData(objects: [AnyHashable], table: AMTable) -> Bool
@@ -38,7 +38,7 @@ import Foundation
 }
 
 public struct TEditor {
-    fileprivate var editingStyle: UITableViewCellEditingStyle = .delete
+    fileprivate var editingStyle: UITableViewCell.EditingStyle = .delete
     fileprivate var action: (()->())?
     fileprivate var actions: (()->([Any]))? // UIContextualAction or UITableViewRowAction
     
@@ -123,7 +123,7 @@ open class AMTable: StaticSetupObject {
         self.init(view: view, style: .plain, delegate: delegate)
     }
     
-    @objc public init(view: UIView, style: UITableViewStyle, delegate: TableDelegate) {
+    @objc public init(view: UIView, style: UITableView.Style, delegate: TableDelegate) {
         self.delegate = delegate
         super.init()
         self.createTable(style: style)
@@ -139,7 +139,7 @@ open class AMTable: StaticSetupObject {
         self.init(customAdd: customAdd, style: .plain, delegate: delegate)
     }
     
-    @objc public init(customAdd: (UITableView)->(), style: UITableViewStyle, delegate: TableDelegate) {
+    @objc public init(customAdd: (UITableView)->(), style: UITableView.Style, delegate: TableDelegate) {
         self.delegate = delegate
         super.init()
         self.createTable(style: style)
@@ -147,9 +147,15 @@ open class AMTable: StaticSetupObject {
         setup()
     }
     
-    @objc open func set(objects: [AnyHashable], animated: Bool) {
+    @objc open func set(objects: [Any], animated: Bool) {
         let oldObjects = self.objects
-        self.objects = objects
+        let resultObjects = objects.map { (object) -> AnyHashable in
+            if let object = object as? NSObject {
+                return object
+            }
+            return object as! AnyHashable
+        }
+        self.objects = resultObjects
         
         // remove missed estimated heights
         var set = Set(estimatedHeights.keys)
@@ -157,7 +163,7 @@ open class AMTable: StaticSetupObject {
         set.forEach { estimatedHeights[$0] = nil }
         
         if animated && oldObjects.count > 0 {
-            table.reload(oldData: oldObjects, newData: objects, deferred: { [weak self] in
+            table.reload(oldData: oldObjects, newData: resultObjects, deferred: { [weak self] in
                 
                 self?.reloadVisibleCells()
             }, addAnimation: self.delegate.animationForAdding?(table: self) ??
@@ -167,8 +173,8 @@ open class AMTable: StaticSetupObject {
             table.reloadData()
         }
         
-        if delegate.shouldShowNoData?(objects: objects, table: self) ??
-            (type(of: self).defaultDelegate?.shouldShowNoData?(objects: objects, table: self) ?? (objects.count == 0)) {
+        if delegate.shouldShowNoData?(objects: resultObjects, table: self) ??
+            (type(of: self).defaultDelegate?.shouldShowNoData?(objects: resultObjects, table: self) ?? (objects.count == 0)) {
             
             noObjectsView.frame = CGRect(x: 0, y: 0, width: table.frame.size.width, height: table.frame.size.height)
             table.addSubview(noObjectsView)
@@ -178,8 +184,11 @@ open class AMTable: StaticSetupObject {
         reloadEditButton(animated: animated)
     }
     
-    @objc open func scrollTo(object: AnyHashable, animated: Bool) {
-        if let index = objects.index(of: object) {
+    @objc open func scrollTo(object: Any, animated: Bool) {
+        // swift leaks if reference object in "Any" cast to AnyHashable
+        if let object = object as? NSObject, let index = objects.index(of: object) {
+            table.scrollToRow(at: IndexPath(row: index, section:0), at: .none, animated: animated)
+        } else if let object = object as? AnyHashable, let index = objects.index(of: object) {
             table.scrollToRow(at: IndexPath(row: index, section:0), at: .none, animated: animated)
         }
     }
@@ -223,10 +232,10 @@ open class AMTable: StaticSetupObject {
         }
     }
     
-    private func createTable(style: UITableViewStyle) {
+    private func createTable(style: UITableView.Style) {
         table = UITableView(frame: CGRect.zero, style: style)
         table.backgroundColor = UIColor.clear
-        table.rowHeight = UITableViewAutomaticDimension
+        table.rowHeight = UITableView.automaticDimension
         table.estimatedRowHeight = 150
         
         table.subviews.forEach {
@@ -306,7 +315,7 @@ extension AMTable: UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var resultHeight = UITableViewAutomaticDimension
+        var resultHeight = UITableView.automaticDimension
         let object = objects[indexPath.row] as Any // swift bug workaround
         
         var height = delegate.cellHeight?(object: object, def: resultHeight, table: self)
@@ -368,7 +377,7 @@ extension AMTable: UITableViewDelegate {
         delegate.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
     }
     
-    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let object = objects[indexPath.row] as Any // swift bug workaround
         
         if let editor = ((delegate.editable()?.cellEditor(object: object, table: self) ??
@@ -403,7 +412,7 @@ extension AMTable: UITableViewDelegate {
         return nil
     }
     
-    public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         let object = objects[indexPath.row] as Any // swift bug workaround
         if let editor = ((delegate.editable()?.cellEditor(object: object, table: self) ??
             type(of: self).defaultDelegate?.editable()?.cellEditor(object: object, table: self)) as? TEditor) {

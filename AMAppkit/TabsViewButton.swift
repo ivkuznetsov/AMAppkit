@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objcMembers
 @objc open class TabsViewButton: UIButton {
     
     open var badgeColor: UIColor = UIColor.red {

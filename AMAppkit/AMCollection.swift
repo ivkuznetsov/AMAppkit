@@ -41,7 +41,7 @@ open class AMCollection: StaticSetupObject {
     @objc public static var defaultDelegate: CollectionDelegate?
     
     @objc open var animationFix: Bool = false //fixes animation for insert/delete but duplicates reloading
-    @objc open private(set) var objects: [AnyHashable] = []
+    @objc private(set) var objects: [AnyHashable] = []
     @objc open private(set) var collection: AMCollectionView!
     @objc open dynamic var layout: UICollectionViewFlowLayout? {
         get {
@@ -60,7 +60,7 @@ open class AMCollection: StaticSetupObject {
     weak var delegate: CollectionDelegate!
    
     private var updatingDatasource: Bool = false
-    private var lazyObjects: [AnyHashable]?
+    private var lazyObjects: [Any]?
     
     @objc public init(collection: AMCollectionView, delegate: CollectionDelegate) {
         super.init()
@@ -108,7 +108,7 @@ open class AMCollection: StaticSetupObject {
         noObjectsViewType = AMNoObjectsView.self
     }
     
-    @objc open func set(objects: [AnyHashable], animated: Bool) {
+    @objc open func set(objects: [Any], animated: Bool) {
         if updatingDatasource {
             lazyObjects = objects
         } else {
@@ -137,17 +137,23 @@ open class AMCollection: StaticSetupObject {
         }
     }
     
-    private func set(objects: [AnyHashable], animated: Bool, completion: (()->())?) {
+    private func set(objects: [Any], animated: Bool, completion: (()->())?) {
         let oldObjects = self.objects
-        self.objects = objects
+        let resultObjects = objects.map { (object) -> AnyHashable in
+            if let object = object as? NSObject {
+                return object
+            }
+            return object as! AnyHashable
+        }
+        self.objects = resultObjects
         
-        let toReload = collection.reload(animated: animated, oldData: oldObjects, data: objects, completion: completion)
+        let toReload = collection.reload(animated: animated, oldData: oldObjects, data: resultObjects, completion: completion)
         collection.layoutIfNeeded()
         
         if let toReload = toReload, animated {
             toReload.forEach {
                 if let cell = collection.cellForItem(at: $0), cell as? AMContainerCell == nil {
-                    let object = objects[$0.item] as Any // swift bug workaround
+                    let object = resultObjects[$0.item] as Any // swift bug workaround
                     
                     let createCell = self.delegate.createCell?(object: object, collection: self) ??
                         type(of: self).defaultDelegate?.createCell?(object: object, collection: self)
@@ -156,8 +162,8 @@ open class AMCollection: StaticSetupObject {
             }
         }
         
-        if delegate.shouldShowNoData?(objects, collection: self) ??
-            (type(of: self).defaultDelegate?.shouldShowNoData?(objects, collection: self) ?? (objects.count == 0)) {
+        if delegate.shouldShowNoData?(resultObjects, collection: self) ??
+            (type(of: self).defaultDelegate?.shouldShowNoData?(resultObjects, collection: self) ?? (objects.count == 0)) {
             noObjectsView.frame = CGRect(x: 0, y: 0, width: collection.frame.size.width, height: collection.frame.size.height)
             collection.addSubview(noObjectsView)
         } else {
@@ -234,7 +240,7 @@ extension AMCollection: UICollectionViewDelegateFlowLayout {
             let insets = self.layout?.sectionInset
             let defaultWidth = collectionView.frame.size.width - (insets?.left ?? 0) - (insets?.right ?? 0)
             
-            var defaultSize = view.systemLayoutSizeFitting(CGSize(width: defaultWidth, height: UILayoutFittingCompressedSize.height))
+            var defaultSize = view.systemLayoutSizeFitting(CGSize(width: defaultWidth, height: UIView.layoutFittingCompressedSize.height))
             defaultSize.width = defaultWidth
             
             var size = delegate.viewSizeFor?(view: view, defaultSize: defaultSize, collection: self)
@@ -250,7 +256,7 @@ extension AMCollection: UICollectionViewDelegateFlowLayout {
             view.frame = frame
             view.layoutIfNeeded()
             
-            return CGSize(width: floor(frame.size.width), height: ceil(view.systemLayoutSizeFitting(CGSize(width: floor(frame.size.width), height: UILayoutFittingCompressedSize.height)).height))
+            return CGSize(width: floor(frame.size.width), height: ceil(view.systemLayoutSizeFitting(CGSize(width: floor(frame.size.width), height: UIView.layoutFittingCompressedSize.height)).height))
         } else {
             var size = delegate.cellSizeFor?(object: object, collection: self)
             

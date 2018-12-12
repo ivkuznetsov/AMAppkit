@@ -11,27 +11,27 @@ import CoreData
 
 public extension NSManagedObject {
 
-    public static func add(observer: AnyObject, closure: @escaping (AMNotification?)->()) {
+    @objc public static func add(observer: AnyObject, closure: @escaping (AMNotification?)->()) {
         self.add(observer: observer, closure: closure, classes: [self])
     }
     
-    public static func remove(observer: AnyObject) {
+    @objc public static func remove(observer: AnyObject) {
         self.remove(observer: observer, classes: [self])
     }
     
-    public static func add(observer: AnyObject, closure: @escaping (AMNotification?)->(), classes: [NSManagedObject.Type]) {
+    @objc public static func add(observer: AnyObject, closure: @escaping (AMNotification?)->(), classes: [NSManagedObject.Type]) {
         AMNotificationManager.shared.add(observer: observer, closure: closure, names: classNamesFor(classes: classes))
     }
     
-    public static func remove(observer: AnyObject, classes: [NSManagedObject.Type]) {
+    @objc public static func remove(observer: AnyObject, classes: [NSManagedObject.Type]) {
         AMNotificationManager.shared.remove(observer: observer, names: classNamesFor(classes: classes))
     }
     
-    public static func postUpdatesFor(classes: [NSManagedObject.Type], notification: AMNotification?) {
+    @objc public static func postUpdatesFor(classes: [NSManagedObject.Type], notification: AMNotification?) {
         AMNotificationManager.shared.postNotification(names: classNamesFor(classes: classes), notification: notification)
     }
     
-    private static func classNamesFor(classes: [NSManagedObject.Type]) -> [String] {
+    @objc private static func classNamesFor(classes: [NSManagedObject.Type]) -> [String] {
         return classes.map { String(describing: $0) }
     }
 }
