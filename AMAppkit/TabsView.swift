@@ -18,7 +18,7 @@ import Foundation
     
     open private(set) var stackView: UIStackView!
     
-    private var backgroundView: UIView
+    open var backgroundView: UIView
     private var selectedView: UIView
     open private(set) var selectedIndex: Int = 0
     private var didSelect: (UIButton, /* animated */ Bool)->()

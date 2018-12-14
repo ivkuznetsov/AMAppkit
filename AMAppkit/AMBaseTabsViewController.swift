@@ -72,7 +72,7 @@ import Foundation
         self.view.addGestureRecognizer(swipeRight)
     }
     
-    @objc private func swipeAction(gr: UISwipeGestureRecognizer) {
+    @objc open func swipeAction(gr: UISwipeGestureRecognizer) {
         if gr.direction == .left {
             if let index = tabsView.selectNext(animated: true) {
                 _ = selectController(at: index, animated: true)
