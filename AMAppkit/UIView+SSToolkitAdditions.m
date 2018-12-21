@@ -12,7 +12,7 @@
 @implementation UIView (SSToolkitAdditions)
 
 - (UIImage *)imageRepresentation {
-	UIGraphicsBeginImageContext(self.bounds.size);
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, false, 0.0);
 	[self.layer renderInContext:UIGraphicsGetCurrentContext()];
 	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
