@@ -9,9 +9,11 @@
 import Foundation
 import UIKit
 
-class AMContainerCell: UICollectionViewCell {
+open class AMContainerCell: UICollectionViewCell {
     
-    override func prepareForReuse() {
+    open var untouchable = false
+    
+    override open func prepareForReuse() {
         super.prepareForReuse()
         self.contentView.subviews.forEach { $0.removeFromSuperview() }
     }
@@ -23,5 +25,12 @@ class AMContainerCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: ["view":view]))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: ["view":view]))
+    }
+    
+    override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if let view = super.hitTest(point, with: event) {
+            return (untouchable && (view == self || view == contentView)) ? nil : view
+        }
+        return nil
     }
 }

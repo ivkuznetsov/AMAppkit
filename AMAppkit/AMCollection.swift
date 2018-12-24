@@ -62,6 +62,8 @@ open class AMCollection: StaticSetupObject {
     private var updatingDatasource: Bool = false
     private var lazyObjects: [Any]?
     
+    open var setupViewContainer: ((AMContainerCell)->())?
+    
     @objc public init(collection: AMCollectionView, delegate: CollectionDelegate) {
         super.init()
         self.collection = collection
@@ -203,6 +205,7 @@ extension AMCollection: UICollectionViewDataSource {
         if let view = object as? UIView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: AMContainerCell.self), for: indexPath) as! AMContainerCell
             cell.attach(view: view)
+            setupViewContainer?(cell)
             return cell
         } else {
             let createCell = (delegate.createCell?(object: object, collection: self) ??
