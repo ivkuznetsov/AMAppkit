@@ -92,6 +92,7 @@ open class AMTable: StaticSetupObject {
     
     //for edit/done button
     @objc open weak var navigationItem: UINavigationItem?
+    @objc open var didChangeEditing: ((Bool)->())?
     
     private lazy var editButton: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editAction))
@@ -218,6 +219,7 @@ open class AMTable: StaticSetupObject {
     
     @objc private func editAction() {
         table.setEditing(!table.isEditing, animated: true)
+        didChangeEditing?(table.isEditing)
         reloadEditButton(animated: true)
     }
     
