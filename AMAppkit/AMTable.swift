@@ -217,7 +217,7 @@ open class AMTable: StaticSetupObject {
         }
     }
     
-    @objc private func editAction() {
+    @objc open func editAction() {
         table.setEditing(!table.isEditing, animated: true)
         didChangeEditing?(table.isEditing)
         reloadEditButton(animated: true)
