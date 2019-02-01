@@ -20,6 +20,9 @@ import Foundation
     @objc optional func createCell(object: Any, collection: AMCollection) -> Any?
     
     @objc optional func cellSizeFor(object: Any, collection: AMCollection) -> CGSize
+    
+    @objc optional func move(object: Any) -> ((/*source*/IndexPath, /*proposed target*/ IndexPath)->())?
+    @objc optional func proposeMoving(object: Any, toIndexPath: IndexPath) -> IndexPath
 }
 
 public struct CCell {
@@ -216,6 +219,25 @@ extension AMCollection: UICollectionViewDataSource {
             
             return cell
         }
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        let object = objects[indexPath.item] as Any
+        return delegate.move?(object: object) ?? type(of: self).defaultDelegate?.move?(object: object) != nil
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let object = objects[sourceIndexPath.item] as Any
+        if let closure = delegate.move?(object: object) ?? type(of: self).defaultDelegate?.move?(object: object) {
+            closure(sourceIndexPath, destinationIndexPath)
+            objects.remove(at: sourceIndexPath.item)
+            objects.insert(object as! AnyHashable, at: destinationIndexPath.item)
+        }
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
+        let object = objects[originalIndexPath.item] as Any
+        return delegate.proposeMoving?(object: object, toIndexPath: proposedIndexPath) ?? type(of: self).defaultDelegate?.proposeMoving?(object: object, toIndexPath: proposedIndexPath) ?? proposedIndexPath
     }
 }
 
