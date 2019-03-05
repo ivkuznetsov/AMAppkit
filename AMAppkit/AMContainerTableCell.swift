@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
-class AMContainerTableCell: AMBaseTableViewCell {
+open class AMContainerTableCell: AMBaseTableViewCell {
     
-    override func prepareForReuse() {
+    override open func prepareForReuse() {
         super.prepareForReuse()
         self.contentView.subviews.forEach { $0.removeFromSuperview() }
     }
