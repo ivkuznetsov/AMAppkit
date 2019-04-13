@@ -40,7 +40,7 @@ import Foundation
 @available(swift, obsoleted: 1.0)
 public extension StaticSetup {
     
-    @objc public static func setupFor(_ type: AnyClass, block: @escaping (AnyObject)->()) {
+    @objc static func setupFor(_ type: AnyClass, block: @escaping (AnyObject)->()) {
         setup(type as! StaticSetupObject.Type, block)
     }
 }

@@ -3,7 +3,6 @@
 //  AMAppkit
 //
 //  Created by Ilya Kuznetsov on 12/27/17.
-//  Copyright © 2017 Arello Mobile. All rights reserved.
 //
 
 import Foundation

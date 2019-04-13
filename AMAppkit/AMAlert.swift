@@ -51,11 +51,11 @@ public extension AMAlert {
     
     fileprivate static var associatedActions: [UITextField : UIAlertAction] = [:]
     
-    public static func present(_ message: String?, cancel: (String, (()->())?), other: [(String, (([UITextField])->())?)], fieldsSetup: [(UITextField)->()], on viewController: UIViewController?) -> UIAlertController {
+    static func present(_ message: String?, cancel: (String, (()->())?), other: [(String, (([UITextField])->())?)], fieldsSetup: [(UITextField)->()], on viewController: UIViewController?) -> UIAlertController {
         return present(title: defaultTitle, message: message, cancel: cancel, other: other, fieldsSetup: fieldsSetup, on: viewController)
     }
     
-    public static func present(title: String?, message: String?, cancel: (String, (()->())?), other: [(String, (([UITextField])->())?)], fieldsSetup: [(UITextField)->()], on viewController: UIViewController?) -> UIAlertController {
+    static func present(title: String?, message: String?, cancel: (String, (()->())?), other: [(String, (([UITextField])->())?)], fieldsSetup: [(UITextField)->()], on viewController: UIViewController?) -> UIAlertController {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -108,11 +108,11 @@ public extension AMAlert {
 }
 
 public extension AMAlert {
-    public static func presentSheet(title: String?, message: String?, cancel: (String, (()->())?), other: [(String, (()->())?)], destructive: Int?, on view: UIView, inRect: CGRect) -> UIAlertController {
+    static func presentSheet(title: String?, message: String?, cancel: (String, (()->())?), other: [(String, (()->())?)], destructive: Int?, on view: UIView, inRect: CGRect) -> UIAlertController {
         return presentSheet(title: title, message: message, cancel: cancel, other: other, destructive: destructive, item: view, inRect: inRect, on: nil)
     }
     
-    public static func presentSheet(title: String?, message: String?, cancel: (String, (()->())?), other: [(String, (()->())?)], destructive: Int?, barButton: UIBarButtonItem, on viewController: UIViewController?) -> UIAlertController {
+    static func presentSheet(title: String?, message: String?, cancel: (String, (()->())?), other: [(String, (()->())?)], destructive: Int?, barButton: UIBarButtonItem, on viewController: UIViewController?) -> UIAlertController {
         return presentSheet(title: title, message: message, cancel: cancel, other: other, destructive: destructive, item: barButton, inRect: CGRect.zero, on: viewController)
     }
     
@@ -149,21 +149,21 @@ public extension AMAlert {
 @objc public extension AMAlert {
     
     @available(swift, obsoleted: 1.0)
-    public static func present(_ message: String?, cancel: AMake, other: [AMake], on viewController: UIViewController?) -> UIAlertController {
+    static func present(_ message: String?, cancel: AMake, other: [AMake], on viewController: UIViewController?) -> UIAlertController {
         return present(title: defaultTitle, message: message, cancel: cancel, other: other, on: viewController)
     }
     
-    public static func present(title: String?, message: String?, cancel: AMake, other: [AMake], on viewController: UIViewController?) -> UIAlertController {
+    static func present(title: String?, message: String?, cancel: AMake, other: [AMake], on viewController: UIViewController?) -> UIAlertController {
         let others: [(String, (()->())?)] = other.map { (other) in
             return (other.title, other.closure)
         }
         return present(message, cancel: (cancel.title, cancel.closure), other: others, on: viewController)
     }
     
-    public typealias ActionBlock = ()->()
+    typealias ActionBlock = ()->()
     
     @available(swift, obsoleted: 1.0)
-    public static func presentSheet(title: String?, message: String?, cancel: AMake, other: [AMake], destructive: Int, on view: UIView, inRect: CGRect) -> UIAlertController {
+    static func presentSheet(title: String?, message: String?, cancel: AMake, other: [AMake], destructive: Int, on view: UIView, inRect: CGRect) -> UIAlertController {
         let others: [(String, (()->())?)] = other.map { (other) in
             return (other.title, other.closure)
         }
@@ -171,7 +171,7 @@ public extension AMAlert {
     }
     
     @available(swift, obsoleted: 1.0)
-    public static func presentSheet(title: String?, message: String?, cancel: AMake, other: [AMake], destructive: Int, barButton: UIBarButtonItem, on viewController: UIViewController?) -> UIAlertController {
+    static func presentSheet(title: String?, message: String?, cancel: AMake, other: [AMake], destructive: Int, barButton: UIBarButtonItem, on viewController: UIViewController?) -> UIAlertController {
         let others: [(String, (()->())?)] = other.map { (other) in
             return (other.title, other.closure)
         }

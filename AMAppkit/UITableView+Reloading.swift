@@ -3,7 +3,6 @@
 //  AMAppkit
 //
 //  Created by Ilya Kuznetsov on 6/1/18.
-//  Copyright © 2018 Arello Mobile. All rights reserved.
 //
 
 import UIKit
@@ -22,7 +21,7 @@ public extension UITableView {
         }
     }
     
-    public func reload(oldData: [AnyHashable], newData: [AnyHashable], deferred: (()->())?, addAnimation: UITableView.RowAnimation) {
+    func reload(oldData: [AnyHashable], newData: [AnyHashable], deferred: (()->())?, addAnimation: UITableView.RowAnimation) {
         
         var toAdd: [IndexPath] = []
         var toDelete: [IndexPath] = []

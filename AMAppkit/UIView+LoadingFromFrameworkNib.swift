@@ -11,19 +11,19 @@ import UIKit
 
 public extension UIView {
     
-    @objc public static func loadFromNib() -> Self {
+    @objc static func loadFromNib() -> Self {
         return loadFrom(nib: String(describing: self))
     }
     
-    @objc public static func loadFrom(nib: String) -> Self {
+    @objc static func loadFrom(nib: String) -> Self {
         return loadFrom(nib: nib, owner: nil)
     }
     
-    @objc public static func loadFrom(nib: String, owner: Any?) -> Self {
+    @objc static func loadFrom(nib: String, owner: Any?) -> Self {
         return loadFrom(nib: nib, owner: owner, type: self)
     }
     
-    public static func loadFrom<T: UIView>(nib: String, owner: Any?, type: T.Type) -> T  {
+    static func loadFrom<T: UIView>(nib: String, owner: Any?, type: T.Type) -> T  {
         var bundle = Bundle.main
         if bundle.path(forResource: nib, ofType: "nib") == nil {
             bundle = Bundle(for: type)

@@ -3,7 +3,6 @@
 //  AMAppkit
 //
 //  Created by Ilya Kuznetsov on 2/2/18.
-//  Copyright © 2018 Arello Mobile. All rights reserved.
 //
 
 import Foundation
@@ -120,7 +119,7 @@ public extension WKWebView {
             "    meta.setAttribute('content', 'width=device-width');\n" +
         "})();\n"
     }
-    public var scalesPageToFit: Bool {
+    var scalesPageToFit: Bool {
         get {
             return objc_getAssociatedObject(self, key.scale) != nil
         }

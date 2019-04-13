@@ -25,11 +25,11 @@ public protocol AMObservable: class {
 
 public extension AMObservable {
     
-    public static func notificationName() -> String {
+    static func notificationName() -> String {
         return String(describing: self)
     }
     
-    public func observe(_ observer: AnyObject, closure: @escaping (AMNotification?)->()) {
+    func observe(_ observer: AnyObject, closure: @escaping (AMNotification?)->()) {
         type(of: self).observe(observer) { [unowned self] (notification) in
             if notification == nil || notification!.object == nil || notification!.object! === self {
                 closure(notification)
@@ -37,19 +37,19 @@ public extension AMObservable {
         }
     }
     
-    public static func observe(_ observer: AnyObject, closure: @escaping (AMNotification?)->()) {
+    static func observe(_ observer: AnyObject, closure: @escaping (AMNotification?)->()) {
         AMNotificationManager.shared.add(observer: observer, closure: closure, names: [notificationName()])
     }
     
-    public static func cancelObserving(_ observer: AnyObject) {
+    static func cancelObserving(_ observer: AnyObject) {
         AMNotificationManager.shared.remove(observer: observer, names: [notificationName()])
     }
     
-    public static func post(_ notification: AMNotification?) {
+    static func post(_ notification: AMNotification?) {
         AMNotificationManager.shared.postNotification(names: [notificationName()], notification: notification)
     }
     
-    public func post(_ notification: AMNotification?) {
+    func post(_ notification: AMNotification?) {
         let notification = notification ?? AMNotification()
         notification.object = self
         type(of: self).post(notification)
