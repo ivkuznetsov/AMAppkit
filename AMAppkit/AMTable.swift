@@ -86,6 +86,9 @@ fileprivate extension TableDelegate {
 
 open class AMTable: StaticSetupObject {
     
+    //use constraints for attacing UIView to AMTableContainerCell
+    @objc var attachViewsByConstraints: Bool = true
+    
     public static var defaultDelegate: TableDelegate?
     @objc open private(set) var table: UITableView!
     @objc open private(set) var objects: [AnyHashable] = []
@@ -303,7 +306,12 @@ extension AMTable: UITableViewDataSource {
             cell = object
         } else if let object = safeCast as? UIView {
             let tableCell = table.dequeueReusableCell(withIdentifier: "AMContainerTableCell") as! AMContainerTableCell
-            tableCell.attach(view: object)
+            
+            if attachViewsByConstraints {
+                tableCell.attach(view: object)
+            } else {
+                tableCell.attachWithoutConstraint(view: object)
+            }
             cell = tableCell
         } else {
             let createCell = (delegate.createCell?(object: safeCast, table: self) ??
