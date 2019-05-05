@@ -86,6 +86,15 @@ fileprivate extension TableDelegate {
 
 open class AMTable: StaticSetupObject {
     
+    @objc private var deferredUpdate: Bool = false
+    @objc open var visible: Bool = true { // defer reload when view is not visible
+        didSet {
+            if deferredUpdate {
+                set(objects: self.objects, animated: false)
+                deferredUpdate = false
+            }
+        }
+    }
     //use constraints for attacing UIView to AMTableContainerCell
     @objc var attachViewsByConstraints: Bool = true
     
@@ -160,6 +169,11 @@ open class AMTable: StaticSetupObject {
             return object as! AnyHashable
         }
         self.objects = resultObjects
+        
+        if !visible {
+            deferredUpdate = true
+            return
+        }
         
         // remove missed estimated heights
         var set = Set(estimatedHeights.keys)
