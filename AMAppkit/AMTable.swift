@@ -89,9 +89,8 @@ open class AMTable: StaticSetupObject {
     @objc private var deferredUpdate: Bool = false
     @objc open var visible: Bool = true { // defer reload when view is not visible
         didSet {
-            if deferredUpdate {
+            if visible && (visible != oldValue) && deferredUpdate {
                 set(objects: self.objects, animated: false)
-                deferredUpdate = false
             }
         }
     }
@@ -180,7 +179,7 @@ open class AMTable: StaticSetupObject {
         objects.forEach { set.remove(estimatedHeightKeyFor(object: $0)) }
         set.forEach { estimatedHeights[$0] = nil }
         
-        if animated && oldObjects.count > 0 {
+        if !deferredUpdate && (animated && oldObjects.count > 0) {
             table.reload(oldData: oldObjects, newData: resultObjects, deferred: { [weak self] in
                 
                 self?.reloadVisibleCells()
@@ -189,6 +188,7 @@ open class AMTable: StaticSetupObject {
             
         } else {
             table.reloadData()
+            deferredUpdate = false
         }
         
         if delegate.shouldShowNoData?(objects: resultObjects, table: self) ??

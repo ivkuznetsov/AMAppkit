@@ -31,7 +31,7 @@ open class AMLoadingView : UIView {
         let loadingView = self.loadFromNib()
         
         loadingView.frame = view.bounds
-        loadingView.progressIndicator.isHidden = true
+        loadingView.progressIndicator?.isHidden = true
         loadingView.opaqueStyle = false
         view.addSubview(loadingView)
         
