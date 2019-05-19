@@ -23,6 +23,11 @@ import Foundation
     open private(set) var selectedIndex: Int = 0
     private var didSelect: (UIButton, /* animated */ Bool)->()
     open private(set) var buttons: [TabsViewButton] = []
+    open var selectorHeight: CGFloat = 2 {
+        didSet {
+            setNeedsLayout()
+        }
+    }
     
     open var hiddenTabs: [Int] = [] {
         didSet {
@@ -107,7 +112,7 @@ import Foundation
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        backgroundView.frame = CGRect(x: stackView.layoutMargins.left, y: self.bounds.size.height - 2, width: stackView.width - stackView.layoutMargins.left - stackView.layoutMargins.right, height: 2)
+        backgroundView.frame = CGRect(x: stackView.layoutMargins.left, y: self.bounds.size.height - selectorHeight, width: stackView.width - stackView.layoutMargins.left - stackView.layoutMargins.right, height: selectorHeight)
         selectedView.frame = selectedFrame()
     }
     
