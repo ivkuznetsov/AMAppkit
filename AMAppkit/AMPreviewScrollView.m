@@ -81,6 +81,17 @@
     }
 }
 
+- (void)zoomToFill {
+    float aspect = (_containerView.frame.size.width / self.zoomScale) / (_containerView.frame.size.height / self.zoomScale);
+    float viewAspect = self.bounds.size.width / self.bounds.size.height;
+    if (aspect < viewAspect) {
+        self.zoomScale = self.bounds.size.width / (_imageView.frame.size.width / self.zoomScale);
+    } else {
+        self.zoomScale = self.bounds.size.height / (_imageView.frame.size.height / self.zoomScale);
+    }
+    self.contentOffset = CGPointMake(self.contentSize.width / 2.0 - self.bounds.size.width / 2.0, self.contentSize.height / 2.0 - self.bounds.size.height / 2.0);
+}
+
 - (void)layoutImageView {
     if (!_imageView.image || self.bounds.size.width == 0 || self.bounds.size.height == 0) {
         return;
@@ -124,16 +135,32 @@
     }
 }
 
-- (UIImage *)croppedImage {
-    if (!_imageView.image) {
-        return nil;
-    }
+- (CGRect)croppingRect {
     CGRect newRect = [self convertRect:self.bounds toView:_imageView];
     newRect.origin.x *= UIScreen.mainScreen.scale;
     newRect.origin.y *= UIScreen.mainScreen.scale;
     newRect.size.width *= UIScreen.mainScreen.scale;
     newRect.size.height *= UIScreen.mainScreen.scale;
-    CGImageRef imageRef = CGImageCreateWithImageInRect(_imageView.image.CGImage, newRect);
+    return newRect;
+}
+
+- (void)setCropRect:(CGRect)rect {
+    CGRect newRect = rect;
+    newRect.origin.x /= UIScreen.mainScreen.scale;
+    newRect.origin.y /= UIScreen.mainScreen.scale;
+    newRect.size.width /= UIScreen.mainScreen.scale;
+    newRect.size.height /= UIScreen.mainScreen.scale;
+    self.zoomScale = self.frame.size.width / newRect.size.width;
+    newRect.origin.x *= self.zoomScale;
+    newRect.origin.y *= self.zoomScale;
+    [self setContentOffset:newRect.origin];
+}
+
+- (UIImage *)croppedImage {
+    if (!_imageView.image) {
+        return nil;
+    }
+    CGImageRef imageRef = CGImageCreateWithImageInRect(_imageView.image.CGImage, [self croppingRect]);
     UIImage* image = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);
     
@@ -155,6 +182,15 @@
         top = (self.bounds.size.height - self.contentSize.height) * 0.5f;
     }
     scrollView.contentInset = UIEdgeInsetsMake(top, left, top, left);
+    if (_didZoomContinuus) {
+        _didZoomContinuus();
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (_didScroll) {
+        _didScroll();
+    }
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {

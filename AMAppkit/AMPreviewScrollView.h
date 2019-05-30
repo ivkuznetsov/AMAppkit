@@ -14,8 +14,13 @@
 @property (nonatomic) UIImageView *imageView;
 @property (nonatomic) UIView *containerView;
 @property (nonatomic) void(^didZoom)(CGFloat zoom);
+@property (nonatomic) void(^didScroll)(void);
+@property (nonatomic) void(^didZoomContinuus)(void);
 
 - (void)setImage:(UIImage *)image;
 - (UIImage *)croppedImage;
+- (void)zoomToFill;
+- (CGRect)croppingRect;
+- (void)setCropRect:(CGRect)rect;
 
 @end
