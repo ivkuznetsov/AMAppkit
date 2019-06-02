@@ -192,6 +192,18 @@
         _didScroll();
     }
 }
+    
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if (_didEndScroll) {
+        _didEndScroll();
+    }
+}
+    
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate) {
+        [self scrollViewDidEndDecelerating:scrollView];
+    }
+}
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
     if (_didZoom) {

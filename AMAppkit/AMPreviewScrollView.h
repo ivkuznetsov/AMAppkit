@@ -15,6 +15,7 @@
 @property (nonatomic) UIView *containerView;
 @property (nonatomic) void(^didZoom)(CGFloat zoom);
 @property (nonatomic) void(^didScroll)(void);
+@property (nonatomic) void(^didEndScroll)(void);
 @property (nonatomic) void(^didZoomContinuus)(void);
 
 - (void)setImage:(UIImage *)image;
