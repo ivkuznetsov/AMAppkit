@@ -172,7 +172,7 @@
     NSLayoutManager *layoutManager = [NSLayoutManager new];
     NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeZero];
     
-   // textContainer.lineFragmentPadding = 0.0;
+    textContainer.lineFragmentPadding = 0.0;
     textContainer.lineBreakMode = self.lineBreakMode;
     textContainer.maximumNumberOfLines = self.numberOfLines;
     textContainer.size = CGSizeMake(self.bounds.size.width, CGFLOAT_MAX);

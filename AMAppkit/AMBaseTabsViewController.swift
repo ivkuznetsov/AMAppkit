@@ -58,6 +58,11 @@ import Foundation
             constraint.priority = UILayoutPriority(900)
             
             tabsView.addConstraint(constraint)
+            
+            if tabsFillWidth() {
+                tabsWidthConstraint = tabsView.widthAnchor.constraint(equalTo: navigationController!.navigationBar.widthAnchor, multiplier: 1)
+                tabsWidthConstraint?.isActive = true
+            }
         }
         _ = selectController(at: 0, animated: false)
         
