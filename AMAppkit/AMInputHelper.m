@@ -338,6 +338,9 @@
     if ([touch.view isKindOfClass:[UIControl class]]) {
         return NO;
     }
+    if (touch.view.isFirstResponder) {
+        return NO;
+    }
     return YES;
 }
 
