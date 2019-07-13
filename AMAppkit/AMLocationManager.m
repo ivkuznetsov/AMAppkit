@@ -69,8 +69,16 @@
     return result;
 }
 
+- (void)addPassiveObserver:(id)observer selector:(SEL)selector {
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:kLocationPositionUpdate object:nil];
+}
+    
+- (void)removePassiveObserver:(id)observer {
+    [[NSNotificationCenter defaultCenter] removeObserver:observer name:kLocationPositionUpdate object:nil];
+}
+    
 - (void)addObserver:(id)observer selector:(SEL)selector options:(LocationManagerOptions)options {
-    NSNotificationCenter *nc =[NSNotificationCenter defaultCenter];
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     if (options & LocationManagerAccess) {
         [nc addObserver:observer selector:selector name:kLocationAccessUpdate object:nil];
     }

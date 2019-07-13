@@ -31,5 +31,9 @@ typedef NS_OPTIONS(NSUInteger, LocationManagerOptions) {
 - (void)addObserver:(id)observer selector:(SEL)selector options:(LocationManagerOptions)options;
 - (void)removeObserver:(id)observer options:(LocationManagerOptions)options;
 - (void)updateLocationWithCompletion:(void(^)(NSError *error))completion;
-
+    
+// these methods don't initiate location tracking
+- (void)addPassiveObserver:(id)observer selector:(SEL)selector;
+- (void)removePassiveObserver:(id)observer;
+    
 @end

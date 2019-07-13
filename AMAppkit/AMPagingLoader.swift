@@ -55,11 +55,12 @@ extension AMPagingLoaderDelegate {
     }
     open private(set) var footerLoadingView: AMFooterLoadingView!
     open private(set) var loading = false
+    open private(set) weak var scrollView: UIScrollView!
+    
     open var fetchedItems: [AnyHashable] = []
     open var offset: Any?
     
     private var currentOperationId: String?
-    private weak var scrollView: UIScrollView!
     private weak var delegate: AMPagingLoaderDelegate!
     private var performedLoading = false
     private var shouldEndRefreshing = false
