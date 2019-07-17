@@ -58,11 +58,6 @@ import Foundation
             constraint.priority = UILayoutPriority(900)
             
             tabsView.addConstraint(constraint)
-            
-            if tabsFillWidth() {
-                tabsWidthConstraint = tabsView.widthAnchor.constraint(equalTo: navigationController!.navigationBar.widthAnchor, multiplier: 1)
-                tabsWidthConstraint?.isActive = true
-            }
         }
         _ = selectController(at: 0, animated: false)
         
@@ -75,6 +70,15 @@ import Foundation
         swipeRight.direction = .right
         swipeRight.delegate = self
         self.view.addGestureRecognizer(swipeRight)
+    }
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if tabsFillWidth() && tabsContainerView == nil {
+            tabsWidthConstraint = tabsView.widthAnchor.constraint(equalTo: navigationController!.navigationBar.widthAnchor, multiplier: 1)
+            tabsWidthConstraint?.isActive = true
+        }
     }
     
     @objc open func swipeAction(gr: UISwipeGestureRecognizer) {
