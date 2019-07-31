@@ -34,6 +34,10 @@ open class AMWebViewController: AMBaseViewController, WKNavigationDelegate {
         super.init()
     }
     
+    public override init() {
+        super.init()
+    }
+    
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
