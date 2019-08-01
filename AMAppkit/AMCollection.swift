@@ -262,6 +262,12 @@ extension AMCollection: UICollectionViewDelegateFlowLayout {
         let object = objects[indexPath.item] as Any // swift bug workaround
         
         if let view = object as? UIView {
+            
+            if view.superview == nil { // perfrom initial trait collection set
+                collectionView.addSubview(view)
+                view.removeFromSuperview()
+            }
+            
             let insets = self.layout?.sectionInset
             let defaultWidth = collectionView.frame.size.width - (insets?.left ?? 0) - (insets?.right ?? 0)
             
