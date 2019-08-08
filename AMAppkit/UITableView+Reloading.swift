@@ -54,7 +54,7 @@ public extension UITableView {
         for (index, object) in newData.enumerated() {
             let oldDataIndex = currentSet.index(of: object)
             if index != oldDataIndex {
-                itemsToMove.append((from: IndexPath(row: oldData.index(of: object)!, section: 0), to: IndexPath(row: index, section: 0)))
+                itemsToMove.append((from: IndexPath(row: oldData.firstIndex(of: object)!, section: 0), to: IndexPath(row: index, section: 0)))
             }
         }
         

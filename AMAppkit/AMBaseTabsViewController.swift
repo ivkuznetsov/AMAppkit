@@ -54,7 +54,7 @@ import Foundation
             tabsView.translatesAutoresizingMaskIntoConstraints = false
             tabsView.frame = CGRect(x: insets.left, y: 0, width: width, height: rect.size.height)
             
-            let constraint = NSLayoutConstraint(item: tabsView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 44)
+            let constraint = NSLayoutConstraint(item: tabsView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 44)
             constraint.priority = UILayoutPriority(900)
             
             tabsView.addConstraint(constraint)
@@ -100,12 +100,12 @@ import Foundation
             tabsView.translatesAutoresizingMaskIntoConstraints = false
             tabsContainer.addSubview(tabsView)
             
-            tabsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[tabsView]|", options: [], metrics: nil, views: ["tabsView":tabsView]))
+            tabsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[tabsView]|", options: [], metrics: nil, views: ["tabsView":tabsView!]))
             
             if tabsFillWidth() {
-                tabsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[tabsView]|", options: [], metrics: nil, views: ["tabsView":tabsView]))
+                tabsContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[tabsView]|", options: [], metrics: nil, views: ["tabsView":tabsView!]))
             } else {
-                tabsContainer.addConstraint(NSLayoutConstraint(item: tabsView, attribute: .centerX, relatedBy: .equal, toItem: tabsContainerView, attribute: .centerX, multiplier: 1, constant: 0))
+                tabsContainer.addConstraint(NSLayoutConstraint(item: tabsView!, attribute: .centerX, relatedBy: .equal, toItem: tabsContainerView, attribute: .centerX, multiplier: 1, constant: 0))
             }
         }
     }
@@ -125,7 +125,7 @@ import Foundation
             return vc
         }
         if let currentViewController = currentViewController, animated {
-            if viewControllers.index(of: currentViewController)! < viewControllers.index(of: vc)! {
+            if viewControllers.firstIndex(of: currentViewController)! < viewControllers.firstIndex(of: vc)! {
                 containerView.addPushTransition()
             } else {
                 containerView.addPopTransition()

@@ -35,7 +35,7 @@ open class AMBaseViewController: UIViewController {
         
         if let nc = self.navigationController,
             nc.presentingViewController != nil,
-            let index = nc.viewControllers.index(of: self),
+            let index = nc.viewControllers.firstIndex(of: self),
             (index == 0 || nc.viewControllers[index - 1].navigationItem.rightBarButtonItem?.action == #selector(closeAction) ) {
             
             createCloseButton()
@@ -47,7 +47,7 @@ open class AMBaseViewController: UIViewController {
     }
     
     open func previousViewController() -> UIViewController? {
-        if let array = self.navigationController?.viewControllers, let index = array.index(of: self), index != 0 {
+        if let array = self.navigationController?.viewControllers, let index = array.firstIndex(of: self), index != 0 {
             return array[index - 1]
         }
         return nil
