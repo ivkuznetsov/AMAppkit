@@ -90,6 +90,10 @@ open class AMWebViewController: AMBaseViewController, WKNavigationDelegate {
         }
     }
     
+    open func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        completionHandler(.performDefaultHandling, nil)
+    }
+    
     open func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if navigationAction.navigationType == .linkActivated, let processNavigation = type(of: self).processNavigation, let url = navigationAction.request.url {
             processNavigation(url)
