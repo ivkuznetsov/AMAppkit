@@ -51,6 +51,14 @@ open class AMCollection: StaticSetupObject {
             return collection.collectionViewLayout as? UICollectionViewFlowLayout
         }
     }
+    @objc private var deferredUpdate: Bool = false
+    @objc open var visible: Bool = true { // defer reload when view is not visible
+        didSet {
+            if visible && (visible != oldValue) && deferredUpdate {
+                set(objects: self.objects, animated: false)
+            }
+        }
+    }
     
     //empty state
     @objc open var noObjectsViewType: AMNoObjectsView.Type! {
@@ -152,19 +160,30 @@ open class AMCollection: StaticSetupObject {
         }
         self.objects = resultObjects
         
-        let toReload = collection.reload(animated: animated, oldData: oldObjects, data: resultObjects, completion: completion)
-        collection.layoutIfNeeded()
+        if !visible {
+            deferredUpdate = true
+            completion?()
+            return
+        }
         
-        if let toReload = toReload, animated {
-            toReload.forEach {
-                if let cell = collection.cellForItem(at: $0), cell as? AMContainerCell == nil {
-                    let object = resultObjects[$0.item] as Any // swift bug workaround
-                    
-                    let createCell = self.delegate.createCell?(object: object, collection: self) ??
-                        type(of: self).defaultDelegate?.createCell?(object: object, collection: self)
-                    (createCell as! CCell).cellFill?(cell)
+        if !deferredUpdate {
+            let toReload = collection.reload(animated: animated, oldData: oldObjects, data: resultObjects, completion: completion)
+            collection.layoutIfNeeded()
+            
+            if let toReload = toReload, animated {
+                toReload.forEach {
+                    if let cell = collection.cellForItem(at: $0), cell as? AMContainerCell == nil {
+                        let object = resultObjects[$0.item] as Any // swift bug workaround
+                        
+                        let createCell = self.delegate.createCell?(object: object, collection: self) ??
+                            type(of: self).defaultDelegate?.createCell?(object: object, collection: self)
+                        (createCell as! CCell).cellFill?(cell)
+                    }
                 }
             }
+        } else {
+            collection.reloadData()
+            deferredUpdate = false
         }
         
         if delegate.shouldShowNoData?(resultObjects, collection: self) ??

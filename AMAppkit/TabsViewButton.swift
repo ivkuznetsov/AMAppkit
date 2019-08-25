@@ -23,6 +23,18 @@ import Foundation
         }
     }
     
+    open override var frame: CGRect {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    open override var bounds: CGRect {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
     open override func draw(_ rect: CGRect) {
         super.draw(rect)
         

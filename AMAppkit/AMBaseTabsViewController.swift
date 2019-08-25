@@ -10,7 +10,7 @@ import Foundation
 
 @objc open class AMBaseTabsViewController: AMBaseViewController {
     
-    open private(set) var viewControllers: [UIViewController]!
+    open var viewControllers: [UIViewController]!
     open private(set) var currentViewController: UIViewController?
     
     @IBOutlet open var containerView: UIView!
@@ -18,6 +18,10 @@ import Foundation
     private var tabsWidthConstraint: NSLayoutConstraint?
     
     open var tabsView: TabsView!
+    
+    public override init() {
+        super.init()
+    }
     
     public init(viewControllers: [UIViewController]) {
         self.viewControllers = viewControllers
