@@ -16,7 +16,7 @@ import Foundation
         }
     }
     
-    fileprivate var table: AMTable!
+    open var table: AMTable!
     @IBOutlet private var overlayView: UIView!
     fileprivate var fill: ((UITableViewCell, Any)->())!
     fileprivate var didSelect: ((Any)->())!

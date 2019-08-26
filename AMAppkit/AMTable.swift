@@ -142,8 +142,8 @@ open class AMTable: StaticSetupObject {
         table.frame = view.bounds
         view.addSubview(table)
         table.translatesAutoresizingMaskIntoConstraints = false
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[table]|", options: [], metrics: nil, views: ["table" : table]))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[table]|", options: [], metrics: nil, views: ["table" : table]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[table]|", options: [], metrics: nil, views: ["table" : table!]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[table]|", options: [], metrics: nil, views: ["table" : table!]))
         setup()
     }
     
@@ -204,9 +204,9 @@ open class AMTable: StaticSetupObject {
     
     @objc open func scrollTo(object: Any, animated: Bool) {
         // swift leaks if reference object in "Any" cast to AnyHashable
-        if let object = object as? NSObject, let index = objects.index(of: object) {
+        if let object = object as? NSObject, let index = objects.firstIndex(of: object) {
             table.scrollToRow(at: IndexPath(row: index, section:0), at: .none, animated: animated)
-        } else if let object = object as? AnyHashable, let index = objects.index(of: object) {
+        } else if let object = object as? AnyHashable, let index = objects.firstIndex(of: object) {
             table.scrollToRow(at: IndexPath(row: index, section:0), at: .none, animated: animated)
         }
     }
@@ -216,7 +216,7 @@ open class AMTable: StaticSetupObject {
             var resIndex: Int?
             
             if let cell = $0 as? TCellObjectHolding {
-                if let object = cell.object, let index = objects.index(of: object) {
+                if let object = cell.object, let index = objects.firstIndex(of: object) {
                     resIndex = index
                     
                     let createCell = self.delegate.createCell?(object: object, table: self) ??
@@ -226,7 +226,7 @@ open class AMTable: StaticSetupObject {
                     }
                 }
             } else {
-                resIndex = objects.index(of: $0)
+                resIndex = objects.firstIndex(of: $0)
             }
             if let index = resIndex {
                 $0.separatorHidden = index == objects.count - 1 && self.table.tableFooterView != nil

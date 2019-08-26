@@ -1077,12 +1077,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Arello Mobile";
 				TargetAttributes = {
 					592060E71E38E26C0066BE0D = {
 						CreatedOnToolsVersion = 8.2.1;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					D7FF5FB2202260FA00DD08B7 = {
@@ -1098,7 +1098,7 @@
 			};
 			buildConfigurationList = 592060E21E38E26C0066BE0D /* Build configuration list for PBXProject "AMAppkit" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				English,
@@ -1456,6 +1456,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1476,6 +1477,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.arellomobile.AMAppkit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

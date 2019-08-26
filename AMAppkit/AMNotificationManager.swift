@@ -65,7 +65,7 @@ private struct AMObserver: Equatable {
                 if var array = array {
                     for observer in array.reversed() {
                         if observer.object == nil {
-                            array.remove(at: array.index(of: observer)!)
+                            array.remove(at: array.firstIndex(of: observer)!)
                             continue
                         }
                         if postedUpdates.contains(observer) {

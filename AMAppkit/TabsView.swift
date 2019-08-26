@@ -85,10 +85,10 @@ import Foundation
         self.addSubview(stackView)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        self.addConstraint(NSLayoutConstraint(item: stackView, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 1, constant: 0))
-        self.addConstraint(NSLayoutConstraint(item: stackView, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: -3))
-        self.addConstraint(NSLayoutConstraint(item: stackView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
-        self.addConstraint(NSLayoutConstraint(item: stackView, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: stackView!, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: stackView!, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: -3))
+        self.addConstraint(NSLayoutConstraint(item: stackView!, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: stackView!, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0))
         
         let color = UIColor(red: 226.0 / 255.0, green: 225.0 / 255.0, blue: 229.0 / 255.0, alpha: 1.0)
         if style == .light {
@@ -120,7 +120,7 @@ import Foundation
         if stackView.arrangedSubviews.count == 0 {
             return CGRect.zero
         }
-        guard let index = stackView?.arrangedSubviews.index(of: buttons[selectedIndex]) else {
+        guard let index = stackView?.arrangedSubviews.firstIndex(of: buttons[selectedIndex]) else {
             return CGRect.zero
         }
         let width = backgroundView.width / CGFloat(stackView!.arrangedSubviews.count)

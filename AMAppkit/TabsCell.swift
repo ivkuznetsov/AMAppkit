@@ -16,20 +16,20 @@ import Foundation
             tabsView.translatesAutoresizingMaskIntoConstraints = false
             self.insertSubview(tabsView, at: 0)
             
-            let constraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[tabsView]|", options: [], metrics: nil, views: ["tabsView":tabsView])
+            let constraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[tabsView]|", options: [], metrics: nil, views: ["tabsView":tabsView!])
             constraints.forEach {
                 $0.priority = UILayoutPriority(900)
             }
             self.addConstraints(constraints)
             
             if fillWidth {
-                let constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[tabsView]|", options: [], metrics: nil, views: ["tabsView":tabsView])
+                let constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[tabsView]|", options: [], metrics: nil, views: ["tabsView":tabsView!])
                 constraints.forEach {
                     $0.priority = UILayoutPriority(900)
                 }
                 self.addConstraints(constraints)
             } else {
-                self.addConstraint(NSLayoutConstraint(item: tabsView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
+                self.addConstraint(NSLayoutConstraint(item: tabsView!, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
             }
         }
     }

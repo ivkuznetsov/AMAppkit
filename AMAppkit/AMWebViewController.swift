@@ -34,6 +34,10 @@ open class AMWebViewController: AMBaseViewController, WKNavigationDelegate {
         super.init()
     }
     
+    public override init() {
+        super.init()
+    }
+    
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -84,6 +88,10 @@ open class AMWebViewController: AMBaseViewController, WKNavigationDelegate {
                 self?.webView.reload()
             })
         }
+    }
+    
+    open func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        completionHandler(.performDefaultHandling, nil)
     }
     
     open func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

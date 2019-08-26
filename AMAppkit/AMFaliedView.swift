@@ -32,9 +32,12 @@ open class AMFailedView: UIView {
         faliedView.translatesAutoresizingMaskIntoConstraints = false
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[failedView]|", options: [], metrics: nil, views: ["failedView":faliedView]))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[failedView]|", options: [], metrics: nil, views: ["failedView":faliedView]))
+        faliedView.configure()
         
         return faliedView
     }
+    
+    open func configure() { }
     
     @IBAction private func retryAction(_ sender: UIButton) {
         retry?()

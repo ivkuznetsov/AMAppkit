@@ -140,8 +140,8 @@ extension AMPagingLoaderDelegate {
                     })
                 }
                 wSelf.offset = newOffset
-                wSelf.footerLoadingView.state = .stop
                 wSelf.append(items: objects, animated: false)
+                wSelf.footerLoadingView.state = .stop
             }
         })
     }
@@ -203,11 +203,11 @@ extension AMPagingLoaderDelegate {
                 if wSelf.offset == nil {
                     wSelf.setFooterVisible(false, wSelf.footerLoadingView)
                 }
-                wSelf.footerLoadingView.state = .stop
                 let oldObjects = wSelf.fetchedItems
                 wSelf.fetchedItems = []
                 wSelf.append(items: objects, animated: oldObjects.count > 0)
                 wSelf.delegate.cachable()?.saveFirstPageInCache(objects: objects)
+                wSelf.footerLoadingView.state = .stop
             }
             wSelf.endRefreshing()
         })
