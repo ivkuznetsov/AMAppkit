@@ -21,6 +21,7 @@ typedef NS_OPTIONS(NSUInteger, LocationManagerOptions) {
 @property (nonatomic, readonly) CLLocation *location;
 @property (nonatomic) BOOL locationFailed;
 @property (nonatomic) BOOL cacheLocation;
+@property (nonatomic) BOOL allowLocationByIp; // to make it work you should add to app transport security access to http://ip-api.com
 @property (nonatomic, readonly) CLAuthorizationStatus authorizationStatus;
 
 + (instancetype)sharedInstance;

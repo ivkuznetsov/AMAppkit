@@ -50,6 +50,7 @@
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     _locationManager.headingOrientation = CLDeviceOrientationFaceUp;
     _locationManager.distanceFilter = 0.01;
+    _authorizationStatus = CLLocationManager.authorizationStatus;
     if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [_locationManager requestWhenInUseAuthorization];
     }
@@ -162,7 +163,18 @@
 
 - (void)updateLocationWithCompletion:(void(^)(NSError *error))completion {
     if (![self.class locationDetectionPermittedByUser]) {
-        completion([NSError errorWithDomain:@"com.amlocationmanager" code:NSURLErrorUserAuthenticationRequired userInfo:@{NSLocalizedDescriptionKey : @"Location update is not permitted by user"}]);
+        if (_allowLocationByIp) {
+            [self getLocationById:^(CLLocation *location, NSError *error) {
+                if (error || !location) {
+                    completion(error);
+                } else {
+                    [self locationManager:_locationManager didUpdateLocations:@[location]];
+                    completion(nil);
+                }
+            }];
+        } else {
+            completion([NSError errorWithDomain:@"com.amlocationmanager" code:NSURLErrorUserAuthenticationRequired userInfo:@{NSLocalizedDescriptionKey : @"Location update is not permitted by user"}]);
+        }
         return;
     }
     
@@ -189,6 +201,30 @@
     }
     [_updateLocationBlocks removeAllObjects];
     [self removeObserver:self options:LocationManagerAccess | LocationManagerLocationUpdate];
+}
+
+- (void)getLocationById:(void(^)(CLLocation *, NSError *))completion {
+    NSURL *url = [NSURL URLWithString:@"http://ip-api.com/json"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    request.HTTPMethod = @"GET";
+    
+    [[NSURLSession.sharedSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                completion(nil, error);
+            } else {
+                if (data) {
+                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                    double lat = [dict[@"lat"] doubleValue];
+                    double lon = [dict[@"lon"] doubleValue];
+                    CLLocation *location = [[CLLocation alloc] initWithLatitude:lat longitude:lon];
+                    completion(location, nil);
+                } else {
+                    completion(nil, nil);
+                }
+            }
+        });
+    }] resume];
 }
 
 @end
