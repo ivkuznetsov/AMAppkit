@@ -17,6 +17,8 @@
 @property (nonatomic) void(^didScroll)(void);
 @property (nonatomic) void(^didEndScroll)(void);
 @property (nonatomic) void(^didZoomContinuus)(void);
+@property (nonatomic) NSNumber *minAspectLimit;
+@property (nonatomic) NSNumber *maxAspectLimit;
 
 - (void)setImage:(UIImage *)image;
 - (UIImage *)croppedImage;

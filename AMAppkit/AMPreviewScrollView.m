@@ -98,11 +98,19 @@
     }
     self.maximumZoomScale = 4.0;
     float aspect = (_containerView.frame.size.width / self.zoomScale) / (_containerView.frame.size.height / self.zoomScale);
+    
+    if (_minAspectLimit) {
+        aspect = MAX(aspect, _minAspectLimit.doubleValue);
+    }
+    if (_maxAspectLimit) {
+        aspect = MIN(aspect, _maxAspectLimit.doubleValue);
+    }
+    
     float viewAspect = self.bounds.size.width / self.bounds.size.height;
     if ((!_aspectFill && aspect > viewAspect) || (_aspectFill && aspect < viewAspect)) {
-        self.minimumZoomScale = self.bounds.size.width / (_imageView.frame.size.width / self.zoomScale);
+        self.minimumZoomScale = self.bounds.size.width / (_imageView.frame.size.height * aspect / self.zoomScale);
     } else {
-        self.minimumZoomScale = self.bounds.size.height / (_imageView.frame.size.height / self.zoomScale);
+        self.minimumZoomScale = self.bounds.size.height / (_imageView.frame.size.width / aspect / self.zoomScale);
     }
     
     if (self.maximumZoomScale < self.minimumZoomScale) {
