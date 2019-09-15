@@ -86,7 +86,8 @@ fileprivate extension TableDelegate {
 
 open class AMTable: StaticSetupObject {
     
-    @objc private var deferredUpdate: Bool = false
+    @objc open var useMarginsForContainerCells: Bool = false
+    private var deferredUpdate: Bool = false
     @objc open var visible: Bool = true { // defer reload when view is not visible
         didSet {
             if visible && (visible != oldValue) && deferredUpdate {
@@ -322,7 +323,7 @@ extension AMTable: UITableViewDataSource {
             let tableCell = table.dequeueReusableCell(withIdentifier: "AMContainerTableCell") as! AMContainerTableCell
             
             if attachViewsByConstraints {
-                tableCell.attach(view: object)
+                tableCell.attach(view: object, useMargins: useMarginsForContainerCells)
             } else {
                 tableCell.attachWithoutConstraint(view: object)
             }

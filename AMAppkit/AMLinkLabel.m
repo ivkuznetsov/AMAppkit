@@ -37,7 +37,7 @@
 - (void)checkInitialization {
     _handlerDictionary = [NSMutableDictionary new];
     _defaultRanges = [NSMutableSet set];
-    self.lineBreakMode = NSLineBreakByWordWrapping;
+  //  self.lineBreakMode = NSLineBreakByWordWrapping;
     
     if (!self.userInteractionEnabled) {
         self.userInteractionEnabled = YES;
@@ -109,7 +109,7 @@
     [self clearActions];
     [super setText:text];
 }
-
+    
 - (void)clearActions {
     [_handlerDictionary removeAllObjects];
     [_defaultRanges removeAllObjects];

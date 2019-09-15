@@ -130,17 +130,21 @@ extension AMPagingLoaderDelegate {
             if let error = error as NSError? {
                 wSelf.footerLoadingView.state = error.code == NSURLErrorCancelled ? .stop : .failed
             } else {
+                
                 if objects.count > 0 && newOffset != nil {
                     wSelf.performedLoading = false
-                } else {
-                    UIView.animate(withDuration: 0.25, animations: {
+                }
+                
+                wSelf.offset = newOffset
+                wSelf.append(items: objects, animated: false)
+                
+                if newOffset == nil {
+                    UIView.animate(withDuration: objects.count > 0 ? 0 : 0.25, animations: {
                         if let view = wSelf.footerLoadingView {
                             wSelf.setFooterVisible(false, view)
                         }
                     })
                 }
-                wSelf.offset = newOffset
-                wSelf.append(items: objects, animated: false)
                 wSelf.footerLoadingView.state = .stop
             }
         })
@@ -156,7 +160,11 @@ extension AMPagingLoaderDelegate {
             }
         }
         fetchedItems = array
+        
+        let offset = scrollView.contentOffset
         delegate.reloadView(animated)
+        scrollView.layoutIfNeeded()
+        scrollView.contentOffset = offset
     }
     
     private func refresh(with refreshControl: UIRefreshControl?) {

@@ -26,7 +26,7 @@ import Foundation
     
     open class func present<T: Hashable>(view: UIView,
                                          options: [T],
-                                         selectedOption: T,
+                                         selectedOption: T?,
                                          fill: @escaping (UITableViewCell, T)->(),
                                          willHide: (()->())?,
                                          didSelect: @escaping (T)->()) -> Self {
@@ -97,8 +97,10 @@ import Foundation
         return TCell(AMOptionCell.self, { (cell) in
             self.fill(cell, object)
             
-            if let option = self.selectedOption,
-                (option as! AnyHashable).hashValue == (object as! AnyHashable).hashValue {
+            if let option = self.selectedOption as? AnyHashable,
+                let object = object as? AnyHashable,
+                option.hashValue == object.hashValue {
+                
                 cell.accessoryType = .checkmark
             } else {
                 cell.accessoryType = .none
