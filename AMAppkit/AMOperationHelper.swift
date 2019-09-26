@@ -30,7 +30,9 @@ class AMOperationToken: Hashable {
     var completion: AMCompletion
     var operation: AMCancellable?
     
-    var hashValue: Int { return id.hashValue }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
     
     static func ==(lhs: AMOperationToken, rhs: AMOperationToken) -> Bool {
         return lhs.hashValue == rhs.hashValue

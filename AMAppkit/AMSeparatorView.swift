@@ -33,9 +33,7 @@ open class AMSeparatorView: UIView {
     }
     
     func commonInit() {
-        defer {
-            super.backgroundColor = UIColor.clear
-        }
+        super.backgroundColor = UIColor.clear
     }
     
     open override func draw(_ rect: CGRect) {

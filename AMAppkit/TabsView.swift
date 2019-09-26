@@ -18,6 +18,7 @@ import Foundation
     
     open private(set) var stackView: UIStackView!
     
+    var wasAddedToSuperview: (()->())?
     open var backgroundView: UIView
     private var selectedView: UIView
     open private(set) var selectedIndex: Int = 0
@@ -56,6 +57,12 @@ import Foundation
     open override var frame: CGRect {
         willSet {
             stackView?.layoutMargins = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: -8)
+        }
+    }
+    
+    open override func didMoveToSuperview() {
+        if superview != nil {
+            wasAddedToSuperview?()
         }
     }
     

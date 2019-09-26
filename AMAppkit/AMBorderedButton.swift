@@ -53,9 +53,8 @@ open class AMBorderedButton: AMFadeButton {
     
     private func commonInit() {
         reloadBorder()
-        defer {
-            borderColor = titleColor(for: .normal)
-        }
+        borderColor = titleColor(for: .normal)
+        layer.borderColor = borderColor?.cgColor
     }
     
     private func reloadBorder() {

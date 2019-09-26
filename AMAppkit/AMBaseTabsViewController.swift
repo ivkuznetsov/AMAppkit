@@ -81,7 +81,12 @@ import Foundation
         
         if tabsFillWidth() && tabsContainerView == nil {
             tabsWidthConstraint = tabsView.widthAnchor.constraint(equalTo: navigationController!.navigationBar.widthAnchor, multiplier: 1)
-            tabsWidthConstraint?.isActive = true
+            tabsView.wasAddedToSuperview = { [weak self] in
+                self?.tabsWidthConstraint?.isActive = true
+            }
+            if tabsView.superview != nil {
+                tabsWidthConstraint?.isActive = true
+            }
         }
     }
     
