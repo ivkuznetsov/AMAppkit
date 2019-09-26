@@ -12,6 +12,7 @@ import UIKit
 open class AMCollectionView: UICollectionView {
     
     private var registeredCells: Set<String> = Set()
+    open var didChangeBounds: (()->())?
     
     public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
@@ -43,6 +44,7 @@ open class AMCollectionView: UICollectionView {
     open override var frame: CGRect {
         didSet {
             if needRelayoutFor(size: frame.size, oldSize: oldValue.size) {
+                didChangeBounds?()
                 collectionViewLayout.invalidateLayout()
             }
         }
@@ -51,6 +53,7 @@ open class AMCollectionView: UICollectionView {
     open override var bounds: CGRect {
         didSet {
             if needRelayoutFor(size: bounds.size, oldSize: oldValue.size) {
+                didChangeBounds?()
                 self.layoutIfNeeded()
                 self.collectionViewLayout.invalidateLayout()
             }
