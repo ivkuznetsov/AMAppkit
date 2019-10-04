@@ -10,6 +10,6 @@
 
 @interface UICollectionView (Reloading)
 
-- (NSArray<NSIndexPath *> *)reloadAnimated:(BOOL)animated oldData:(NSArray *)oldData data:(NSArray *)data completion:(dispatch_block_t)completion;
+- (NSArray<NSIndexPath *> *)reloadAnimated:(BOOL)animated oldData:(NSArray *)oldData data:(NSArray *)data completion:(dispatch_block_t)completion updateObjects:(dispatch_block_t)updateObjects;
 
 @end

@@ -22,7 +22,7 @@
     }
 }
 
-- (NSArray<NSIndexPath *> *)reloadAnimated:(BOOL)animated oldData:(NSArray *)oldData data:(NSArray *)data completion:(dispatch_block_t)completion {
+- (NSArray<NSIndexPath *> *)reloadAnimated:(BOOL)animated oldData:(NSArray *)oldData data:(NSArray *)data completion:(dispatch_block_t)completion updateObjects:(dispatch_block_t)updateObjects {
     BOOL applicationPresented = YES;
     
     if ([UIApplication respondsToSelector:@selector(sharedApplication)]) {
@@ -32,6 +32,7 @@
     
     if (!animated || !oldData.count || !self.window || !applicationPresented) {
         
+        if (updateObjects) updateObjects();
         [self reloadData];
         if (completion) completion();
         return nil;
@@ -86,6 +87,10 @@
         [application valueForKey:@"beginIgnoringInteractionEvents"];
         
         [self performBatchUpdates:^{
+            if (updateObjects) {
+                updateObjects();
+            }
+            
             [self deleteItemsAtIndexPaths:toDelete];
             [self insertItemsAtIndexPaths:toAdd];
             for (NSDictionary *dict in itemsToMove) {
@@ -115,6 +120,9 @@
         }
         
     } else {
+        if (updateObjects) {
+            updateObjects();
+        }
         if (completion) {
             completion();
         }
