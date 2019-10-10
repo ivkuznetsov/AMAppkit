@@ -21,7 +21,7 @@ public extension UITableView {
         }
     }
     
-    func reload(oldData: [AnyHashable], newData: [AnyHashable], deferred: (()->())?, addAnimation: UITableView.RowAnimation) {
+    func reload(oldData: [AnyHashable], newData: [AnyHashable], deferred: (()->())?, updateObjects: (()->())?, addAnimation: UITableView.RowAnimation) {
         
         var toAdd: [IndexPath] = []
         var toDelete: [IndexPath] = []
@@ -60,6 +60,8 @@ public extension UITableView {
         
         self.beginUpdates()
         
+        updateObjects?()
+        
         if !toDelete.isEmpty {
             self.deleteRows(at: toDelete, with: .fade)
         }
@@ -71,8 +73,9 @@ public extension UITableView {
                 self.moveRow(at: couple.from, to: couple.to)
             }
         }
-        deferred?()
         
         self.endUpdates()
+        
+        deferred?()
     }
 }

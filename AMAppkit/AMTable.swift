@@ -168,9 +168,9 @@ open class AMTable: StaticSetupObject {
             }
             return object as! AnyHashable
         }
-        self.objects = resultObjects
         
         if !visible {
+            self.objects = resultObjects
             deferredUpdate = true
             return
         }
@@ -184,10 +184,15 @@ open class AMTable: StaticSetupObject {
             table.reload(oldData: oldObjects, newData: resultObjects, deferred: { [weak self] in
                 
                 self?.reloadVisibleCells()
+            }, updateObjects: { [weak self] in
+                
+                self?.objects = resultObjects
+                
             }, addAnimation: self.delegate.animationForAdding?(table: self) ??
                     (type(of: self).defaultDelegate?.animationForAdding?(table: self) ?? .fade))
             
         } else {
+            self.objects = resultObjects
             table.reloadData()
             deferredUpdate = false
         }
