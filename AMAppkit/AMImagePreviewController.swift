@@ -23,6 +23,10 @@ import Foundation
         self.customContainer = customContainer
         self.contentMode = contentMode
         super.init()
+        
+        if #available(iOS 13, *) {
+            modalPresentationStyle = .fullScreen
+        }
     }
     
     open override func viewDidLoad() {
