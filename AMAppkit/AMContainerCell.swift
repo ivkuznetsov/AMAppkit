@@ -12,6 +12,9 @@ import UIKit
 open class AMContainerCell: UICollectionViewCell {
     
     open var untouchable = false
+    open var attachedView: UIView? {
+        return self.contentView.subviews.last
+    }
     
     func attach(view: UIView) {
         if view == self.contentView.subviews.last {

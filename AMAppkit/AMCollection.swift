@@ -158,16 +158,18 @@ open class AMCollection: StaticSetupObject {
             }
             return object as! AnyHashable
         }
-        self.objects = resultObjects
         
         if !visible {
+            self.objects = resultObjects
             deferredUpdate = true
             completion?()
             return
         }
         
         if !deferredUpdate {
-            let toReload = collection.reload(animated: animated, oldData: oldObjects, data: resultObjects, completion: completion)
+            let toReload = collection.reload(animated: animated, oldData: oldObjects, data: resultObjects, completion: completion, updateObjects: {
+                self.objects = resultObjects
+            })
             collection.layoutIfNeeded()
             
             if let toReload = toReload, animated {
@@ -182,6 +184,7 @@ open class AMCollection: StaticSetupObject {
                 }
             }
         } else {
+            self.objects = resultObjects
             collection.reloadData()
             deferredUpdate = false
             completion?()

@@ -146,6 +146,12 @@ extension AMPagingLoaderDelegate {
                     })
                 }
                 wSelf.footerLoadingView.state = .stop
+                
+                if wSelf.offset != nil {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.loadModeIfNeeded()
+                    }
+                }
             }
         })
     }
@@ -216,6 +222,11 @@ extension AMPagingLoaderDelegate {
                 wSelf.append(items: objects, animated: oldObjects.count > 0)
                 wSelf.delegate.cachable()?.saveFirstPageInCache(objects: objects)
                 wSelf.footerLoadingView.state = .stop
+                if wSelf.offset != nil {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.loadModeIfNeeded()
+                    }
+                }
             }
             wSelf.endRefreshing()
         })
@@ -245,9 +256,13 @@ extension AMPagingLoaderDelegate {
         if delegate == nil {
             return
         }
-        let shouldLoadMore = delegate.shouldLoadMore?() ?? true
-        
-        if keyPath == "contentOffset" && shouldLoadMore {
+        if keyPath == "contentOffset" {
+            loadModeIfNeeded()
+        }
+    }
+    
+    private func loadModeIfNeeded() {
+        if delegate.shouldLoadMore?() ?? true {
             
             if footerLoadingView.state == .failed && !isFooterVisible() {
                 footerLoadingView.state = .stop
