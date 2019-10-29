@@ -74,8 +74,8 @@ public extension UITableView {
             }
         }
         
-        self.endUpdates()
-        
         deferred?()
+        
+        self.endUpdates()
     }
 }
