@@ -240,6 +240,20 @@ open class AMTable: StaticSetupObject {
         }
     }
     
+    @objc open func setNeedUpdateHeights() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateHeights), object: nil)
+        perform(#selector(updateHeights), with: nil, afterDelay: 0)
+    }
+    
+    @objc private func updateHeights() {
+        if !visible {
+            deferredUpdate = true
+            return
+        }
+        table.beginUpdates()
+        table.endUpdates()
+    }
+    
     @objc open func editAction() {
         let complete = { [weak self] in
             if let wSelf = self {
