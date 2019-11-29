@@ -34,6 +34,7 @@
         
         if (updateObjects) updateObjects();
         [self reloadData];
+        [self layoutIfNeeded];
         if (completion) completion();
         return nil;
     }

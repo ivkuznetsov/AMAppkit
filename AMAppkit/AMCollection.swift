@@ -296,7 +296,7 @@ extension AMCollection: UICollectionViewDelegateFlowLayout {
             
             let targetView = view.superview ?? view
             
-            var defaultSize = targetView.systemLayoutSizeFitting(CGSize(width: defaultWidth, height: UIView.layoutFittingCompressedSize.height))
+            var defaultSize = targetView.systemLayoutSizeFitting(CGSize(width: defaultWidth, height: UIView.layoutFittingCompressedSize.height), withHorizontalFittingPriority: UILayoutPriority(rawValue: 1000), verticalFittingPriority: UILayoutPriority(rawValue: 1))
             defaultSize.width = defaultWidth
             
             var size = delegate.viewSizeFor?(view: view, defaultSize: defaultSize, collection: self)
@@ -313,7 +313,7 @@ extension AMCollection: UICollectionViewDelegateFlowLayout {
             view.setNeedsLayout()
             view.layoutIfNeeded()
             
-            return CGSize(width: floor(frame.size.width), height: ceil(view.systemLayoutSizeFitting(CGSize(width: floor(frame.size.width), height: UIView.layoutFittingCompressedSize.height)).height))
+            return CGSize(width: floor(frame.size.width), height: ceil(view.systemLayoutSizeFitting(CGSize(width: defaultWidth, height: UIView.layoutFittingCompressedSize.height), withHorizontalFittingPriority: UILayoutPriority(rawValue: 1000), verticalFittingPriority: UILayoutPriority(rawValue: 1)).height))
         } else {
             var size = delegate.cellSizeFor?(object: object, collection: self)
             
