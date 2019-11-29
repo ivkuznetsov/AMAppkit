@@ -93,6 +93,12 @@ extension AMPagingLoaderDelegate {
         scrollView.addObserver(self, forKeyPath: "contentOffset", options: .new, context: nil)
     }
     
+    @objc public func set(fetchedItems: [AnyHashable], offset: Any?) {
+        self.fetchedItems = fetchedItems
+        self.offset = offset
+        setFooterVisible(offset == nil ? false : true, footerLoadingView)
+    }
+    
     @objc private func refreshAction() {
         shouldBeginRefreshing = true
     }
