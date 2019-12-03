@@ -68,7 +68,7 @@ open class AMCollection: StaticSetupObject {
     }
     @objc open private(set) var noObjectsView: AMNoObjectsView!
     
-    weak var delegate: CollectionDelegate!
+    weak var delegate: CollectionDelegate?
    
     private var updatingDatasource: Bool = false
     private var lazyObjects: [Any]?
@@ -177,7 +177,7 @@ open class AMCollection: StaticSetupObject {
                     if let cell = collection.cellForItem(at: $0), cell as? AMContainerCell == nil {
                         let object = resultObjects[$0.item] as Any // swift bug workaround
                         
-                        let createCell = self.delegate.createCell?(object: object, collection: self) ??
+                        let createCell = self.delegate?.createCell?(object: object, collection: self) ??
                             type(of: self).defaultDelegate?.createCell?(object: object, collection: self)
                         (createCell as! CCell).cellFill?(cell)
                     }
@@ -190,7 +190,7 @@ open class AMCollection: StaticSetupObject {
             completion?()
         }
         
-        if delegate.shouldShowNoData?(resultObjects, collection: self) ??
+        if delegate?.shouldShowNoData?(resultObjects, collection: self) ??
             (type(of: self).defaultDelegate?.shouldShowNoData?(resultObjects, collection: self) ?? (objects.count == 0)) {
             noObjectsView.frame = CGRect(x: 0, y: 0, width: collection.frame.size.width, height: collection.frame.size.height)
             collection.addSubview(noObjectsView)
@@ -201,7 +201,7 @@ open class AMCollection: StaticSetupObject {
     
     open override func responds(to aSelector: Selector!) -> Bool {
         if !super.responds(to: aSelector) {
-            return delegate != nil ? delegate.responds(to: aSelector) : false
+            return delegate != nil ? (delegate?.responds(to: aSelector) ?? false) : false
         }
         return true
     }
@@ -234,7 +234,7 @@ extension AMCollection: UICollectionViewDataSource {
             setupViewContainer?(cell)
             return cell
         } else {
-            let createCell = (delegate.createCell?(object: object, collection: self) ??
+            let createCell = (delegate?.createCell?(object: object, collection: self) ??
                 type(of: self).defaultDelegate?.createCell?(object: object, collection: self)) as! CCell
             
             let cell = self.collection.createCell(for: createCell.cellType, at: indexPath)
@@ -246,12 +246,12 @@ extension AMCollection: UICollectionViewDataSource {
     
     public func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         let object = objects[indexPath.item] as Any
-        return delegate.move?(object: object) ?? type(of: self).defaultDelegate?.move?(object: object) != nil
+        return delegate?.move?(object: object) ?? type(of: self).defaultDelegate?.move?(object: object) != nil
     }
     
     public func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let object = objects[sourceIndexPath.item] as Any
-        if let closure = delegate.move?(object: object) ?? type(of: self).defaultDelegate?.move?(object: object) {
+        if let closure = delegate?.move?(object: object) ?? type(of: self).defaultDelegate?.move?(object: object) {
             closure(sourceIndexPath, destinationIndexPath)
             objects.remove(at: sourceIndexPath.item)
             objects.insert(object as! AnyHashable, at: destinationIndexPath.item)
@@ -260,7 +260,7 @@ extension AMCollection: UICollectionViewDataSource {
     
     public func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
         let object = objects[originalIndexPath.item] as Any
-        return delegate.proposeMoving?(object: object, toIndexPath: proposedIndexPath) ?? type(of: self).defaultDelegate?.proposeMoving?(object: object, toIndexPath: proposedIndexPath) ?? proposedIndexPath
+        return delegate?.proposeMoving?(object: object, toIndexPath: proposedIndexPath) ?? type(of: self).defaultDelegate?.proposeMoving?(object: object, toIndexPath: proposedIndexPath) ?? proposedIndexPath
     }
 }
 
@@ -269,7 +269,7 @@ extension AMCollection: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let object = objects[indexPath.item] as Any // swift bug workaround
         
-        var result = delegate.action?(object: object, collection: self)
+        var result = delegate?.action?(object: object, collection: self)
         if result == nil || result! == .unsupported {
             result = type(of: self).defaultDelegate?.action?(object: object, collection: self)
         }
@@ -299,7 +299,7 @@ extension AMCollection: UICollectionViewDelegateFlowLayout {
             var defaultSize = targetView.systemLayoutSizeFitting(CGSize(width: defaultWidth, height: UIView.layoutFittingCompressedSize.height), withHorizontalFittingPriority: UILayoutPriority(rawValue: 1000), verticalFittingPriority: UILayoutPriority(rawValue: 1))
             defaultSize.width = defaultWidth
             
-            var size = delegate.viewSizeFor?(view: view, defaultSize: defaultSize, collection: self)
+            var size = delegate?.viewSizeFor?(view: view, defaultSize: defaultSize, collection: self)
             if size == nil || size! == CGSize.zero {
                 size = type(of: self).defaultDelegate?.viewSizeFor?(view: view, defaultSize: defaultSize, collection: self)
             }
@@ -315,7 +315,7 @@ extension AMCollection: UICollectionViewDelegateFlowLayout {
             
             return CGSize(width: floor(frame.size.width), height: ceil(view.systemLayoutSizeFitting(CGSize(width: defaultWidth, height: UIView.layoutFittingCompressedSize.height), withHorizontalFittingPriority: UILayoutPriority(rawValue: 1000), verticalFittingPriority: UILayoutPriority(rawValue: 1)).height))
         } else {
-            var size = delegate.cellSizeFor?(object: object, collection: self)
+            var size = delegate?.cellSizeFor?(object: object, collection: self)
             
             if size == nil || size! == CGSize.zero {
                 size = type(of: self).defaultDelegate?.cellSizeFor?(object: object, collection: self)

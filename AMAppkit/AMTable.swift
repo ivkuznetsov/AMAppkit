@@ -121,7 +121,7 @@ open class AMTable: StaticSetupObject {
     }
     @objc open private(set) var noObjectsView: AMNoObjectsView!
     
-    weak var delegate: TableDelegate!
+    weak var delegate: TableDelegate?
     fileprivate var estimatedHeights: [NSValue:CGFloat] = [:]
     
     @objc public init(table: UITableView, delegate: TableDelegate) {
@@ -169,7 +169,7 @@ open class AMTable: StaticSetupObject {
             return object as! AnyHashable
         }
         
-        if !visible {
+        if !visible && self.objects.count == resultObjects.count {
             self.objects = resultObjects
             deferredUpdate = true
             return
@@ -188,7 +188,7 @@ open class AMTable: StaticSetupObject {
                 
                 self?.objects = resultObjects
                 
-            }, addAnimation: self.delegate.animationForAdding?(table: self) ??
+            }, addAnimation: self.delegate?.animationForAdding?(table: self) ??
                     (type(of: self).defaultDelegate?.animationForAdding?(table: self) ?? .fade))
             
         } else {
@@ -197,7 +197,7 @@ open class AMTable: StaticSetupObject {
             deferredUpdate = false
         }
         
-        if delegate.shouldShowNoData?(objects: resultObjects, table: self) ??
+        if delegate?.shouldShowNoData?(objects: resultObjects, table: self) ??
             (type(of: self).defaultDelegate?.shouldShowNoData?(objects: resultObjects, table: self) ?? (objects.count == 0)) {
             
             noObjectsView.frame = CGRect(x: 0, y: 0, width: table.frame.size.width, height: table.frame.size.height)
@@ -225,7 +225,7 @@ open class AMTable: StaticSetupObject {
                 if let object = cell.object, let index = objects.firstIndex(of: object) {
                     resIndex = index
                     
-                    let createCell = self.delegate.createCell?(object: object, table: self) ??
+                    let createCell = self.delegate?.createCell?(object: object, table: self) ??
                         type(of: self).defaultDelegate?.createCell?(object: object, table: self)
                     if let cell = createCell as? TCell {
                         cell.cellFill?($0)
@@ -306,7 +306,7 @@ open class AMTable: StaticSetupObject {
     
     open override func responds(to aSelector: Selector!) -> Bool {
         if !super.responds(to: aSelector) {
-            return delegate.responds(to: aSelector)
+            return delegate?.responds(to: aSelector) ?? false
         }
         return true
     }
@@ -321,6 +321,7 @@ open class AMTable: StaticSetupObject {
     deinit {
         table.delegate = nil
         table.dataSource = nil
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateHeights), object: nil)
     }
 }
 
@@ -348,7 +349,7 @@ extension AMTable: UITableViewDataSource {
             }
             cell = tableCell
         } else {
-            let createCell = (delegate.createCell?(object: safeCast, table: self) ??
+            let createCell = (delegate?.createCell?(object: safeCast, table: self) ??
                 type(of: self).defaultDelegate?.createCell?(object: safeCast, table: self))!
             
             if let createCell = createCell as? TCell {
@@ -370,7 +371,7 @@ extension AMTable: UITableViewDataSource {
         var resultHeight = UITableView.automaticDimension
         let object = objects[indexPath.row] as Any // swift bug workaround
         
-        var height = delegate.cellHeight?(object: object, def: resultHeight, table: self)
+        var height = delegate?.cellHeight?(object: object, def: resultHeight, table: self)
         if height == nil || height! == 0 {
             height = type(of: self).defaultDelegate?.cellHeight?(object: object, def: resultHeight, table: self)
         }
@@ -390,7 +391,7 @@ extension AMTable: UITableViewDataSource {
             return cell.systemLayoutSizeFitting(CGSize(width: tableView.width, height: CGFloat.greatestFiniteMagnitude)).height
         } else if let value = estimatedHeights[estimatedHeightKeyFor(object: object)] {
             return value
-        } else if let value = (delegate.cellEstimatedHeight?(object: object, def: tableView.estimatedRowHeight, table: self) ??
+        } else if let value = (delegate?.cellEstimatedHeight?(object: object, def: tableView.estimatedRowHeight, table: self) ??
             type(of: self).defaultDelegate?.cellEstimatedHeight?(object: object, def: tableView.estimatedRowHeight, table: self)) {
             return value
         }
@@ -413,7 +414,7 @@ extension AMTable: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let object = objects[indexPath.row] as Any // swift bug workaround
         
-        var result = delegate.action?(object: object, table: self)
+        var result = delegate?.action?(object: object, table: self)
         if result == nil || result! == .unsupported {
             result = type(of: self).defaultDelegate?.action?(object: object, table: self)
         }
@@ -426,13 +427,13 @@ extension AMTable: UITableViewDelegate {
         if let holding = cell as? TCellObjectHolding, let object = holding.object {
             estimatedHeights[estimatedHeightKeyFor(object: object)] = cell.bounds.size.height
         }
-        delegate.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
+        delegate?.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
     }
     
     public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let object = objects[indexPath.row] as Any // swift bug workaround
         
-        if let editor = ((delegate.editable()?.cellEditor(object: object, table: self) ??
+        if let editor = ((delegate?.editable()?.cellEditor(object: object, table: self) ??
             type(of: self).defaultDelegate?.editable()?.cellEditor(object: object, table: self)) as? TEditor) {
             
             editor.action?()
@@ -442,7 +443,7 @@ extension AMTable: UITableViewDelegate {
     @available(iOS 11.0, *)
     public func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let object = objects[indexPath.row] as Any // swift bug workaround
-        if let editor = ((delegate.editable()?.cellEditor(object: object, table: self) ??
+        if let editor = ((delegate?.editable()?.cellEditor(object: object, table: self) ??
             type(of: self).defaultDelegate?.editable()?.cellEditor(object: object, table: self)) as? TEditor) {
             
             if let actions = editor.actions?() as? [UIContextualAction] {
@@ -456,7 +457,7 @@ extension AMTable: UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let object = objects[indexPath.row] as Any // swift bug workaround
-        if let editor = ((delegate.editable()?.cellEditor(object: object, table: self) ??
+        if let editor = ((delegate?.editable()?.cellEditor(object: object, table: self) ??
             type(of: self).defaultDelegate?.editable()?.cellEditor(object: object, table: self)) as? TEditor) {
             
             return editor.actions?() as? [UITableViewRowAction]
@@ -466,7 +467,7 @@ extension AMTable: UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         let object = objects[indexPath.row] as Any // swift bug workaround
-        if let editor = ((delegate.editable()?.cellEditor(object: object, table: self) ??
+        if let editor = ((delegate?.editable()?.cellEditor(object: object, table: self) ??
             type(of: self).defaultDelegate?.editable()?.cellEditor(object: object, table: self)) as? TEditor) {
             
             return editor.editingStyle

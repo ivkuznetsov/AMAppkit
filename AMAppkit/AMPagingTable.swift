@@ -11,12 +11,12 @@ import Foundation
 @objc open class AMPagingTable: AMTable {
     
     @objc open private(set) var loader: AMPagingLoader!
-    private weak var pagingDelegate: AMPagingLoaderDelegate!
+    private weak var pagingDelegate: AMPagingLoaderDelegate?
     
     override func setup() {
         super.setup()
         
-        let loaderType = pagingDelegate.pagingLoader?() ?? AMPagingLoader.self
+        let loaderType = pagingDelegate?.pagingLoader?() ?? AMPagingLoader.self
         
         self.loader = loaderType.init(scrollView: table,
                                  delegate: pagingDelegate!,
@@ -70,13 +70,13 @@ extension AMPagingTable {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         loader.endDecelerating()
-        delegate.scrollViewDidEndDecelerating?(scrollView)
+        delegate?.scrollViewDidEndDecelerating?(scrollView)
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             loader.endDecelerating()
         }
-        delegate.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
+        delegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
     }
 }

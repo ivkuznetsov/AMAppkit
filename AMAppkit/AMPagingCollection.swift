@@ -18,12 +18,12 @@ open class AMPagingCollection: AMCollection {
     private var xConstraint: NSLayoutConstraint?
     
     open private(set) var loader: AMPagingLoader!
-    private weak var pagingDelegate: AMPagingLoaderDelegate!
+    private weak var pagingDelegate: AMPagingLoaderDelegate?
     
     override func setup() {
         super.setup()
         
-        let loaderType = pagingDelegate.pagingLoader?() ?? AMPagingLoader.self
+        let loaderType = pagingDelegate!.pagingLoader?() ?? AMPagingLoader.self
         
         loader = loaderType.init(scrollView: collection,
                                  delegate: pagingDelegate!,
@@ -165,13 +165,13 @@ extension AMPagingCollection {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         loader.endDecelerating()
-        delegate.scrollViewDidEndDecelerating?(scrollView)
+        delegate?.scrollViewDidEndDecelerating?(scrollView)
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             loader.endDecelerating()
         }
-        delegate.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
+        delegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
     }
 }

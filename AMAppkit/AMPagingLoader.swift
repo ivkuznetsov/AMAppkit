@@ -55,13 +55,13 @@ extension AMPagingLoaderDelegate {
     }
     open private(set) var footerLoadingView: AMFooterLoadingView!
     open private(set) var loading = false
-    open private(set) weak var scrollView: UIScrollView!
+    open private(set) weak var scrollView: UIScrollView?
     
     open var fetchedItems: [AnyHashable] = []
     open var offset: Any?
     
     private var currentOperationId: String?
-    private weak var delegate: AMPagingLoaderDelegate!
+    private weak var delegate: AMPagingLoaderDelegate?
     private var performedLoading = false
     private var shouldEndRefreshing = false
     private var shouldBeginRefreshing = false
@@ -119,7 +119,7 @@ extension AMPagingLoaderDelegate {
         let operationId = UUID().uuidString
         currentOperationId = operationId
         
-        delegate.load(offset: offset, completion: { [weak self] (objects, error, newOffset) in
+        delegate?.load(offset: offset, completion: { [weak self] (objects, error, newOffset) in
             guard let wSelf = self else {
                 return
             }
@@ -148,7 +148,7 @@ extension AMPagingLoaderDelegate {
                 wSelf.footerLoadingView.state = .stop
                 
                 if wSelf.offset != nil {
-                    DispatchQueue.main.async { [weak self] in
+                    DispatchQueue.main.async {
                         self?.loadModeIfNeeded()
                     }
                 }
@@ -167,15 +167,18 @@ extension AMPagingLoaderDelegate {
         }
         fetchedItems = array
         
+        guard let scrollView = scrollView else {
+            return
+        }
         let offset = scrollView.contentOffset
-        delegate.reloadView(animated)
+        delegate?.reloadView(animated)
         scrollView.layoutIfNeeded()
         scrollView.contentOffset = offset
     }
     
     private func refresh(with refreshControl: UIRefreshControl?) {
         
-        delegate.performOnRefresh?()
+        delegate?.performOnRefresh?()
         
         loading = true
         setFooterVisible(true, footerLoadingView)
@@ -194,7 +197,7 @@ extension AMPagingLoaderDelegate {
         let operationId = UUID().uuidString
         currentOperationId = operationId
         
-        delegate.load(offset: nil, completion: { [weak self] (objects, error, newOffset) in
+        delegate?.load(offset: nil, completion: { [weak self] (objects, error, newOffset) in
             guard let wSelf = self else {
                 return
             }
@@ -208,7 +211,7 @@ extension AMPagingLoaderDelegate {
                     if refreshControl != nil {
                         wSelf.processPullToRefreshError(wSelf, error)
                     }
-                    wSelf.delegate.reloadView(false)
+                    wSelf.delegate?.reloadView(false)
                 } else {
                     wSelf.footerLoadingView.state = .stop
                 }
@@ -220,10 +223,10 @@ extension AMPagingLoaderDelegate {
                 let oldObjects = wSelf.fetchedItems
                 wSelf.fetchedItems = []
                 wSelf.append(items: objects, animated: oldObjects.count > 0)
-                wSelf.delegate.cachable()?.saveFirstPageInCache(objects: objects)
+                wSelf.delegate?.cachable()?.saveFirstPageInCache(objects: objects)
                 wSelf.footerLoadingView.state = .stop
                 if wSelf.offset != nil {
-                    DispatchQueue.main.async { [weak self] in
+                    DispatchQueue.main.async {
                         self?.loadModeIfNeeded()
                     }
                 }
@@ -233,7 +236,7 @@ extension AMPagingLoaderDelegate {
     }
     
     private func endRefreshing() {
-        guard let refreshControl = refreshControl else {
+        guard let refreshControl = refreshControl, let scrollView = scrollView else {
             return
         }
         
@@ -262,7 +265,7 @@ extension AMPagingLoaderDelegate {
     }
     
     private func loadModeIfNeeded() {
-        if delegate.shouldLoadMore?() ?? true {
+        if delegate?.shouldLoadMore?() ?? true {
             
             if footerLoadingView.state == .failed && !isFooterVisible() {
                 footerLoadingView.state = .stop
@@ -281,6 +284,10 @@ extension AMPagingLoaderDelegate {
     }
     
     private func isFooterVisible() -> Bool {
+        guard let scrollView = scrollView else {
+            return false
+        }
+        
         scrollView.delegate?.scrollViewDidScroll?(scrollView)
         
         var frame = scrollView.convert(footerLoadingView.bounds, from: footerLoadingView)
@@ -297,7 +304,7 @@ extension AMPagingLoaderDelegate {
     
     func endDecelerating() {
         performedLoading = false
-        if shouldEndRefreshing && !scrollView.isDecelerating && !scrollView.isDragging {
+        if shouldEndRefreshing && scrollView?.isDecelerating == false && scrollView?.isDragging == false {
             shouldEndRefreshing = false
             DispatchQueue.main.async {
                 self.refreshControl?.endRefreshing()
@@ -310,6 +317,6 @@ extension AMPagingLoaderDelegate {
     }
     
     deinit {
-        scrollView.removeObserver(self, forKeyPath: "contentOffset")
+        scrollView?.removeObserver(self, forKeyPath: "contentOffset")
     }
 }
