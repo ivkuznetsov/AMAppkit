@@ -138,7 +138,9 @@ open class AMCollection: StaticSetupObject {
                             DispatchQueue.main.async {
                                 if !wSelf.updatingDatasource {
                                     UIView.performWithoutAnimation {
-                                        wSelf.collection.reloadSections(IndexSet(integer: 0))
+                                        if wSelf.delegate != nil {
+                                            wSelf.collection.reloadSections(IndexSet(integer: 0))
+                                        }
                                     }
                                 }
                             }
@@ -166,6 +168,10 @@ open class AMCollection: StaticSetupObject {
             return
         }
         
+        if delegate == nil {
+            return
+        }
+            
         if !deferredUpdate {
             let toReload = collection.reload(animated: animated, oldData: oldObjects, data: resultObjects, completion: completion, updateObjects: {
                 self.objects = resultObjects
