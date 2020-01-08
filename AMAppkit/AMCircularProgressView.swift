@@ -38,6 +38,12 @@ open class AMCircularProgressView: UIView {
         return layer
     }()
     
+    open override var tintColor: UIColor! {
+        didSet {
+            progressLayer.strokeColor = tintColor.cgColor
+        }
+    }
+    
     private lazy var progressLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
         layer.strokeColor = self.tintColor.cgColor
