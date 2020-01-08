@@ -61,7 +61,7 @@ extension AMPagingLoaderDelegate {
     open var offset: Any?
     
     private var currentOperationId: String?
-    private weak var delegate: AMPagingLoaderDelegate?
+    public private(set) weak var delegate: AMPagingLoaderDelegate?
     private var performedLoading = false
     private var shouldEndRefreshing = false
     private var shouldBeginRefreshing = false
@@ -126,7 +126,7 @@ extension AMPagingLoaderDelegate {
         currentOperationId = operationId
         
         delegate?.load(offset: offset, completion: { [weak self] (objects, error, newOffset) in
-            guard let wSelf = self else {
+            guard let wSelf = self, wSelf.delegate != nil else {
                 return
             }
             if wSelf.currentOperationId != operationId {
@@ -173,7 +173,7 @@ extension AMPagingLoaderDelegate {
         }
         fetchedItems = array
         
-        guard let scrollView = scrollView else {
+        guard let scrollView = scrollView, delegate != nil else {
             return
         }
         let offset = scrollView.contentOffset
@@ -204,7 +204,7 @@ extension AMPagingLoaderDelegate {
         currentOperationId = operationId
         
         delegate?.load(offset: nil, completion: { [weak self] (objects, error, newOffset) in
-            guard let wSelf = self else {
+            guard let wSelf = self, wSelf.delegate != nil else {
                 return
             }
             if wSelf.currentOperationId != operationId {
@@ -271,7 +271,7 @@ extension AMPagingLoaderDelegate {
     }
     
     private func loadModeIfNeeded() {
-        if delegate?.shouldLoadMore?() ?? true {
+        if (delegate?.shouldLoadMore?() ?? true) && delegate != nil {
             
             if footerLoadingView.state == .failed && !isFooterVisible() {
                 footerLoadingView.state = .stop

@@ -175,6 +175,10 @@ open class AMTable: StaticSetupObject {
             return
         }
         
+        if delegate == nil {
+            return
+        }
+        
         // remove missed estimated heights
         var set = Set(estimatedHeights.keys)
         objects.forEach { set.remove(estimatedHeightKeyFor(object: $0)) }
@@ -250,8 +254,10 @@ open class AMTable: StaticSetupObject {
             deferredUpdate = true
             return
         }
-        table.beginUpdates()
-        table.endUpdates()
+        if delegate != nil {
+            table.beginUpdates()
+            table.endUpdates()
+        }
     }
     
     @objc open func editAction() {
