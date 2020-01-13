@@ -62,13 +62,9 @@ private struct AMObserver: Equatable {
             for name in names {
                 let array = self.dictionary[name]
                 
-                if var array = array {
+                if var array = self.dictionary[name] {
                     for observer in array.reversed() {
-                        if observer.object == nil {
-                            array.remove(at: array.firstIndex(of: observer)!)
-                            continue
-                        }
-                        if postedUpdates.contains(observer) {
+                        if observer.object == nil || postedUpdates.contains(observer) {
                             continue
                         }
                         
@@ -78,7 +74,7 @@ private struct AMObserver: Equatable {
                         
                         postedUpdates.append(observer)
                     }
-                    self.dictionary[name] = array
+                    self.dictionary[name] = self.dictionary[name]?.filter({ $0.object != nil })
                 }
             }
         }
