@@ -60,9 +60,7 @@ private struct AMObserver: Equatable {
             var postedUpdates: [AMObserver] = []
             
             for name in names {
-                let array = self.dictionary[name]
-                
-                if var array = self.dictionary[name] {
+                if let array = self.dictionary[name] {
                     for observer in array.reversed() {
                         if observer.object == nil || postedUpdates.contains(observer) {
                             continue
