@@ -58,6 +58,15 @@ import Foundation
         willSet {
             stackView?.layoutMargins = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: -8)
         }
+        didSet {
+            layoutBackgroundView()
+        }
+    }
+    
+    open override var bounds: CGRect {
+        didSet {
+            layoutBackgroundView()
+        }
     }
     
     open override func didMoveToSuperview() {
@@ -70,9 +79,11 @@ import Foundation
         self.didSelect = didSelect
         
         backgroundView = UIView()
+        backgroundView.autoresizingMask = [.flexibleRightMargin, .flexibleBottomMargin]
         backgroundView.backgroundColor = UIColor.clear
         
         selectedView = UIView()
+        selectedView.autoresizingMask = [.flexibleBottomMargin, .flexibleRightMargin]
         
         super.init(frame: CGRect.zero)
         for (index, title) in titles.enumerated() {
@@ -119,11 +130,19 @@ import Foundation
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        backgroundView.frame = CGRect(x: stackView.layoutMargins.left, y: self.bounds.size.height - selectorHeight, width: stackView.width - stackView.layoutMargins.left - stackView.layoutMargins.right, height: selectorHeight)
         selectedView.frame = selectedFrame()
     }
     
+    private func layoutBackgroundView() {
+        if stackView == nil {
+            return
+        }
+        backgroundView.frame = CGRect(x: -8, y: self.bounds.size.height - selectorHeight, width: stackView.width + 16, height: selectorHeight)
+    }
+    
     private func selectedFrame() -> CGRect {
+        layoutBackgroundView()
+        
         if stackView.arrangedSubviews.count == 0 {
             return CGRect.zero
         }
