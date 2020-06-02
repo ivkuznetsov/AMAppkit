@@ -140,7 +140,7 @@ import Foundation
         backgroundView.frame = CGRect(x: -8, y: self.bounds.size.height - selectorHeight, width: stackView.width + 16, height: selectorHeight)
     }
     
-    private func selectedFrame() -> CGRect {
+    open func selectedFrame() -> CGRect {
         layoutBackgroundView()
         
         if stackView.arrangedSubviews.count == 0 {
